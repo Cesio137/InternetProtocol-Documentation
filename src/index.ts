@@ -13,5 +13,5 @@ app.get('/', function(req:Request, res:Response){
 });
 
 app.listen(PORT, function(){
-    console.log(`listening at adress localhost:${PORT}`)
-})
+    console.log(`listening at adress localhost:${PORT}`);
+});
