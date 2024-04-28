@@ -1,8 +1,6 @@
 # Welcome
 
-`Internet Protocol`: A Plugin for Streamlined WebSocket and HTTP Requests via Blueprint
-
-The `Internet Protocol` is a plugin designed to simplify the creation of WebSocket connections and HTTP requests through blueprints. It operates asynchronously to ensure that the user’s gaming experience remains uninterrupted.
+Internet Protocol exposes Websocket, HTTP, and Json modules to the blueprint. The goal of this plugin is, in addition to making it easier, to give you full control over managing connections and manipulating messages via Json.
 
 Key Features:
 
@@ -10,6 +8,14 @@ Key Features:
 * HTTP Requests: Seamlessly send and receive data with HTTP requests, supporting GET, POST, PUT, and DELETE and more methods.
 * Blueprint-Friendly: Intuitive blueprint integration allows for quick and easy setup within your projects.
 * Asynchronous Operations: All networking processes are handled asynchronously, maintaining smooth gameplay without big performance hitches.
+
+## Modules
+
+* InternetProtocol `World Subsystem`.
+* Websocket `Client side only`.
+* HTTP `Client side only`.
+* Json.
+* RawFunctionLibrary.
 
 ## Supported Unreal Versions
 
