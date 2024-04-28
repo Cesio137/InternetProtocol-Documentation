@@ -1,6 +1,15 @@
 # Welcome
 
-`Internet Protocol` é um plugin que facilita a criação de conexões websockets e HTTP request via blueprint. Tudo acontece de maneira assincrona para que nao atrapalhe a experiencia do usuario no jogo.
+`Internet Protocol`: A Plugin for Streamlined WebSocket and HTTP Requests via Blueprint
+
+The `Internet Protocol` is a plugin designed to simplify the creation of WebSocket connections and HTTP requests through blueprints. It operates asynchronously to ensure that the user’s gaming experience remains uninterrupted.
+
+Key Features:
+
+* WebSocket Connections: Effortlessly establish real-time, two-way communication channels with servers using WebSockets.
+* HTTP Requests: Seamlessly send and receive data with HTTP requests, supporting GET, POST, PUT, and DELETE and more methods.
+* Blueprint-Friendly: Intuitive blueprint integration allows for quick and easy setup within your projects.
+* Asynchronous Operations: All networking processes are handled asynchronously, maintaining smooth gameplay without big performance hitches.
 
 ## Supported Unreal Versions
 
@@ -10,7 +19,7 @@ UE4          | UE5
 
 ## Links
 
-[Video Showcase](https://www.youtube.com/watch?v=IVlGHYiMjxY){:target="_blank" .md-button .md-button--primary } 
-[Get UE5 Plugin](https://www.unrealengine.com/marketplace/en-US/product/ef7fb07b25c045889222aeada7e375b2){:target="_blank" .md-button .md-button--primary }
+[Video Showcase](){:target="_blank" .md-button .md-button--primary } 
+[Get UE5 Plugin](){:target="_blank" .md-button .md-button--primary }
 
 OBS: If the plugin has good relevance, I will make the version for Unreal Engine 4.27 available for free.
