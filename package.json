@@ -1,0 +1,21 @@
+{
+  "name": "http-request",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Cesio137/InternetProtocol-Documentation.git",
+  "author": "Nathan Miguel <nathan.cm77@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/express": "^4.17.21",
+    "tsx": "^4.7.3",
+    "typescript": "^5.4.5",
+    "express": "^4.19.2"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "build": "tsc src/index.ts"
+  }
+}
