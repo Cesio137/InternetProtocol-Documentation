@@ -1,0 +1,103 @@
+# JSON
+
+## Create Json object
+
+* 1- Right click in any blueprint graph to open search box.
+* 2- Search by `InternetProtocolSubsystem`.
+* 3- Search by `CreateJsonObject` from `InternetProtocolSubsystem` node.
+* ![Image title](/media/img/2.png)
+* ![Image title](/media/img/json/0.png)
+
+---
+
+## Nodes
+
+### 1- Construct Json
+
+* Construct Json.
+* It also reset json object.
+* Must be called before use any json function.
+* ![Image title](/media/img/json/1.png)
+
+### 2- Construct Json From String
+
+* Construct Json from string.
+* It also reset json object.
+* Must be called before use any json function.
+* ![Image title](/media/img/json/3.png)
+
+### 3- Is Valid
+
+* Check if json is valid.
+* ![Image title](/media/img/json/2.png)
+
+### 4- To String
+
+* Parse json data to string.
+* ![Image title](/media/img/json/5.png)
+
+### 5- Reset
+
+* Reset json and clear all fields.
+* `Construct Json` or `Construct Json From String` must be called again.
+* ![Image title](/media/img/json/4.png)
+
+### 6- Set bool field
+
+* ![Image title](/media/img/json/6.png)
+
+### 7- Set bool array field
+
+* ![Image title](/media/img/json/7.png)
+
+### 8- Set byte field
+
+* ![Image title](/media/img/json/8.png)
+
+### 9- Set byte array field
+
+* ![Image title](/media/img/json/9.png)
+
+### 10- Set integer field
+
+* ![Image title](/media/img/json/10.png)
+
+### 11- Set integer array field
+
+* ![Image title](/media/img/json/11.png)
+
+### 12- Set float field
+
+* ![Image title](/media/img/json/12.png)
+
+### 13- Set float array field
+
+* ![Image title](/media/img/json/13.png)
+
+### 14- Set string field
+
+* ![Image title](/media/img/json/14.png)
+
+### 15- Set string array field
+
+* ![Image title](/media/img/json/15.png)
+
+### 16- Set object field
+
+* Set a json object field.
+* Search by `CreateJsonObject` from `InternetProtocolSubsystem` node to assign to object field.
+* ![Image title](/media/img/json/16.png)
+
+### 17- Set object array field
+
+* ![Image title](/media/img/json/17.png)
+
+### 18- Remove field
+
+* Remove field by name.
+* ![Image title](/media/img/json/18.png)
+
+### 19- Has field
+
+* Check if json has field.
+* ![Image title](/media/img/json/19.png)
