@@ -1,0 +1,921 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../websocket/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.19">
+    
+    
+      
+        <title>HTTP - Internet Protocol</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#http" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Internet Protocol" class="md-header__button md-logo" aria-label="Internet Protocol" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Internet Protocol
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              HTTP
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../websocket/" class="md-tabs__link">
+        
+  
+    
+  
+  Websocket
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+    
+  
+  HTTP
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Internet Protocol" class="md-nav__button md-logo" aria-label="Internet Protocol" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Internet Protocol
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../websocket/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Websocket
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    HTTP
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    HTTP
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-http-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create HTTP object
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nodes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nodes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-construct-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      1- Construct HTTP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-is-valid" class="md-nav__link">
+    <span class="md-ellipsis">
+      2- Is Valid
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      3- Reset
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-set-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      4- Set URL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-get-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      5- Get URL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-encode-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      6- Encode URL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-decode-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      7- Decode URL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-set-verb" class="md-nav__link">
+    <span class="md-ellipsis">
+      8- Set Verb
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-get-verb" class="md-nav__link">
+    <span class="md-ellipsis">
+      9- Get Verb
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-set-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      10- Set Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-get-parameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      11- Get Parameter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-get-all-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      12- Get All Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-append-to-header" class="md-nav__link">
+    <span class="md-ellipsis">
+      13- Append to Header
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-get-header" class="md-nav__link">
+    <span class="md-ellipsis">
+      14- Get Header
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-get-header" class="md-nav__link">
+    <span class="md-ellipsis">
+      15- Get Header
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-set-content-as-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      16- Set Content As String
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-set-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      17- Set Content
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#18-get-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      18- Get Content
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#19-get-content-lenght" class="md-nav__link">
+    <span class="md-ellipsis">
+      19- Get Content Lenght
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#20-get-content-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      20- Get Content Type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21-set-timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      21- Set Timeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-get-timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      22- Get Timeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-clear-timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      23- Clear Timeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-process-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      24- Process Request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-cancel-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      25- Cancel Request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-tick-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      26- Tick Request
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Events
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Events">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-on-completed" class="md-nav__link">
+    <span class="md-ellipsis">
+      1- On Completed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-on-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      2- On Progress
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-on-will-retry" class="md-nav__link">
+    <span class="md-ellipsis">
+      3- On Will Retry
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="http">HTTP</h1>
+<h2 id="create-http-object">Create HTTP object</h2>
+<ul>
+<li>1- Right click in any blueprint graph to open search box.</li>
+<li>2- Search by <code>InternetProtocolSubsystem</code>.</li>
+<li>3- Search by <code>CreateHTTPObject</code> from <code>InternetProtocolSubsystem</code> node.</li>
+<li><img alt="Image title" src="/media/img/2.png" /></li>
+<li><img alt="Image title" src="/media/img/http/1.png" /></li>
+</ul>
+<h2 id="nodes">Nodes</h2>
+<hr />
+<h3 id="1-construct-http">1- Construct HTTP</h3>
+<ul>
+<li>Construct HTTP.</li>
+<li>Must be called before use any http function.</li>
+<li><img alt="Image title" src="/media/img/http/2.png" /></li>
+</ul>
+<h3 id="2-is-valid">2- Is Valid</h3>
+<ul>
+<li>Check if the http was built and is valid.</li>
+<li><img alt="Image title" src="/media/img/http/3.png" /></li>
+</ul>
+<h3 id="3-reset">3- Reset</h3>
+<ul>
+<li>Shutdown http module.</li>
+<li><code>ConstructHTTP</code> must be called again before use any node.</li>
+<li><img alt="Image title" src="/media/img/http/4.png" /></li>
+</ul>
+<h3 id="4-set-url">4- Set URL</h3>
+<ul>
+<li>Set url.</li>
+<li><img alt="Image title" src="/media/img/http/5.png" /></li>
+</ul>
+<h3 id="5-get-url">5- Get URL</h3>
+<ul>
+<li>Get url.</li>
+<li><img alt="Image title" src="/media/img/http/6.png" /></li>
+</ul>
+<h3 id="6-encode-url">6- Encode URL</h3>
+<ul>
+<li>Encode url to ANSII.</li>
+<li><img alt="Image title" src="/media/img/http/7.png" /></li>
+</ul>
+<h3 id="7-decode-url">7- Decode URL</h3>
+<ul>
+<li>Decode url from ANSII.</li>
+<li><img alt="Image title" src="/media/img/http/8.png" /></li>
+</ul>
+<h3 id="8-set-verb">8- Set Verb</h3>
+<ul>
+<li>Set request metod.</li>
+<li><img alt="Image title" src="/media/img/http/9.png" /></li>
+</ul>
+<h3 id="9-get-verb">9- Get Verb</h3>
+<ul>
+<li>Get request metod.</li>
+<li><img alt="Image title" src="/media/img/http/10.png" /></li>
+</ul>
+<h3 id="10-set-parameters">10- Set Parameters</h3>
+<ul>
+<li>Set url parameters.</li>
+<li><img alt="Image title" src="/media/img/http/11.png" /></li>
+</ul>
+<h3 id="11-get-parameter">11- Get Parameter</h3>
+<ul>
+<li>Get get parameter value by name.</li>
+<li><img alt="Image title" src="/media/img/http/12.png" /></li>
+</ul>
+<h3 id="12-get-all-parameters">12- Get All Parameters</h3>
+<ul>
+<li>Get all url parameters.</li>
+<li><img alt="Image title" src="/media/img/http/13.png" /></li>
+</ul>
+<h3 id="13-append-to-header">13- Append to Header</h3>
+<ul>
+<li>Add headers.</li>
+<li>Reseting headers you need to call node <code>Reset</code> and reconstruct http.</li>
+<li><img alt="Image title" src="/media/img/http/14.png" /></li>
+</ul>
+<h3 id="14-get-header">14- Get Header</h3>
+<ul>
+<li>Get header value by name.</li>
+<li><img alt="Image title" src="/media/img/http/15.png" /></li>
+</ul>
+<h3 id="15-get-header">15- Get Header</h3>
+<ul>
+<li>Get all headers.</li>
+<li><img alt="Image title" src="/media/img/http/16.png" /></li>
+</ul>
+<h3 id="16-set-content-as-string">16- Set Content As String</h3>
+<ul>
+<li>Sets the content of the request as a string encoded as UTF8.</li>
+<li><img alt="Image title" src="/media/img/http/20.png" /></li>
+</ul>
+<h3 id="17-set-content">17- Set Content</h3>
+<ul>
+<li>Sets the content of the request (optional data). Usually only set for POST requests.</li>
+<li><img alt="Image title" src="/media/img/http/17.png" /></li>
+</ul>
+<h3 id="18-get-content">18- Get Content</h3>
+<ul>
+<li>Get content of the request. </li>
+<li><img alt="Image title" src="/media/img/http/18.png" /></li>
+</ul>
+<h3 id="19-get-content-lenght">19- Get Content Lenght</h3>
+<ul>
+<li>Get content size in bytes.</li>
+<li><img alt="Image title" src="/media/img/http/19.png" /></li>
+</ul>
+<h3 id="20-get-content-type">20- Get Content Type</h3>
+<ul>
+<li>Get type of content.</li>
+<li><img alt="Image title" src="/media/img/http/21.png" /></li>
+</ul>
+<h3 id="21-set-timeout">21- Set Timeout</h3>
+<ul>
+<li>Set request timeout.</li>
+<li><img alt="Image title" src="/media/img/http/22.png" /></li>
+</ul>
+<h3 id="22-get-timeout">22- Get Timeout</h3>
+<ul>
+<li>Get request timeout.</li>
+<li><img alt="Image title" src="/media/img/http/24.png" /></li>
+</ul>
+<h3 id="23-clear-timeout">23- Clear Timeout</h3>
+<ul>
+<li>Reset timeout.</li>
+<li><img alt="Image title" src="/media/img/http/23.png" /></li>
+</ul>
+<h3 id="24-process-request">24- Process Request</h3>
+<ul>
+<li>Called to begin processing the request.</li>
+<li><img alt="Image title" src="/media/img/http/25.png" /></li>
+</ul>
+<h3 id="25-cancel-request">25- Cancel Request</h3>
+<ul>
+<li>Called to cancel a request that is still being processed.</li>
+<li><img alt="Image title" src="/media/img/http/26.png" /></li>
+</ul>
+<h3 id="26-tick-request">26- Tick Request</h3>
+<ul>
+<li>Use to tick request</li>
+<li><img alt="Image title" src="/media/img/http/27.png" /></li>
+</ul>
+<h2 id="events">Events</h2>
+<ul>
+<li>Events can be called or assigned without construct websocket.</li>
+</ul>
+<hr />
+<h3 id="1-on-completed">1- On Completed</h3>
+<ul>
+<li>Delegate called when the request is complete.</li>
+<li><img alt="Image title" src="/media/img/http/28.png" /></li>
+</ul>
+<h3 id="2-on-progress">2- On Progress</h3>
+<ul>
+<li>Delegate called to update the request/response progress.</li>
+<li><img alt="Image title" src="/media/img/http/29.png" /></li>
+</ul>
+<h3 id="3-on-will-retry">3- On Will Retry</h3>
+<ul>
+<li>Delegate called when the request will be retried.</li>
+<li><img alt="Image title" src="/media/img/http/30.png" /></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 plugin made by Natha Miguel.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "toc.integrate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      
+    
+  </body>
+</html>
