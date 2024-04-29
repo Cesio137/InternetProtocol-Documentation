@@ -2,6 +2,7 @@ site_name: Internet Protocol
 nav:
   - Home: index.md
   - Websocket: websocket.md
+  - HTTP: http.md
 theme:
   name: material
   features:
