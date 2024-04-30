@@ -101,3 +101,51 @@
 
 * Check if json has field.
 * ![Image title](/media/img/json/19.png)
+
+### 20- Try get bool field
+
+* ![Image title](/media/img/json/20.png)
+
+### 21- Try get bool array field
+
+* ![Image title](/media/img/json/21.png)
+
+### 22- Try get byte field
+
+* ![Image title](/media/img/json/22.png)
+
+### 23- Try get byte array field
+
+* ![Image title](/media/img/json/23.png)
+
+### 24- Try get integer field
+
+* ![Image title](/media/img/json/24.png)
+
+### 25- Try get integer array field
+
+* ![Image title](/media/img/json/25.png)
+
+### 26- Try get float field
+
+* ![Image title](/media/img/json/26.png)
+
+### 27- Try get float array field
+
+* ![Image title](/media/img/json/27.png)
+
+### 28- Try get object field
+
+* ![Image title](/media/img/json/28.png)
+
+### 29- Try get object array field
+
+* ![Image title](/media/img/json/29.png)
+
+### 30- Try get string field
+
+* ![Image title](/media/img/json/30.png)
+
+### 31- Try get string array field
+
+* ![Image title](/media/img/json/31.png)
