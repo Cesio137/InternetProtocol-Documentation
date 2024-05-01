@@ -1,5 +1,6 @@
 import { RawData, WebSocket, WebSocketServer } from 'ws';
 import { client_info, players_info } from './types/websocket_types';
+import { Console } from 'console';
 
 //URL -> ws://localhost:3000
 const WS_PORT: number = 3000;
@@ -10,13 +11,26 @@ let client_id:number = 0;
 
 
 wss.on('connection', function connection(ws:WebSocket) {
-  ws.on('error', console.error);
   clients.set(ws, client_id);
   ParseClientID(ws);
   client_id += 1;
   num_clients = clients.size;
   console.log('connected');
   ParsePlayersConnected(ws);
+
+  ws.on('error', function error(){
+        if (clients.has(ws))
+        {
+          const disconnected_client: client_info = {event:'on_client_error', id:clients.get(ws)!};
+          clients.delete(ws);
+          num_clients = clients.size;
+          clients.forEach( (obj, websocket) => {
+            websocket.send(JSON.stringify(disconnected_client));
+          });
+          console.error;
+        }
+        
+  });
   
 
   ws.on('message', function message(data) {
