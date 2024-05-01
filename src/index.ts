@@ -4,25 +4,26 @@ import { client_info, players_info } from './types/websocket_types';
 //URL -> ws://localhost:3000
 const WS_PORT: number = 3000;
 const wss: WebSocketServer = new WebSocketServer( { port: WS_PORT } );
-const clients: Map<WebSocket, number> = new Map();
-let num_clients: number = 0;
-let client_id: number = 0;
+const clients: WebSocket[] = [];
 
 wss.on('connection', function connection(ws:WebSocket) {
-  ws.on('error', console.error);
-  clients.set(ws, client_id);
-  num_clients = clients.size;
-  client_id += 1
+  clients.push(ws);
   console.log('connected');
 
+  ws.on('error', function error(){
+        if (clients.indexOf(ws) > -1)
+          clients.splice(clients.indexOf(ws), 1);
+        console.log('closed!');
+  });
+  
   ws.on('message', function message(data) {
         HandlerMessage(ws, data);
   });
 
   ws.on('close', function close() {
-    clients.delete(ws);
-    num_clients = clients.size;
-    console.log('closed!');
+        if (clients.indexOf(ws) > -1)
+          clients.splice(clients.indexOf(ws), 1);
+        console.log('closed!');
   });
 
 });
@@ -41,7 +42,7 @@ function HandlerMessage(ws:WebSocket, data:RawData)
     if ( isJson(data.toString()) )
     {
       const JsonObject:JSON = JSON.parse(data.toString());
-      clients.forEach( (id, websocket) => {
+      clients.forEach( (websocket) => {
           if (ws !== websocket)
             websocket.send(JSON.stringify(JsonObject));
       });
