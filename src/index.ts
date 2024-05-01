@@ -8,7 +8,7 @@ const clients: WebSocket[] = [];
 
 wss.on('connection', function connection(ws:WebSocket) {
   clients.push(ws);
-  console.log('connected');
+  console.log('connecteds');
 
   ws.on('error', function error(){
         if (clients.indexOf(ws) > -1)
