@@ -52,6 +52,7 @@
 ### 8- Set Verb
 
 * Set request metod.
+* GET, POST, PUT, PATCH, DELETE, COPY, HEAD, OPTIONS, LINK, UNLINK, LOCK, UNLOCK, PROPFIND, VIEW.
 * ![Image title](https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/http/9.png)
 
 ### 9- Get Verb

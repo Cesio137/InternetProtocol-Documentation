@@ -9,10 +9,8 @@
       
       
       
-        <link rel="prev" href="../http/">
+        <link rel="prev" href="../json/">
       
-      
-        <link rel="next" href="../raw/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +18,7 @@
     
     
       
-        <title>Json - Internet Protocol</title>
+        <title>Raw - Internet Protocol</title>
       
     
     
@@ -72,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#json" class="md-skip">
+        <a href="#raw-function-library" class="md-skip">
           Skip to content
         </a>
       
@@ -106,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Json
+              Raw
             
           </span>
         </div>
@@ -250,11 +248,9 @@
         
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../json/" class="md-tabs__link">
         
   
     
@@ -269,9 +265,11 @@
         
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../raw/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
     
@@ -382,6 +380,26 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../json/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Json
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -398,7 +416,7 @@
           
   
   <span class="md-ellipsis">
-    Json
+    Raw
   </span>
   
 
@@ -409,7 +427,7 @@
         
   
   <span class="md-ellipsis">
-    Json
+    Raw
   </span>
   
 
@@ -431,15 +449,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-json-object" class="md-nav__link">
-    <span class="md-ellipsis">
-      Create Json object
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#nodes" class="md-nav__link">
     <span class="md-ellipsis">
       Nodes
@@ -450,279 +459,189 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-construct-json" class="md-nav__link">
+  <a href="#1-raw-to-bool" class="md-nav__link">
     <span class="md-ellipsis">
-      1- Construct Json
+      1- Raw to bool
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-construct-json-from-string" class="md-nav__link">
+  <a href="#2-raw-to-byte" class="md-nav__link">
     <span class="md-ellipsis">
-      2- Construct Json From String
+      2- Raw to byte
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-is-valid" class="md-nav__link">
+  <a href="#3-raw-to-int" class="md-nav__link">
     <span class="md-ellipsis">
-      3- Is Valid
+      3- Raw to int
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-to-string" class="md-nav__link">
+  <a href="#4-raw-to-int64" class="md-nav__link">
     <span class="md-ellipsis">
-      4- To String
+      4- Raw to int64
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#5-reset" class="md-nav__link">
+  <a href="#5-raw-to-float" class="md-nav__link">
     <span class="md-ellipsis">
-      5- Reset
+      5- Raw to float
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#6-set-bool-field" class="md-nav__link">
+  <a href="#6-raw-to-string" class="md-nav__link">
     <span class="md-ellipsis">
-      6- Set bool field
+      6- Raw to string
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#7-set-bool-array-field" class="md-nav__link">
+  <a href="#7-raw-to-fvector" class="md-nav__link">
     <span class="md-ellipsis">
-      7- Set bool array field
+      7- Raw to fvector
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#8-set-byte-field" class="md-nav__link">
+  <a href="#8-raw-to-frotator" class="md-nav__link">
     <span class="md-ellipsis">
-      8- Set byte field
+      8- Raw to frotator
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#9-set-byte-array-field" class="md-nav__link">
+  <a href="#9-raw-to-ftransform" class="md-nav__link">
     <span class="md-ellipsis">
-      9- Set byte array field
+      9- Raw to ftransform
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#10-set-integer-field" class="md-nav__link">
+  <a href="#10-bool-to-byte-array" class="md-nav__link">
     <span class="md-ellipsis">
-      10- Set integer field
+      10- Bool to byte array
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#11-set-integer-array-field" class="md-nav__link">
+  <a href="#11-byte-array-to-bool" class="md-nav__link">
     <span class="md-ellipsis">
-      11- Set integer array field
+      11- Byte array to bool
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#12-set-float-field" class="md-nav__link">
+  <a href="#12-int-to-byte-array" class="md-nav__link">
     <span class="md-ellipsis">
-      12- Set float field
+      12- Int to byte array
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#13-set-float-array-field" class="md-nav__link">
+  <a href="#13-byte-array-to-int" class="md-nav__link">
     <span class="md-ellipsis">
-      13- Set float array field
+      13- Byte array to int
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#14-set-string-field" class="md-nav__link">
+  <a href="#14-float-to-byte-array" class="md-nav__link">
     <span class="md-ellipsis">
-      14- Set string field
+      14- Float to byte array
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#15-set-string-array-field" class="md-nav__link">
+  <a href="#15-byte-array-to-float" class="md-nav__link">
     <span class="md-ellipsis">
-      15- Set string array field
+      15- Byte array to float
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#16-set-object-field" class="md-nav__link">
+  <a href="#16-fvector-to-byte-array" class="md-nav__link">
     <span class="md-ellipsis">
-      16- Set object field
+      16- FVector to byte array
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#17-set-object-array-field" class="md-nav__link">
+  <a href="#17-byte-array-to-fvectort" class="md-nav__link">
     <span class="md-ellipsis">
-      17- Set object array field
+      17- Byte array to fvectort
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#18-remove-field" class="md-nav__link">
+  <a href="#18-frotator-to-byte-array" class="md-nav__link">
     <span class="md-ellipsis">
-      18- Remove field
+      18- FRotator to byte array
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#19-has-field" class="md-nav__link">
+  <a href="#19-byte-array-to-frotator" class="md-nav__link">
     <span class="md-ellipsis">
-      19- Has field
+      19- Byte array to frotator
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#20-try-get-bool-field" class="md-nav__link">
+  <a href="#20-ftransform-to-byte-array" class="md-nav__link">
     <span class="md-ellipsis">
-      20- Try get bool field
+      20- FTransform to byte array
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#21-try-get-bool-array-field" class="md-nav__link">
+  <a href="#21-byte-array-to-ftransform" class="md-nav__link">
     <span class="md-ellipsis">
-      21- Try get bool array field
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#22-try-get-byte-field" class="md-nav__link">
-    <span class="md-ellipsis">
-      22- Try get byte field
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#23-try-get-byte-array-field" class="md-nav__link">
-    <span class="md-ellipsis">
-      23- Try get byte array field
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#24-try-get-integer-field" class="md-nav__link">
-    <span class="md-ellipsis">
-      24- Try get integer field
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#25-try-get-integer-array-field" class="md-nav__link">
-    <span class="md-ellipsis">
-      25- Try get integer array field
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#26-try-get-float-field" class="md-nav__link">
-    <span class="md-ellipsis">
-      26- Try get float field
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#27-try-get-float-array-field" class="md-nav__link">
-    <span class="md-ellipsis">
-      27- Try get float array field
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#28-try-get-object-field" class="md-nav__link">
-    <span class="md-ellipsis">
-      28- Try get object field
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#29-try-get-object-array-field" class="md-nav__link">
-    <span class="md-ellipsis">
-      29- Try get object array field
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#30-try-get-string-field" class="md-nav__link">
-    <span class="md-ellipsis">
-      30- Try get string field
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#31-try-get-string-array-field" class="md-nav__link">
-    <span class="md-ellipsis">
-      31- Try get string array field
+      21- Byte array to ftransform
     </span>
   </a>
   
@@ -737,26 +656,6 @@
   
 </nav>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../raw/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Raw
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -776,154 +675,114 @@
                   
 
 
-<h1 id="json">JSON</h1>
-<h2 id="create-json-object">Create Json object</h2>
-<ul>
-<li>1- Right click in any blueprint graph to open search box.</li>
-<li>2- Search by <code>InternetProtocolSubsystem</code>.</li>
-<li>3- Search by <code>CreateJsonObject</code> from <code>InternetProtocolSubsystem</code> node.</li>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/2.png" /></li>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/0.png" /></li>
-</ul>
-<hr />
+<h1 id="raw-function-library">Raw Function Library</h1>
+<p><code>Raw Function Library</code> is a colection of static functions to manage <code>byte array</code> and <code>void*</code> data. This allows you to convert a float to a byte array or a byte array to a float for example.</p>
 <h2 id="nodes">Nodes</h2>
-<h3 id="1-construct-json">1- Construct Json</h3>
+<hr />
+<h3 id="1-raw-to-bool">1- Raw to bool</h3>
 <ul>
-<li>Construct Json.</li>
-<li>It also reset json object.</li>
-<li>Must be called before use any json function.</li>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/1.png" /></li>
+<li>Convert <code>void*</code> to bool.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/1.png" /></li>
 </ul>
-<h3 id="2-construct-json-from-string">2- Construct Json From String</h3>
+<h3 id="2-raw-to-byte">2- Raw to byte</h3>
 <ul>
-<li>Construct Json from string.</li>
-<li>It also reset json object.</li>
-<li>Must be called before use any json function.</li>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/3.png" /></li>
+<li>Convert <code>void*</code> to byte.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/2.png" /></li>
 </ul>
-<h3 id="3-is-valid">3- Is Valid</h3>
+<h3 id="3-raw-to-int">3- Raw to int</h3>
 <ul>
-<li>Check if json is valid.</li>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/2.png" /></li>
+<li>Convert <code>void*</code> to int.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/3.png" /></li>
 </ul>
-<h3 id="4-to-string">4- To String</h3>
+<h3 id="4-raw-to-int64">4- Raw to int64</h3>
 <ul>
-<li>Parse json data to string.</li>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/5.png" /></li>
+<li>Convert <code>void*</code> to int64.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/4.png" /></li>
 </ul>
-<h3 id="5-reset">5- Reset</h3>
+<h3 id="5-raw-to-float">5- Raw to float</h3>
 <ul>
-<li>Reset json and clear all fields.</li>
-<li><code>Construct Json</code> or <code>Construct Json From String</code> must be called again.</li>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/4.png" /></li>
+<li>Convert <code>void*</code> to float.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/5.png" /></li>
 </ul>
-<h3 id="6-set-bool-field">6- Set bool field</h3>
+<h3 id="6-raw-to-string">6- Raw to string</h3>
 <ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/6.png" /></li>
+<li>Convert <code>void*</code> to string.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/6.png" /></li>
 </ul>
-<h3 id="7-set-bool-array-field">7- Set bool array field</h3>
+<h3 id="7-raw-to-fvector">7- Raw to fvector</h3>
 <ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/7.png" /></li>
+<li>Convert <code>void*</code> to fvector.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/7.png" /></li>
 </ul>
-<h3 id="8-set-byte-field">8- Set byte field</h3>
+<h3 id="8-raw-to-frotator">8- Raw to frotator</h3>
 <ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/8.png" /></li>
+<li>Convert <code>void*</code> to frotator.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/8.png" /></li>
 </ul>
-<h3 id="9-set-byte-array-field">9- Set byte array field</h3>
+<h3 id="9-raw-to-ftransform">9- Raw to ftransform</h3>
 <ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/9.png" /></li>
+<li>Convert <code>void*</code> to ftransform.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/9.png" /></li>
 </ul>
-<h3 id="10-set-integer-field">10- Set integer field</h3>
+<h3 id="10-bool-to-byte-array">10- Bool to byte array</h3>
 <ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/10.png" /></li>
+<li>Convert bool to byte array.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/10.png" /></li>
 </ul>
-<h3 id="11-set-integer-array-field">11- Set integer array field</h3>
+<h3 id="11-byte-array-to-bool">11- Byte array to bool</h3>
 <ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/11.png" /></li>
+<li>Convert byte array to bool.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/11.png" /></li>
 </ul>
-<h3 id="12-set-float-field">12- Set float field</h3>
+<h3 id="12-int-to-byte-array">12- Int to byte array</h3>
 <ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/12.png" /></li>
+<li>Convert int to byte array.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/12.png" /></li>
 </ul>
-<h3 id="13-set-float-array-field">13- Set float array field</h3>
+<h3 id="13-byte-array-to-int">13- Byte array to int</h3>
 <ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/13.png" /></li>
+<li>Convert byte array to int.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/13.png" /></li>
 </ul>
-<h3 id="14-set-string-field">14- Set string field</h3>
+<h3 id="14-float-to-byte-array">14- Float to byte array</h3>
 <ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/14.png" /></li>
+<li>Convert float to byte array.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/14.png" /></li>
 </ul>
-<h3 id="15-set-string-array-field">15- Set string array field</h3>
+<h3 id="15-byte-array-to-float">15- Byte array to float</h3>
 <ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/15.png" /></li>
+<li>Convert byte array to float.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/15.png" /></li>
 </ul>
-<h3 id="16-set-object-field">16- Set object field</h3>
+<h3 id="16-fvector-to-byte-array">16- FVector to byte array</h3>
 <ul>
-<li>Set a json object field.</li>
-<li>Search by <code>CreateJsonObject</code> from <code>InternetProtocolSubsystem</code> node to assign to object field.</li>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/16.png" /></li>
+<li>Convert fvector to byte array.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/16.png" /></li>
 </ul>
-<h3 id="17-set-object-array-field">17- Set object array field</h3>
+<h3 id="17-byte-array-to-fvectort">17- Byte array to fvectort</h3>
 <ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/17.png" /></li>
+<li>Convert byte array to fvector.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/17.png" /></li>
 </ul>
-<h3 id="18-remove-field">18- Remove field</h3>
+<h3 id="18-frotator-to-byte-array">18- FRotator to byte array</h3>
 <ul>
-<li>Remove field by name.</li>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/18.png" /></li>
+<li>Convert frotator to byte array.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/18.png" /></li>
 </ul>
-<h3 id="19-has-field">19- Has field</h3>
+<h3 id="19-byte-array-to-frotator">19- Byte array to frotator</h3>
 <ul>
-<li>Check if json has field.</li>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/19.png" /></li>
+<li>Convert byte array to frotator.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/19.png" /></li>
 </ul>
-<h3 id="20-try-get-bool-field">20- Try get bool field</h3>
+<h3 id="20-ftransform-to-byte-array">20- FTransform to byte array</h3>
 <ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/20.png" /></li>
+<li>Convert ftransform to byte array.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/20.png" /></li>
 </ul>
-<h3 id="21-try-get-bool-array-field">21- Try get bool array field</h3>
+<h3 id="21-byte-array-to-ftransform">21- Byte array to ftransform</h3>
 <ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/21.png" /></li>
-</ul>
-<h3 id="22-try-get-byte-field">22- Try get byte field</h3>
-<ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/22.png" /></li>
-</ul>
-<h3 id="23-try-get-byte-array-field">23- Try get byte array field</h3>
-<ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/23.png" /></li>
-</ul>
-<h3 id="24-try-get-integer-field">24- Try get integer field</h3>
-<ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/24.png" /></li>
-</ul>
-<h3 id="25-try-get-integer-array-field">25- Try get integer array field</h3>
-<ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/25.png" /></li>
-</ul>
-<h3 id="26-try-get-float-field">26- Try get float field</h3>
-<ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/26.png" /></li>
-</ul>
-<h3 id="27-try-get-float-array-field">27- Try get float array field</h3>
-<ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/27.png" /></li>
-</ul>
-<h3 id="28-try-get-object-field">28- Try get object field</h3>
-<ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/28.png" /></li>
-</ul>
-<h3 id="29-try-get-object-array-field">29- Try get object array field</h3>
-<ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/29.png" /></li>
-</ul>
-<h3 id="30-try-get-string-field">30- Try get string field</h3>
-<ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/30.png" /></li>
-</ul>
-<h3 id="31-try-get-string-array-field">31- Try get string array field</h3>
-<ul>
-<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/json/31.png" /></li>
+<li>Convert byte array to ftransform.</li>
+<li><img alt="Image title" src="https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/21.png" /></li>
 </ul>
 
 
