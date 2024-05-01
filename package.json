@@ -5,17 +5,15 @@
   "license": "MIT",
   "type": "module",
   "devDependencies": {
+    "@types/node": "^20.12.8",
     "@types/ws": "^8.5.10",
     "tsx": "^4.7.1",
     "typescript": "^5.4.3"
   },
   "scripts": {
-    "dev-chat": "tsx watch src/ws_chat.ts",
-    "start-chat": "tsx src/ws_chat.ts",
-    "build-chat": "tsc src/ws_chat.ts",
-    "dev-topdown": "tsx watch src/ws_topdown.ts",
-    "start-topdown": "tsx src/ws_topdown.ts",
-    "build-topdown": "tsc src/ws_topdown.ts"
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "build": "tsc src/index.ts"
   },
   "dependencies": {
     "ws": "^8.16.0"
