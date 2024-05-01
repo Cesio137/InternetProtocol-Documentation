@@ -24,7 +24,7 @@ wss.on('connection', function connection(ws:WebSocket) {
           const disconnected_client: client_info = {event:'on_client_error', id:clients.get(ws)!};
           clients.delete(ws);
           num_clients = clients.size;
-          clients.forEach( (obj, websocket) => {
+          clients.forEach( (id, websocket) => {
             websocket.send(JSON.stringify(disconnected_client));
           });
           console.error;
@@ -39,12 +39,16 @@ wss.on('connection', function connection(ws:WebSocket) {
   });
 
   ws.on('close', function close() {
-    const disconnected_client: client_info = {event:'on_client_disconnected', id:clients.get(ws)!};
-    clients.delete(ws);
-    num_clients = clients.size;
-    clients.forEach( (obj, websocket) => {
-      websocket.send(JSON.stringify(disconnected_client));
-    });
+        if (clients.has(ws))
+        {
+          const disconnected_client: client_info = {event:'on_client_disconnected', id:clients.get(ws)!};
+          clients.delete(ws);
+          num_clients = clients.size;
+          clients.forEach( (id, websocket) => {
+            websocket.send(JSON.stringify(disconnected_client));
+          });
+        }
+        console.log("closed!");
   });
 
 });
@@ -80,9 +84,9 @@ function ParseClientID(ws:WebSocket)
 function ParsePlayersConnected(ws:WebSocket)
 {
     const playerinfo:number[] = [];
-    clients.forEach( (val, websocket) => {
+    clients.forEach( (id, websocket) => {
       if (ws !== websocket)
-        playerinfo.push(val);
+        playerinfo.push(id);
     });
     const clients_info: players_info = { event: 'clients_connected', clients_id: playerinfo };
     const JsonRequest = JSON.stringify(clients_info);
