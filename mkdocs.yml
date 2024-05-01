@@ -4,6 +4,7 @@ nav:
   - Websocket: websocket.md
   - HTTP: http.md
   - Json: json.md
+  - Raw: raw.md
 theme:
   name: material
   features:
