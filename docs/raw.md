@@ -110,3 +110,8 @@
 
 * Convert byte array to ftransform.
 * ![Image title](https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/21.png)
+
+### 22- Get type name
+
+* Return type of `void*` as `bool, int, string and etc`.
+* ![Image title](https://raw.githubusercontent.com/Cesio137/InternetProtocol-Documentation/gh-pages/media/img/raw/22.png)

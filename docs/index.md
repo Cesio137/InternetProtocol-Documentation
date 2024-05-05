@@ -29,3 +29,9 @@ UE4          | UE5
 [Get UE5 Plugin](){:target="_blank" .md-button .md-button--primary }
 
 OBS: If the plugin has good relevance, I will make the version for Unreal Engine 4.27 available for free.
+
+## Changelogs
+
+### 1.0
+
+* Initial release.

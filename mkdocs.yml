@@ -1,6 +1,7 @@
 site_name: Internet Protocol
 nav:
   - Home: index.md
+  - Example: example.md
   - Websocket: websocket.md
   - HTTP: http.md
   - Json: json.md
