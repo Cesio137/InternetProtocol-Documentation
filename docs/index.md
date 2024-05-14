@@ -25,8 +25,8 @@ UE4          | UE5
 
 ## Links
 
-[Video Showcase](https://youtu.be/mbPmh8IenvM){:target="_blank" .md-button .md-button--primary } 
-[Get UE5 Plugin](){:target="_blank" .md-button .md-button--primary }
+[Video Showcase](https://www.youtube.com/watch?v=n0eVonOsPXw){:target="_blank" .md-button .md-button--primary } 
+[Get UE5 Plugin](https://www.unrealengine.com/marketplace/en-US/product/6e1c9d50c0624012808c0b6c25fa3a5a){:target="_blank" .md-button .md-button--primary }
 
 OBS: If the plugin has good relevance, I will make the version for Unreal Engine 4.27 available for free.
 
