@@ -1,0 +1,313 @@
+---
+title: UDP Client
+description: How to use UDP client class
+---
+
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+## References
+ 
+<Tabs items={['Global', 'Include']}>
+    <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
+    <Tab value="Include">#include "IP/UDP/UDPClient.hpp"</Tab>
+</Tabs>
+
+## Syntax
+
+```cpp
+namespace InternetProtocol
+class UDPClient
+```
+
+## Example code
+
+```cpp
+#include <iostream>
+#include <IP/UDP/UDPClient.h>
+
+using namespace InternetProtocol;
+
+int main()
+{
+    UDPClient client;
+    client.setHost("localhost", "3000");
+    client.onMessageReceived = [&](const size_t size, const FUdpMessage message) {
+        std::cout << message.toString() << std::endl;
+    };
+    client.connect();
+    
+    std::string input;
+    std::cout << "Digite algo: ";
+    while (std::getline(std::cin, input)) {
+        if (input == "quit")
+        {
+            break;
+        }
+        client.send(input);
+    }
+    
+    return 0;
+}
+```
+
+## Variables
+
+### FUdpMessage
+
+```cpp
+namespace InternetProtocol
+
+struct FUdpMessage {
+    FUdpMessage() { rawData.resize(1024); }
+    std::vector<std::byte> rawData;
+    size_t size = 0;
+
+    std::string toString() const;
+};
+```
+
+## Functions
+
+### Set Host
+
+* Set the `adress` and `port` of host
+
+```cpp
+void setHost(const std::string &ip, const std::string &port)
+```
+
+### Get Local Adress
+
+* Get local IP of client
+
+```cpp
+std::string getLocalAdress() const
+```
+
+### Get Local Port
+
+* Get local port of client
+
+```cpp
+std::string getLocalPort() const
+```
+
+### Get Remote Adress
+
+* Get host IP
+
+```cpp
+std::string getRemoteAdress() const
+```
+
+### Get Remote Port
+
+* Get host port
+
+```cpp
+std::string getRemotePort() const
+```
+
+### Set Timeout
+
+* Set timeout in seconds
+* OBS: Value must be between 0 and 255
+
+```cpp
+void setTimeout(uint8_t value = 3)
+```
+
+### Get Timeout
+
+* Get timeout in seconds
+
+```cpp
+uint8_t getTimeout() const
+```
+
+### Set Max Attemp
+
+* Set max times to try reconnect
+* OBS: Value must be between 0 and 255
+
+```cpp
+void setMaxAttemp(uint8_t value = 3)
+```
+
+### Get Max Attemp
+
+* Get max times to try reconnect
+
+```cpp
+ uint8_t getMaxAttemp() const
+```
+
+### Set Max Send Buffer Size
+
+* Set max size in bytes of send buffer
+
+```cpp
+void setMaxSendBufferSize(int value = 1024)
+```
+
+### Get Max Send Buffer Size
+
+* Get max size in bytes of send buffer
+
+```cpp
+int getMaxSendBufferSize() const
+```
+
+### Set Max Receive Buffer Size
+
+* Set max size in bytes of receive buffer
+
+```cpp
+void setMaxSendBufferSize(int value = 1024)
+```
+
+### Get Max Receive Buffer Size
+
+* Get max size in bytes of receive buffer
+
+```cpp
+int getMaxSendBufferSize() const
+```
+
+### Set Split Package
+
+* If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
+
+```cpp
+void setSplitPackage(bool value = true)
+```
+
+### Get Split Package
+
+* Get if Split Package is enabled
+
+```cpp
+bool getSplitPackage() const
+```
+
+### Send
+
+* Send a string message
+* Return true if It's able to send
+* Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
+
+```cpp
+bool send(const std::string &message)
+```
+
+### Send Raw
+
+* Send a buffer message
+* Return true if It's able to send
+
+```cpp
+bool sendRaw(const std::vector<std::byte> &buffer)
+```
+
+### Async Read
+
+* In case an error occurs during the asynchronous message reception, you can use the function below to reactivate the async reading
+* Return true if It's able to read
+
+```cpp
+bool async_read()
+```
+
+### Connect
+
+* Connect to the host
+* Return true if It's able to connect
+
+```cpp
+bool connect()
+```
+
+### Is Connected
+
+* Check if client is connected to the host
+
+```cpp
+bool isConnected() const
+```
+
+### Close
+
+* Close connection
+
+```cpp
+void close()
+```
+### Get Error Code
+
+* Get latest error code
+
+```cpp
+int getErrorCode() const
+```
+
+### Get Error Message
+
+* Get latest error message
+
+```cpp
+int getErrorMessage() const
+```
+
+## Events
+
+### On Connected
+
+* Event called when a connection is estabilished
+
+```cpp
+std::function<void()> onConnected;
+```
+
+### On Close
+
+* Event called when a connection is closed
+
+```cpp
+std::function<void()> onClose;
+```
+
+### On Connection Retry
+
+* Event called when every time It's try recconnect
+* Int param is the number of attemps
+
+```cpp
+std::function<void(int)> onConnectionRetry;
+```
+
+### On Message Sent
+
+* Event called when a message is sent
+* Size_t param is the size of message
+
+```cpp
+std::function<void(const size_t)> onMessageSent;
+```
+
+### On Message Received
+
+* Event called when a message is received
+* Size_t param is the size of message and FUdpMessage is the message struct
+
+```cpp
+std::function<void(const size_t, const FUdpMessage)> onMessageReceived;
+```
+
+### On Error
+
+* Event called if any error occur during async process
+* int param is the error code and const std::string is the error message
+
+```cpp
+std::function<void(const int, const std::string &)> onError;
+```
