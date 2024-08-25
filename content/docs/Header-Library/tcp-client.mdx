@@ -1,6 +1,6 @@
 ---
-title: UDP Client
-description: How to use UDP client class
+title: TCP Client
+description: How to use TCP client class
 ---
 
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
@@ -9,29 +9,27 @@ import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
  
 <Tabs items={['Global', 'Include']}>
     <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
-    <Tab value="Include">#include "IP/UDP/UDPClient.hpp"</Tab>
+    <Tab value="Include">#include "IP/TCP/TCPClient.hpp"</Tab>
 </Tabs>
 
 ## Syntax
 
 ```cpp
 namespace InternetProtocol
-class UDPClient
+class TCPClient
 ```
-
-## Example code
 
 ```cpp
 #include <iostream>
-#include <IP/UDP/UDPClient.h>
+#include <IP/TCP/TCPClient.h>
 
 using namespace InternetProtocol;
 
 int main()
 {
-    UDPClient client;
+    TCPClient client;
     client.setHost("localhost", "3000");
-    client.onMessageReceived = [&](const size_t size, const FUdpMessage message) {
+    client.onMessageReceived = [&](const size_t size, const FTcpMessage message) {
         std::cout << message.toString() << std::endl;
     };
     client.connect();
@@ -52,16 +50,14 @@ int main()
 
 ## Variables
 
-### FUdpMessage
+### FTcpMessage
 
 ```cpp
 namespace InternetProtocol
 
-struct FUdpMessage {
-    FUdpMessage() { rawData.resize(1024); }
-    std::vector<std::byte> rawData;
-    size_t size = 0;
-
+struct FTcpMessage {
+    std::vector<std::byte> raw_data;
+    uint32_t size = 0;
     std::string toString() const;
 };
 ```
@@ -153,22 +149,6 @@ void setMaxSendBufferSize(int value = 1024)
 ### Get Max Send Buffer Size
 
 * Get max size in bytes of send buffer
-
-```cpp
-int getMaxSendBufferSize() const
-```
-
-### Set Max Receive Buffer Size
-
-* Set max size in bytes of receive buffer
-
-```cpp
-void setMaxSendBufferSize(int value = 1024)
-```
-
-### Get Max Receive Buffer Size
-
-* Get max size in bytes of receive buffer
 
 ```cpp
 int getMaxSendBufferSize() const
@@ -297,10 +277,10 @@ std::function<void(const size_t)> onMessageSent;
 ### On Message Received
 
 * Event triggered when a message is received
-* Size_t param is the size of message and FUdpMessage is the message struct
+* Size_t param is the size of message and FTcpMessage is the message struct
 
 ```cpp
-std::function<void(const size_t, const FUdpMessage)> onMessageReceived;
+std::function<void(const size_t, const FTcpMessage)> onMessageReceived;
 ```
 
 ### On Error
