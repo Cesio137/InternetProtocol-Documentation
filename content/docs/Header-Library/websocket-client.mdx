@@ -1,0 +1,468 @@
+---
+title: Websocket Client
+description: How to use TCP client class
+---
+
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+## References
+ 
+<Tabs items={['Global', 'Include']}>
+    <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
+    <Tab value="Include">#include "IP/Websocket/WebsocketClient.hpp"</Tab>
+</Tabs>
+
+## Syntax
+
+```cpp
+namespace InternetProtocol
+class TCPClient
+```
+
+```cpp
+#include <iostream>
+#include <IP/TCP/TCPClient.h>
+
+using namespace InternetProtocol;
+
+int main()
+{
+    TCPClient client;
+    client.setHost("localhost", "3000");
+    client.onMessageReceived = [&](const size_t size, const FTcpMessage message) {
+        std::cout << message.toString() << std::endl;
+    };
+    client.connect();
+    
+    std::string input;
+    std::cout << "Digite algo: ";
+    while (std::getline(std::cin, input)) {
+        if (input == "quit")
+        {
+            break;
+        }
+        client.send(input);
+    }
+    
+    return 0;
+}
+```
+
+## Variables
+
+### FTcpMessage
+
+```cpp
+namespace InternetProtocol
+
+struct FTcpMessage {
+    std::vector<std::byte> raw_data;
+    uint32_t size = 0;
+    std::string toString() const;
+};
+```
+
+## Functions
+
+### Set Host
+
+* Set the `adress` and `port` of host
+
+```cpp
+void setHost(const std::string &ip, const std::string &port)
+```
+
+### Get Local Adress
+
+* Get local IP of client
+
+```cpp
+std::string getLocalAdress() const
+```
+
+### Get Local Port
+
+* Get local port of client
+
+```cpp
+std::string getLocalPort() const
+```
+
+### Get Remote Adress
+
+* Get host IP
+
+```cpp
+std::string getRemoteAdress() const
+```
+
+### Get Remote Port
+
+* Get host port
+
+```cpp
+std::string getRemotePort() const
+```
+
+### Set Timeout
+
+* Set timeout in seconds
+* OBS: Value must be between 0 and 255
+
+```cpp
+void setTimeout(uint8_t value = 3)
+```
+
+### Get Timeout
+
+* Get timeout in seconds
+
+```cpp
+uint8_t getTimeout() const
+```
+
+### Set Max Attemp
+
+* Set max times to try reconnect
+* OBS: Value must be between 0 and 255
+
+```cpp
+void setMaxAttemp(uint8_t value = 3)
+```
+
+### Get Max Attemp
+
+* Get max times to try reconnect
+
+```cpp
+ uint8_t getMaxAttemp() const
+```
+
+### Set Max Send Buffer Size
+
+* Set max size in bytes of send buffer
+
+```cpp
+void setMaxSendBufferSize(int value = 1024)
+```
+
+### Get Max Send Buffer Size
+
+* Get max size in bytes of send buffer
+
+```cpp
+int getMaxSendBufferSize() const
+```
+
+### Set Split Package
+
+* If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
+
+```cpp
+void setSplitPackage(bool value = true)
+```
+
+### Get Split Package
+
+* Get if Split Package is enabled
+
+```cpp
+bool getSplitPackage() const
+```
+
+### Send
+
+* Send a string message
+* Return true if It's able to send
+* Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
+
+```cpp
+bool send(const std::string &message)
+```
+
+### Send Raw
+
+* Send a buffer message
+* Return true if It's able to send
+
+```cpp
+bool sendRaw(const std::vector<std::byte> &buffer)
+```
+
+### Send Ping
+
+* Send a ping to websocket server
+* Return true if It's able to send
+
+```cpp
+bool send_ping()
+```
+
+### Async Read
+
+* In case an error occurs during the asynchronous message reception, you can use the function below to reactivate the async reading
+* Return true if It's able to read
+
+```cpp
+bool async_read()
+```
+
+### Connect
+
+* Connect to the host
+* Return true if It's able to connect
+
+```cpp
+bool connect()
+```
+
+### Is Connected
+
+* Check if client is connected to the host
+
+```cpp
+bool isConnected() const
+```
+
+### Close
+
+* Close connection
+
+```cpp
+void close()
+```
+### Get Error Code
+
+* Get latest error code
+
+```cpp
+int getErrorCode() const
+```
+
+### Get Error Message
+
+* Get latest error message
+
+```cpp
+int getErrorMessage() const
+```
+
+## Handshake Functions
+
+[Handshake](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#client_handshake_request) is a http request to contact the server and requesting a WebSocket connection
+
+### Set Path
+
+* Set request version
+
+```cpp
+void setPath(const std::string &path = "/")
+```
+
+### Get Path
+
+* Get request version
+
+```cpp
+std::string getPath() const
+```
+
+### Set Version
+
+* Set request version
+
+```cpp
+void setVersion(const std::string &version = "2.0")
+```
+
+### Get Version
+
+* Get request version
+
+```cpp
+std::string getVersion() const
+```
+
+### Set Key
+
+* Set request key
+
+```cpp
+void setKey(const std::string &value = "dGhlIHNhbXBsZSBub25jZQ==")
+```
+
+### Get Key
+
+* Get request key
+
+```cpp
+std::string getKey() const
+```
+
+### Set Origin
+
+* Set request origin
+
+```cpp
+void setOrigin(const std::string &value = "client")
+```
+
+### Get Origin
+
+* Get request origin
+
+```cpp
+std::string getOrigin() const
+```
+
+### Set Sec Protocol
+
+* Set request security protocol
+
+```cpp
+void setSecProtocol(const std::string &value = "chat, superchat")
+```
+
+### Get Sec Protocol
+
+* Get request security protocol
+
+```cpp
+std::string getSecProtocol() const
+```
+
+### Set Sec Version
+
+* Set request security version
+
+```cpp
+void setSecVersion(const std::string &value = "13")
+```
+
+### Get Sec Version
+
+* Get request security version
+
+```cpp
+std::string getSecVersion() const
+```
+
+## Dataframe Functions
+
+### Set RSV1
+
+```cpp
+void setRSV1(bool value = false)
+```
+
+### Use RSV1
+
+```cpp
+bool useRSV1() const
+```
+
+### Set RSV2
+
+```cpp
+void setRSV2(bool value = false)
+```
+
+### Use RSV2
+
+```cpp
+bool useRSV2() const
+```
+
+### Set RSV3
+
+```cpp
+void setRSV3(bool value = false)
+```
+
+### Use RSV3
+
+```cpp
+bool useRSV3() const
+```
+
+### Set Mask
+
+```cpp
+void setMask(bool value = true)
+```
+
+### Use Mask
+
+```cpp
+bool useMask() const
+```
+
+## Events
+
+### On Connected
+
+* Event triggered when a connection is estabilished
+
+```cpp
+std::function<void()> onConnected;
+```
+
+### On Close
+
+* Event triggered when a connection is closed
+
+```cpp
+std::function<void()> onClose;
+```
+
+### On Close Notify
+
+* Event triggered when a server send a close notification
+
+```cpp
+std::function<void()> onCloseNotify
+```
+
+### On Connection Retry
+
+* Event triggered when every time It's try recconnect
+* Int param is the number of attemps
+
+```cpp
+std::function<void(int)> onConnectionRetry;
+```
+
+### On Message Sent
+
+* Event triggered when a message is sent
+* Size_t param is the size of message
+
+```cpp
+std::function<void(const size_t)> onMessageSent;
+```
+
+### On Message Received
+
+* Event triggered when a message is received
+* Size_t param is the size of message and FWsMessage is the message struct
+
+```cpp
+std::function<void(const size_t, const FWsMessage)> onMessageReceived;
+```
+
+### On Pong Received
+
+* Event triggered when a pong message is received
+
+```cpp
+std::function<void()> onPongReceived
+```
+
+### On Error
+
+* Event triggered if any error occur during async process
+* int param is the error code and const std::string is the error message
+
+```cpp
+std::function<void(const int, const std::string &)> onError;
+```
