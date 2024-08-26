@@ -16,20 +16,20 @@ import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 ```cpp
 namespace InternetProtocol
-class TCPClient
+class WebsocketClient
 ```
 
 ```cpp
 #include <iostream>
-#include <IP/TCP/TCPClient.h>
+#include <IP/Websocket/WebsocketClient.hpp>
 
 using namespace InternetProtocol;
 
 int main()
 {
-    TCPClient client;
+    WebsocketClient client;
     client.setHost("localhost", "3000");
-    client.onMessageReceived = [&](const size_t size, const FTcpMessage message) {
+    client.onMessageReceived = [&](const size_t size, const FWsMessage message) {
         std::cout << message.toString() << std::endl;
     };
     client.connect();
@@ -50,14 +50,48 @@ int main()
 
 ## Variables
 
-### FTcpMessage
+### EOpcode
 
 ```cpp
 namespace InternetProtocol
 
-struct FTcpMessage {
-    std::vector<std::byte> raw_data;
-    uint32_t size = 0;
+enum class EOpcode : uint8_t {
+        FRAME_CON,
+        TEXT_FRAME,
+        BINARY_FRAME,
+        NON_CONTROL_FRAMES,
+        CONNECTION_CLOSE,
+        PING,
+        PONG,
+        FURTHER_FRAMES,
+    };
+```
+
+### FDataFrame
+
+```cpp
+namespace InternetProtocol
+
+struct FDataFrame {
+    bool fin;
+    bool rsv1;
+    bool rsv2;
+    bool rsv3;
+    bool mask;
+    EOpcode opcode;
+    size_t length;
+    std::array<std::byte, 4> masking_key;
+};
+```
+
+### FWsMessage
+
+```cpp
+namespace InternetProtocol
+
+struct FWsMessage {
+    FDataFrame data_frame;
+    std::vector<std::byte> payload;
     std::string toString() const;
 };
 ```
