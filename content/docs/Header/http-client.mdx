@@ -56,7 +56,19 @@ int main()
 ```cpp
 namespace InternetProtocol
 
-enum class EVerb : uint8_t
+enum class EVerb : uint8_t {
+    GET,
+    POST,
+    PUT,
+    PATCH, 
+    DEL,
+    COPY,
+    HEAD,
+    OPTIONS,
+    LOCK,
+    UNLOCK,
+    PROPFIND
+}
 ```
 
 ### FRequest
