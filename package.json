@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "framer-motion": "^11.3.30",
     "fumadocs-core": "13.3.2",
     "fumadocs-mdx": "9.0.2",
     "fumadocs-ui": "13.3.2",
