@@ -460,16 +460,16 @@ std::function<void()> onCloseNotify
 ### On Connection Retry
 
 * Event triggered when every time It's try recconnect
-* Int param is the number of attemps
+* `int`: number of attemps
 
 ```cpp
-std::function<void(int)> onConnectionRetry;
+std::function<void(const int)> onConnectionRetry;
 ```
 
 ### On Message Sent
 
 * Event triggered when a message is sent
-* Size_t param is the size of message
+* `size_t`: size of message
 
 ```cpp
 std::function<void(const size_t)> onMessageSent;
@@ -478,7 +478,8 @@ std::function<void(const size_t)> onMessageSent;
 ### On Message Received
 
 * Event triggered when a message is received
-* Size_t param is the size of message and FWsMessage is the message struct
+* `size_t`: size of message
+* `FWsMessage`: message struct
 
 ```cpp
 std::function<void(const size_t, const FWsMessage)> onMessageReceived;
@@ -495,7 +496,8 @@ std::function<void()> onPongReceived
 ### On Error
 
 * Event triggered if any error occur during async process
-* int param is the error code and const std::string is the error message
+* `int`: error code
+* `std::string`: error message
 
 ```cpp
 std::function<void(const int, const std::string &)> onError;

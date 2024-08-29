@@ -437,7 +437,7 @@ int getErrorMessage() const
 
 ### On Async Payload Finished
 
-* Event called when payload process has been finished
+* Event triggered when payload process has been finished
 
 ```cpp
 std::function<void()> onAsyncPayloadFinished;
@@ -445,7 +445,8 @@ std::function<void()> onAsyncPayloadFinished;
 
 ### On Request Complete
 
-* Event called when request is done
+* Event triggered when request is done
+* `FResponse`: Response struct
 
 ```cpp
 std::function<void(const FResponse)> onRequestComplete;
@@ -453,7 +454,7 @@ std::function<void(const FResponse)> onRequestComplete;
 
 ### On Request Canceled
 
-* Event called when request is canceled
+* Event triggered when request is canceled
 
 ```cpp
 std::function<void()> onRequestCanceled;
@@ -462,35 +463,37 @@ std::function<void()> onRequestCanceled;
 ### On Request Progress
 
 * Event triggered while the request is in progress
-* First `int` param get the bytes sent and second `int` get the bytes received from request
+* `size_t`: bytes sent 
+* `size_t`: bytes received
 
 ```cpp
-std::function<void(int, int)> onRequestProgress;
+std::function<void(const size_t, const size_t)> onRequestProgress;
 ```
 
 ### On Request Will Retry
 
 * Event triggered while retry to connect
-* `int` param get the number of attemps
+* `int`: number of attemps
 
 ```cpp
-std::function<void(int)> onRequestWillRetry;
+std::function<void(const int)> onRequestWillRetry;
 ```
 
 ### On Request Fail
 
 * Event triggered if request fail
-* `int` param is error code and `std::string` param is error message
+* `int`: error code
+* `std::string`: error message
 
 ```cpp
-std::function<void(int, const std::string &)> onRequestFail;
+std::function<void(const int, const std::string &)> onRequestFail;
 ```
 
 ### On Response Error
 
 * Event triggered if any error occur during async process of response
-* int param is the error
+* `int`: error code
 
 ```cpp
-std::function<void(int)> onResponseFail;
+std::function<void(const int)> onResponseFail;
 ```
