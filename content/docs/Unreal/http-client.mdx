@@ -1,0 +1,422 @@
+---
+title: HTTP Client
+description: How to use HTTP client class
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+
+## References
+ 
+<Tabs items={['Include']}>
+    <Tab value="Include">#include "Http/HttpClient.h"</Tab>
+</Tabs>
+
+## How to use
+
+<Steps>
+  <Step>
+    Blueprint: search by [`GetInternetProtocolSubsystem`](/docs/Unreal/subsystem#how-to-use) and call [`CreateTCPClient`](/docs/Unreal/subsystem#create-http-client) function
+  </Step>
+  <Step>
+    C++: Use the code bellow
+    ``` cpp
+    #include "Http/HttpClient.h"
+
+    UHttpClient* HttpClient = NewObject<UHttpClient>();
+    ```
+  </Step>
+</Steps>
+
+## Functions
+
+### Set Host
+
+* Set the `adress` and `port` of host
+
+```cpp
+void setHost(const std::string &url = "localhost", const std::string &port = "")
+```
+
+### Get Host
+
+* Get host IP
+
+```cpp
+std::string getHost() const
+```
+
+### Get Port
+
+* Get host port
+
+```cpp
+std::string getPort() const
+```
+
+### Set Timeout
+
+* Set timeout in seconds
+* OBS: Value must be between 0 and 255
+
+```cpp
+void setTimeout(uint8_t value = 3)
+```
+
+### Get Timeout
+
+* Get timeout in seconds
+
+```cpp
+uint8_t getTimeout() const
+```
+
+### Set Max Attemp
+
+* Set max times to try reconnect
+* OBS: Value must be between 0 and 255
+
+```cpp
+void setMaxAttemp(uint8_t value = 3)
+```
+
+### Get Max Attemp
+
+* Get max times to try reconnect
+
+```cpp
+ uint8_t getMaxAttemp() const
+```
+
+### Set Request
+
+* Set the HTTP request to be sent
+
+```cpp
+void setRequest(const FRequest &value)
+```
+
+### Get Request
+
+* Get the HTTP request to be sent
+
+```cpp
+FRequest getRequest() const
+```
+
+### Set Request Method
+
+* Set request verb
+
+```cpp
+void setRequestMethod(EVerb requestMethod = EVerb::GET)
+```
+
+### Get Request Method
+
+* Get request verb
+
+```cpp
+EVerb getRequestMethod() const
+```
+
+### Set Version
+
+* Set request version
+
+```cpp
+void setVersion(const std::string &version = "2.0")
+```
+
+### Get Version
+
+* Get request version
+
+```cpp
+std::string getVersion() const
+```
+
+### Set Path
+
+* Set request version
+
+```cpp
+void setPath(const std::string &path = "/")
+```
+
+### Get Path
+
+* Get request version
+
+```cpp
+std::string getPath() const
+```
+
+### Append Params
+
+* Append parameter to request
+
+```cpp
+void appendParams(const std::string &key, const std::string &value)
+```
+
+### Clear Params
+
+* Clear request parameters
+
+```cpp
+void clearParams()
+```
+
+### Remove Param
+
+* Remove request parameter
+
+```cpp
+void removeParam(const std::string &key)
+```
+
+### Has Param
+
+* Check if request has a certain parameter
+
+```cpp
+bool hasParam(const std::string &key) const
+```
+
+### Get Params
+
+* Get all parameters from request
+
+```cpp
+std::map<std::string, std::string> getParams() const
+```
+
+### Append Headers
+
+* Append headers to request
+
+```cpp
+void AppendHeaders(const std::string &key, const std::string &value)
+```
+
+### Clear Headers
+
+* Clear request headers
+
+```cpp
+void ClearHeaders()
+```
+
+### Remove Header
+
+* Clear request header
+
+```cpp
+void RemoveHeader(const std::string &key)
+```
+
+### Has Header
+
+* Check if request has a certain header
+
+```cpp
+bool hasHeader(const std::string &key) const
+```
+
+### Get Headers
+
+* Get all headers from request
+
+```cpp
+std::map<std::string, std::string> GetHeaders() const
+```
+
+### Set Body
+
+* Set request body
+
+```cpp
+void SetBody(const std::string &value)
+```
+
+### Clear Body
+
+* Clear request body
+
+```cpp
+void ClearBody()
+```
+
+### Get Body
+
+* Get request body
+
+```cpp
+std::string GetBody() const
+```
+
+### Get Request Data
+
+* Get request data
+
+```cpp
+FRequest getRequestData() const
+```
+
+### Prepare Payload
+
+* Prepare request data
+* Must be called before call `processRequest` function
+
+```cpp
+void preparePayload()
+```
+
+### Async Prepare Payload
+
+* Prepare request data asynchronously
+* Must be called before call `processRequest` function
+
+```cpp
+void async_preparePayload()
+```
+
+### Get Payload Data
+
+* Get processed payload data 
+
+```cpp
+std::string getPayloadData() const
+```
+
+### Get Response Data
+
+* Get latest response data 
+
+```cpp
+FResponse getResponseData() const
+```
+
+### Process Request
+
+* Send request
+* Return true if request can be sent
+
+```cpp
+bool processRequest()
+```
+
+### Cancel Request
+
+* Cancel request
+
+```cpp
+void cancelRequest()
+```
+
+### Clear Request
+
+* Clear request data
+
+```cpp
+void clearRequest()
+```
+
+### Clear Payload
+
+* Clear payload  data
+
+```cpp
+void clearPayload()
+```
+
+### Clear Response
+
+* Clear response buffer
+
+```cpp
+void clearResponse()
+```
+
+### Get Error Code
+
+* Get latest error code
+
+```cpp
+int getErrorCode() const
+```
+
+### Get Error Message
+
+* Get latest error message
+
+```cpp
+int getErrorMessage() const
+```
+
+## Events
+
+### On Async Payload Finished
+
+* Event triggered when payload process has been finished
+
+```cpp
+std::function<void()> onAsyncPayloadFinished;
+```
+
+### On Request Complete
+
+* Event triggered when request is done
+* `FResponse`: Response struct
+
+```cpp
+std::function<void(const FResponse)> onRequestComplete;
+```
+
+### On Request Canceled
+
+* Event triggered when request is canceled
+
+```cpp
+std::function<void()> onRequestCanceled;
+```
+
+### On Request Progress
+
+* Event triggered while the request is in progress
+* `size_t`: bytes sent 
+* `size_t`: bytes received
+
+```cpp
+std::function<void(const size_t, const size_t)> onRequestProgress;
+```
+
+### On Request Will Retry
+
+* Event triggered while retry to connect
+* `int`: number of attemps
+
+```cpp
+std::function<void(const int)> onRequestWillRetry;
+```
+
+### On Request Fail
+
+* Event triggered if request fail
+* `int`: error code
+* `std::string`: error message
+
+```cpp
+std::function<void(const int, const std::string &)> onRequestFail;
+```
+
+### On Response Error
+
+* Event triggered if any error occur during async process of response
+* `int`: error code
+
+```cpp
+std::function<void(const int)> onResponseFail;
+```

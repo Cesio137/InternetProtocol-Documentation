@@ -5,6 +5,7 @@
         "examples",
         "subsystem",
         "udp-client",
-        "tcp-client"
+        "tcp-client",
+        "http-client"
     ]
 }
