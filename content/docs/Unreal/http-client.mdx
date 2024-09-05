@@ -34,389 +34,239 @@ import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 ### Set Host
 
 * Set the `adress` and `port` of host
-
-```cpp
-void setHost(const std::string &url = "localhost", const std::string &port = "")
-```
+<ImageZoom src="/img/http/sethost.png" width={172} height={164} />
 
 ### Get Host
 
 * Get host IP
-
-```cpp
-std::string getHost() const
-```
+<ImageZoom src="/img/http/gethost.png" width={227} height={76} />
 
 ### Get Port
 
 * Get host port
-
-```cpp
-std::string getPort() const
-```
+<ImageZoom src="/img/http/getport.png" width={227} height={76} />
 
 ### Set Timeout
 
 * Set timeout in seconds
-* OBS: Value must be between 0 and 255
-
-```cpp
-void setTimeout(uint8_t value = 3)
-```
+<ImageZoom src="/img/http/settimeout.png" width={172} height={134} />
 
 ### Get Timeout
 
 * Get timeout in seconds
-
-```cpp
-uint8_t getTimeout() const
-```
+<ImageZoom src="/img/http/gettimeout.png" width={227} height={76} />
 
 ### Set Max Attemp
 
 * Set max times to try reconnect
-* OBS: Value must be between 0 and 255
-
-```cpp
-void setMaxAttemp(uint8_t value = 3)
-```
+<ImageZoom src="/img/http/setmaxattemp.png" width={172} height={134} />
 
 ### Get Max Attemp
 
 * Get max times to try reconnect
-
-```cpp
- uint8_t getMaxAttemp() const
-```
+<ImageZoom src="/img/http/getmaxattemp.png" width={227} height={76} />
 
 ### Set Request
 
 * Set the HTTP request to be sent
-
-```cpp
-void setRequest(const FRequest &value)
-```
+<ImageZoom src="/img/http/setrequest.png" width={172} height={130} />
 
 ### Get Request
 
 * Get the HTTP request to be sent
-
-```cpp
-FRequest getRequest() const
-```
+<ImageZoom src="/img/http/getrequest.png" width={227} height={76} />
 
 ### Set Request Method
 
 * Set request verb
-
-```cpp
-void setRequestMethod(EVerb requestMethod = EVerb::GET)
-```
+<ImageZoom src="/img/http/setrequestmethod.png" width={262} height={153} />
 
 ### Get Request Method
 
 * Get request verb
-
-```cpp
-EVerb getRequestMethod() const
-```
+<ImageZoom src="/img/http/getrequestmethod.png" width={227} height={76} />
 
 ### Set Version
 
 * Set request version
-
-```cpp
-void setVersion(const std::string &version = "2.0")
-```
+<ImageZoom src="/img/http/setversion.png" width={172} height={134} />
 
 ### Get Version
 
 * Get request version
-
-```cpp
-std::string getVersion() const
-```
+<ImageZoom src="/img/http/getversion.png" width={227} height={76} />
 
 ### Set Path
 
 * Set request version
-
-```cpp
-void setPath(const std::string &path = "/")
-```
+<ImageZoom src="/img/http/setpath.png" width={171} height={133} />
 
 ### Get Path
 
 * Get request version
-
-```cpp
-std::string getPath() const
-```
+<ImageZoom src="/img/http/getpath.png" width={227} height={76} />
 
 ### Append Params
 
 * Append parameter to request
-
-```cpp
-void appendParams(const std::string &key, const std::string &value)
-```
+<ImageZoom src="/img/http/appendparams.png" width={172} height={164} />
 
 ### Clear Params
 
 * Clear request parameters
-
-```cpp
-void clearParams()
-```
+<ImageZoom src="/img/http/clearparams.png" width={172} height={104} />
 
 ### Remove Param
 
 * Remove request parameter
-
-```cpp
-void removeParam(const std::string &key)
-```
+<ImageZoom src="/img/http/removeparam.png" width={172} height={134} />
 
 ### Has Param
 
 * Check if request has a certain parameter
-
-```cpp
-bool hasParam(const std::string &key) const
-```
+<ImageZoom src="/img/http/hasparam.png" width={227} height={106} />
 
 ### Get Params
 
 * Get all parameters from request
-
-```cpp
-std::map<std::string, std::string> getParams() const
-```
+<ImageZoom src="/img/http/getparams.png" width={228} height={76} />
 
 ### Append Headers
 
 * Append headers to request
-
-```cpp
-void AppendHeaders(const std::string &key, const std::string &value)
-```
+<ImageZoom src="/img/http/appendheaders.png" width={169} height={162} />
 
 ### Clear Headers
 
 * Clear request headers
-
-```cpp
-void ClearHeaders()
-```
+<ImageZoom src="/img/http/clearheaders.png" width={172} height={104} />
 
 ### Remove Header
 
 * Clear request header
-
-```cpp
-void RemoveHeader(const std::string &key)
-```
+<ImageZoom src="/img/http/removeheader.png" width={172} height={134} />
 
 ### Has Header
 
 * Check if request has a certain header
-
-```cpp
-bool hasHeader(const std::string &key) const
-```
+<ImageZoom src="/img/http/hasparam.png" width={227} height={106} />
 
 ### Get Headers
 
 * Get all headers from request
-
-```cpp
-std::map<std::string, std::string> GetHeaders() const
-```
+<ImageZoom src="/img/http/getheaders.png" width={228} height={76} />
 
 ### Set Body
 
 * Set request body
-
-```cpp
-void SetBody(const std::string &value)
-```
+<ImageZoom src="/img/http/setbody.png" width={172} height={134} />
 
 ### Clear Body
 
 * Clear request body
-
-```cpp
-void ClearBody()
-```
+<ImageZoom src="/img/http/clearbody.png" width={172} height={104} />
 
 ### Get Body
 
 * Get request body
-
-```cpp
-std::string GetBody() const
-```
+<ImageZoom src="/img/http/getbody.png" width={227} height={76} />
 
 ### Get Request Data
 
 * Get request data
-
-```cpp
-FRequest getRequestData() const
-```
+<ImageZoom src="/img/http/getrequestdata.png" width={227} height={76} />
 
 ### Prepare Payload
 
 * Prepare request data
 * Must be called before call `processRequest` function
-
-```cpp
-void preparePayload()
-```
+<ImageZoom src="/img/http/preparepayload.png" width={172} height={104} />
 
 ### Async Prepare Payload
 
 * Prepare request data asynchronously
 * Must be called before call `processRequest` function
-
-```cpp
-void async_preparePayload()
-```
+<ImageZoom src="/img/http/asyncpreparepayload.png" width={227} height={104} />
 
 ### Get Payload Data
 
 * Get processed payload data 
-
-```cpp
-std::string getPayloadData() const
-```
+<ImageZoom src="/img/http/getpayload.png" width={227} height={76} />
 
 ### Get Response Data
 
 * Get latest response data 
-
-```cpp
-FResponse getResponseData() const
-```
+<ImageZoom src="/img/http/getresponsedata.png" width={227} height={76} />
 
 ### Process Request
 
 * Send request
 * Return true if request can be sent
-
-```cpp
-bool processRequest()
-```
+<ImageZoom src="/img/http/processrequest.png" width={227} height={104} />
 
 ### Cancel Request
 
 * Cancel request
-
-```cpp
-void cancelRequest()
-```
+<ImageZoom src="/img/http/cancelrequest.png" width={172} height={104} />
 
 ### Clear Request
 
 * Clear request data
-
-```cpp
-void clearRequest()
-```
+<ImageZoom src="/img/http/clearrequest.png" width={172} height={104} />
 
 ### Clear Payload
 
 * Clear payload  data
-
-```cpp
-void clearPayload()
-```
+<ImageZoom src="/img/http/clearpayload.png" width={172} height={104} />
 
 ### Clear Response
 
 * Clear response buffer
-
-```cpp
-void clearResponse()
-```
+<ImageZoom src="/img/http/clearresponse.png" width={170} height={103} />
 
 ### Get Error Code
 
 * Get latest error code
-
-```cpp
-int getErrorCode() const
-```
+<ImageZoom src="/img/http/geterrorcode.png" width={227} height={76} />
 
 ### Get Error Message
 
 * Get latest error message
-
-```cpp
-int getErrorMessage() const
-```
+<ImageZoom src="/img/http/geterrormessage.png" width={227} height={76} />
 
 ## Events
 
 ### On Async Payload Finished
 
 * Event triggered when payload process has been finished
-
-```cpp
-std::function<void()> onAsyncPayloadFinished;
-```
+<ImageZoom src="/img/http/onasyncpayload.png" width={298} height={184} />
 
 ### On Request Complete
 
 * Event triggered when request is done
-* `FResponse`: Response struct
-
-```cpp
-std::function<void(const FResponse)> onRequestComplete;
-```
+<ImageZoom src="/img/http/onrequestcompleted.png" width={276} height={212} />
 
 ### On Request Canceled
 
 * Event triggered when request is canceled
-
-```cpp
-std::function<void()> onRequestCanceled;
-```
+<ImageZoom src="/img/http/onresquestcanceled.png" width={266} height={200} />
 
 ### On Request Progress
 
 * Event triggered while the request is in progress
-* `size_t`: bytes sent 
-* `size_t`: bytes received
-
-```cpp
-std::function<void(const size_t, const size_t)> onRequestProgress;
-```
+<ImageZoom src="/img/http/onrequestprogress.png" width={267} height={238} />
 
 ### On Request Will Retry
 
 * Event triggered while retry to connect
-* `int`: number of attemps
+<ImageZoom src="/img/http/onrequestwillretry.png" width={269} height={212} />
 
-```cpp
-std::function<void(const int)> onRequestWillRetry;
-```
-
-### On Request Fail
+### On Request Error
 
 * Event triggered if request fail
-* `int`: error code
-* `std::string`: error message
-
-```cpp
-std::function<void(const int, const std::string &)> onRequestFail;
-```
+<ImageZoom src="/img/http/onrequesterror.png" width={243} height={238} />
 
 ### On Response Error
 
 * Event triggered if any error occur during async process of response
-* `int`: error code
-
-```cpp
-std::function<void(const int)> onResponseFail;
-```
+<ImageZoom src="/img/http/onresponseerror.png" width={252} height={212} />
