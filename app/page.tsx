@@ -1,8 +1,4 @@
 import Link from "next/link";
-import { FaGithub } from "react-icons/fa";
-import { GoStarFill } from "react-icons/go";
-import { GrDocumentText } from "react-icons/gr";
-import { GrLinkedin } from "react-icons/gr";
 
 export default function HomePage() {
     return (
