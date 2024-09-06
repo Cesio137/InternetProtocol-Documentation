@@ -6,6 +6,7 @@
         "subsystem",
         "udp-client",
         "tcp-client",
-        "http-client"
+        "http-client",
+        "websocket-client"
     ]
 }
