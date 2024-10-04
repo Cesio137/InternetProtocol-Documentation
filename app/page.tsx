@@ -16,13 +16,13 @@ export default function HomePage() {
                     Star on github
                 </Link>
                 <Link
-                    className="bg-neutral-700 px-3 py-1 rounded-full text-center flex gap-1"
+                    className="bg-neutral-600 px-3 py-1 rounded-full text-white text-center flex gap-1"
                     href="/docs"
                 >
                     Read the docs
                 </Link>
                 <Link
-                    className="bg-blue-700 px-3 py-1 rounded-full text-center flex gap-1"
+                    className="bg-blue-700 px-3 py-1 rounded-full text-white text-center flex gap-1"
                     href="https://www.linkedin.com/in/nathan-miguel-488b462b1/"
                     target="_blank"
                 >
