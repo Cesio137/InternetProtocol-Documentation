@@ -1,0 +1,125 @@
+---
+title: TCP Client Openssl
+description: How to use TCP client class with openssl
+---
+
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+## References
+ 
+<Tabs items={['Global', 'Include', 'Macro']}>
+    <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
+    <Tab value="Include">#include "IP/TCP/TCPClient.hpp"</Tab>
+    <Tab value="Macro">#define ASIO_USE_OPENSSL</Tab>
+</Tabs>
+
+## Syntax
+
+```cpp
+namespace InternetProtocol
+class TCPClientSsl
+```
+
+```cpp
+#include <iostream>
+#define ASIO_USE_OPENSSL
+#include <IP/TCP/TCPClient.hpp>
+
+using namespace InternetProtocol;
+
+int main()
+{
+    TCPClientSsl client;
+    client.setHost("localhost", "3000");
+    client.onMessageReceived = [&](const size_t size, const FTcpMessage message) {
+        std::cout << message.toString() << std::endl;
+    };
+    client.load_private_key_file("client-key.pem"); //Relative path to your PEM file
+    client.load_certificate_file("client-cert.pem"); //Relative path to your PEM file
+    client.connect();
+    
+    std::string input;
+    std::cout << "Digite algo: ";
+    while (std::getline(std::cin, input)) {
+        if (input == "quit")
+        {
+            client.close();
+            break;
+        }
+        client.send(input);
+    }
+    
+    return 0;
+}
+```
+
+## Functions
+
+This class has the same functions from ```TCPClient```, except for the ones shown below
+
+### Load Private Key Data
+
+* Load the private key from a string.
+* If any error occurs, it will trigger the ```onError``` event.
+
+```cpp
+ bool load_private_key_data(const std::string &key_data)
+```
+
+### Load Private Key File
+
+* Load the private key from file.
+* If any error occurs, it will trigger the ```onError``` event.
+* Relative path.
+
+```cpp
+ bool load_private_key_file(const std::string &filename)
+```
+
+### Load Certificate Data
+
+* Load the certificate from a string.
+* If any error occurs, it will trigger the ```onError``` event.
+
+```cpp
+ bool load_certificate_data(const std::string &cert_data)
+```
+
+### Load Certificate File
+
+* Load the certificate from file.
+* If any error occurs, it will trigger the ```onError``` event.
+* Relative path.
+
+```cpp
+ bool load_certificate_file(const std::string &filename)
+```
+
+### Load Certificate Chain Data
+
+* Load the certificate chain from a string.
+* If any error occurs, it will trigger the ```onError``` event.
+
+```cpp
+ bool load_certificate_chain_data(const std::string &cert_chain_data)
+```
+
+### Load Certificate Chain File
+
+* Load the certificate chain from file.
+* If any error occurs, it will trigger the ```onError``` event.
+* Relative path.
+
+```cpp
+ bool load_certificate_chain_file(const std::string &filename)
+```
+
+### Load Verify File
+
+* Load the certificate from file and verify if it is valid.
+* If any error occurs, it will trigger the ```onError``` event.
+* Relative path.
+
+```cpp
+ bool load_verify_file(const std::string &filename)
+```

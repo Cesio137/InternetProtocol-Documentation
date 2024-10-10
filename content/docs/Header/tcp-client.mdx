@@ -39,6 +39,7 @@ int main()
     while (std::getline(std::cin, input)) {
         if (input == "quit")
         {
+            client.close();
             break;
         }
         client.send(input);
@@ -220,7 +221,7 @@ bool isConnected() const
 * Close connection
 
 ```cpp
-void close()
+void close(bool forceClose = false)
 ```
 ### Get Error Code
 

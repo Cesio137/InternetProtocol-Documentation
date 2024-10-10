@@ -12,6 +12,7 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 >  - Your project must use C++ 17 or above
 >  - Requires [InternetProtocol](https://github.com/Cesio137/InternetProtocol/releases)
 >  - Requires ([ASIO non-boost](https://sourceforge.net/projects/asio/files/asio/) 1.30.x or above)
+>  - ([Openssl](https://www.openssl.org/) is only required if you need to use it within the library.)
 
 ## How to use
 
@@ -21,6 +22,9 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
   </Step>
   <Step>
     Extract both headers to include folder of your project
+  </Step>
+  <Step>
+    You need to build [`Openssl`](https://www.openssl.org/) and link its libraries to your project yourself if you wish to use it.
   </Step>
 </Steps>
 
