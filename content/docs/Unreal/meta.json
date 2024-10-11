@@ -6,7 +6,10 @@
         "subsystem",
         "udp-client",
         "tcp-client",
+        "tcp-client-openssl",
         "http-client",
-        "websocket-client"
+        "http-client-openssl",
+        "websocket-client",
+        "websocket-client-openssl"
     ]
 }

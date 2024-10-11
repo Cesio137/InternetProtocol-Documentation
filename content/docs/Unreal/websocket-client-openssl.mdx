@@ -1,0 +1,87 @@
+---
+title: Websocket Client Openssl
+description: How to use Websocket client class with openssl
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+
+## References
+
+<Tabs items={['Include']}>
+    <Tab value="Include">#include "Websockets/WebsocketClient.h"</Tab>
+</Tabs>
+
+## How to use
+
+<Steps>
+  <Step>
+    Blueprint: search by [`GetInternetProtocolSubsystem`](/docs/Unreal/subsystem#how-to-use) and call [`CreateWebsocketClientSsl`](/docs/Unreal/subsystem#create-websocket-client-ssl) function
+  </Step>
+  <Step>
+    C++: Use the code bellow
+    ``` cpp
+    #include "Websockets/WebsocketClient.h"
+
+    UWebsocketClientSsl* WebsocketClientSsl = NewObject<UWebsocketClientSsl>();
+    ```
+  </Step>
+</Steps>
+
+## Functions
+
+This class has the same functions from ```WebsocketClient```, except for the ones shown below
+
+### Load Private Key Data
+
+* Load the private key from a string.
+* If any error occurs, it will trigger the ```OnError``` event.
+
+<ImageZoom src="/img/client-side/websocket/ssl/loadkeydata.png" width={230} height={134} />
+
+### Load Private Key File
+
+* Load the private key from file.
+* If any error occurs, it will trigger the ```OnError``` event.
+* Relative path.
+
+<ImageZoom src="/img/client-side/websocket/ssl/loadkeyfile.png" width={230} height={134} />
+
+### Load Certificate Data
+
+* Load the certificate from a string.
+* If any error occurs, it will trigger the ```OnError``` event.
+
+<ImageZoom src="/img/client-side/websocket/ssl/loadcertificatedata.png" width={232} height={134} />
+
+### Load Certificate File
+
+* Load the certificate from file.
+* If any error occurs, it will trigger the ```OnError``` event.
+* Relative path.
+
+<ImageZoom src="/img/client-side/websocket/ssl/loadcertificatefile.png" width={230} height={134} />
+
+### Load Certificate Chain Data
+
+* Load the certificate chain from a string.
+* If any error occurs, it will trigger the ```OnError``` event.
+
+<ImageZoom src="/img/client-side/websocket/ssl/loadcertificatechaindata.png" width={232} height={134} />
+
+### Load Certificate Chain File
+
+* Load the certificate chain from file.
+* If any error occurs, it will trigger the ```OnError``` event.
+* Relative path.
+
+<ImageZoom src="/img/client-side/websocket/ssl/loadcertificatechainfile.png" width={230} height={134} />
+
+### Load Verify File
+
+* Load the certificate from file and verify if it is valid.
+* If any error occurs, it will trigger the ```OnError``` event.
+* Relative path.
+
+<ImageZoom src="/img/client-side/websocket/ssl/loadverifyfile.png" width={230} height={134} />
