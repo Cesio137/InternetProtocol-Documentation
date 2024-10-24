@@ -1,0 +1,181 @@
+---
+title: Json Object
+description: How to use Json Object class
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+
+## References
+ 
+<Tabs items={['Include']}>
+    <Tab value="Include">#include "Json/JavaScriptObjectNotation.h"</Tab>
+</Tabs>
+
+## How to use
+
+<Steps>
+  <Step>
+    Blueprint: search by [`GetInternetProtocolSubsystem`](/docs/Unreal/subsystem#how-to-use) and call [`CreateJsonObject`](/docs/Unreal/subsystem#create-json-object) function
+  </Step>
+  <Step>
+    C++: Use the code bellow
+    ``` cpp
+    #include "Json/JavaScriptObjectNotation.h"
+
+    UJavaScriptObjectNotation* Json = NewObject<UJavaScriptObjectNotation>();
+    ```
+  </Step>
+</Steps>
+
+## Nodes
+
+### Construct Json
+
+* Must be called before use any json function.
+* It also reset json object.
+
+<ImageZoom src="/img/json/constructjson.png" width={263} height={104} />
+
+### Construct Json From String
+
+* Must be called before use any json function.
+* It also reset json object.
+
+<ImageZoom src="/img/json/constructjsonstring.png" width={263} height={134} />
+
+### Is Valid
+
+* Check if json is valid.
+
+<ImageZoom src="/img/json/isvalid.png" width={118} height={56} />
+
+### To String
+
+* Parse json data to string.
+
+<ImageZoom src="/img/json/tostring.png" width={117} height={56} />
+
+### Reset
+
+* Reset json and clear all fields.
+* [`Construct Json`](/docs/Unreal/json#construct-json) or [`Construct Json From String`](/docs/Unreal/json#construct-json-from-string) must be called again.
+
+<ImageZoom src="/img/json/reset.png" width={263} height={104} />
+
+### Set Bool Field
+
+<ImageZoom src="/img/json/setboolfield.png" width={263} height={160} />
+
+### Set Bool Array Field
+
+<ImageZoom src="/img/json/setboolarrayfield.png" width={263} height={160} />
+
+### Set Byte Field
+
+<ImageZoom src="/img/json/setbytefield.png" width={263} height={160} />
+
+### Set Byte Array Field
+
+<ImageZoom src="/img/json/setbytearrayfield.png" width={263} height={160} />
+
+### Set Integer Field
+
+<ImageZoom src="/img/json/setintegerfield.png" width={263} height={160} />
+
+### Set Integer Array Field
+
+<ImageZoom src="/img/json/setintegerarrayfield.png" width={263} height={160} />
+
+### Set Float Field
+
+<ImageZoom src="/img/json/setfloatfield.png" width={263} height={160} />
+
+### Set Float Array Field
+
+<ImageZoom src="/img/json/setfloatarrayfield.png" width={263} height={160} />
+
+### Set String Field
+
+<ImageZoom src="/img/json/setstringfield.png" width={263} height={160} />
+
+### Set String Array Field
+
+<ImageZoom src="/img/json/setstringarrayfield.png" width={263} height={160} />
+
+### Set Object Field
+
+* Set a json object field.
+
+<ImageZoom src="/img/json/setobjectfield.png" width={263} height={160} />
+
+### Set Object Array Field
+
+* Set a json object array field.
+
+<ImageZoom src="/img/json/setobjectarrayfield.png" width={263} height={160} />
+
+### Remove Field
+
+* Remove field by name.
+
+<ImageZoom src="/img/json/removefield.png" width={263} height={134} />
+
+### Has Field
+
+* Check if json object has field.
+
+<ImageZoom src="/img/json/hasfield.png" width={241} height={60} />
+
+### Try Get Bool Field
+
+<ImageZoom src="/img/json/trygetboolfield.png" width={263} height={134} />
+
+### Try Get Bool Array Field
+
+<ImageZoom src="/img/json/trygetboolarrayfield.png" width={263} height={134} />
+
+### Try Get Byte Field
+
+<ImageZoom src="/img/json/trygetbytefield.png" width={263} height={134} />
+
+### Try Get Byte Array Field
+
+<ImageZoom src="/img/json/trygetbytearrayfield.png" width={263} height={134} />
+
+### Try Get Integer Field
+
+<ImageZoom src="/img/json/trygetintegerfield.png" width={263} height={134} />
+
+### Try Get Integer Array Field
+
+<ImageZoom src="/img/json/trygetintegerarrayfield.png" width={263} height={134} />
+
+### Try Get Float Field
+
+<ImageZoom src="/img/json/trygetfloatfield.png" width={263} height={134} />
+
+### Try Get Float Array Field
+
+<ImageZoom src="/img/json/trygetfloatarrayfield.png" width={263} height={134} />
+
+### Try Get String Field
+
+<ImageZoom src="/img/json/trygetstringfield.png" width={263} height={134} />
+
+### Try Get String Array Field
+
+<ImageZoom src="/img/json/trygetstringarrayfield.png" width={263} height={134} />
+
+### Try Get Object Field
+
+* Try get a json object field.
+
+<ImageZoom src="/img/json/trygetobjectfield.png" width={263} height={134} />
+
+### Try Get Object Array Field
+
+* Try get a json object array field.
+
+<ImageZoom src="/img/json/trygetobjectarrayfield.png" width={263} height={134} />
