@@ -28,13 +28,13 @@ using namespace InternetProtocol;
 int main()
 {
     HttpClient client;
-    client.setHost("localhost", "3000");
-    client.setRequestMethod();
-    client.onRequestComplete = [&](const FResponse response) {
+    client.set_host("localhost", "3000");
+    client.set_request_method();
+    client.on_request_complete = [&](const FResponse response) {
         std::cout << response.content << std::endl;
     };
-    client.preparePayload();
-    client.processRequest();
+    client.prepare_payload();
+    client.process_request();
 
     std::string input;
     std::cout << "Digite algo: ";
@@ -113,7 +113,7 @@ struct FResponse {
 * Set the `adress` and `port` of host
 
 ```cpp
-void setHost(const std::string &url = "localhost", const std::string &port = "")
+void set_host(const std::string &url = "localhost", const std::string &port = "")
 ```
 
 ### Get Host
@@ -121,7 +121,7 @@ void setHost(const std::string &url = "localhost", const std::string &port = "")
 * Get host IP
 
 ```cpp
-std::string getHost() const
+std::string get_host() const
 ```
 
 ### Get Port
@@ -129,7 +129,7 @@ std::string getHost() const
 * Get host port
 
 ```cpp
-std::string getPort() const
+std::string get_port() const
 ```
 
 ### Set Timeout
@@ -138,7 +138,7 @@ std::string getPort() const
 * OBS: Value must be between 0 and 255
 
 ```cpp
-void setTimeout(uint8_t value = 3)
+void set_timeout(uint8_t value = 3)
 ```
 
 ### Get Timeout
@@ -146,7 +146,7 @@ void setTimeout(uint8_t value = 3)
 * Get timeout in seconds
 
 ```cpp
-uint8_t getTimeout() const
+uint8_t get_timeout() const
 ```
 
 ### Set Max Attemp
@@ -155,7 +155,7 @@ uint8_t getTimeout() const
 * OBS: Value must be between 0 and 255
 
 ```cpp
-void setMaxAttemp(uint8_t value = 3)
+void set_max_attemp(uint8_t value = 3)
 ```
 
 ### Get Max Attemp
@@ -163,7 +163,7 @@ void setMaxAttemp(uint8_t value = 3)
 * Get max times to try reconnect
 
 ```cpp
- uint8_t getMaxAttemp() const
+ uint8_t get_max_attemp() const
 ```
 
 ### Set Request
@@ -171,7 +171,7 @@ void setMaxAttemp(uint8_t value = 3)
 * Set the HTTP request to be sent
 
 ```cpp
-void setRequest(const FRequest &value)
+void set_request(const FRequest &value)
 ```
 
 ### Get Request
@@ -179,7 +179,7 @@ void setRequest(const FRequest &value)
 * Get the HTTP request to be sent
 
 ```cpp
-FRequest getRequest() const
+FRequest get_request() const
 ```
 
 ### Set Request Method
@@ -187,7 +187,7 @@ FRequest getRequest() const
 * Set request verb
 
 ```cpp
-void setRequestMethod(EVerb requestMethod = EVerb::GET)
+void set_request_method(EVerb requestMethod = EVerb::GET)
 ```
 
 ### Get Request Method
@@ -195,7 +195,7 @@ void setRequestMethod(EVerb requestMethod = EVerb::GET)
 * Get request verb
 
 ```cpp
-EVerb getRequestMethod() const
+EVerb get_request_method() const
 ```
 
 ### Set Version
@@ -203,7 +203,7 @@ EVerb getRequestMethod() const
 * Set request version
 
 ```cpp
-void setVersion(const std::string &version = "2.0")
+void set_version(const std::string &version = "2.0")
 ```
 
 ### Get Version
@@ -211,7 +211,7 @@ void setVersion(const std::string &version = "2.0")
 * Get request version
 
 ```cpp
-std::string getVersion() const
+std::string get_version() const
 ```
 
 ### Set Path
@@ -219,7 +219,7 @@ std::string getVersion() const
 * Set request version
 
 ```cpp
-void setPath(const std::string &path = "/")
+void set_path(const std::string &path = "/")
 ```
 
 ### Get Path
@@ -227,7 +227,7 @@ void setPath(const std::string &path = "/")
 * Get request version
 
 ```cpp
-std::string getPath() const
+std::string get_path() const
 ```
 
 ### Append Params
@@ -235,7 +235,7 @@ std::string getPath() const
 * Append parameter to request
 
 ```cpp
-void appendParams(const std::string &key, const std::string &value)
+void append_params(const std::string &key, const std::string &value)
 ```
 
 ### Clear Params
@@ -243,7 +243,7 @@ void appendParams(const std::string &key, const std::string &value)
 * Clear request parameters
 
 ```cpp
-void clearParams()
+void clear_params()
 ```
 
 ### Remove Param
@@ -251,7 +251,7 @@ void clearParams()
 * Remove request parameter
 
 ```cpp
-void removeParam(const std::string &key)
+void remove_param(const std::string &key)
 ```
 
 ### Has Param
@@ -259,7 +259,7 @@ void removeParam(const std::string &key)
 * Check if request has a certain parameter
 
 ```cpp
-bool hasParam(const std::string &key) const
+bool has_param(const std::string &key) const
 ```
 
 ### Get Params
@@ -267,7 +267,7 @@ bool hasParam(const std::string &key) const
 * Get all parameters from request
 
 ```cpp
-std::map<std::string, std::string> getParams() const
+std::map<std::string, std::string> get_params() const
 ```
 
 ### Append Headers
@@ -275,7 +275,7 @@ std::map<std::string, std::string> getParams() const
 * Append headers to request
 
 ```cpp
-void AppendHeaders(const std::string &key, const std::string &value)
+void Append_headers(const std::string &key, const std::string &value)
 ```
 
 ### Clear Headers
@@ -283,7 +283,7 @@ void AppendHeaders(const std::string &key, const std::string &value)
 * Clear request headers
 
 ```cpp
-void ClearHeaders()
+void clear_headers()
 ```
 
 ### Remove Header
@@ -291,7 +291,7 @@ void ClearHeaders()
 * Clear request header
 
 ```cpp
-void RemoveHeader(const std::string &key)
+void remove_header(const std::string &key)
 ```
 
 ### Has Header
@@ -299,7 +299,7 @@ void RemoveHeader(const std::string &key)
 * Check if request has a certain header
 
 ```cpp
-bool hasHeader(const std::string &key) const
+bool has_header(const std::string &key) const
 ```
 
 ### Get Headers
@@ -307,7 +307,7 @@ bool hasHeader(const std::string &key) const
 * Get all headers from request
 
 ```cpp
-std::map<std::string, std::string> GetHeaders() const
+std::map<std::string, std::string> get_headers() const
 ```
 
 ### Set Body
@@ -315,7 +315,7 @@ std::map<std::string, std::string> GetHeaders() const
 * Set request body
 
 ```cpp
-void SetBody(const std::string &value)
+void set_body(const std::string &value)
 ```
 
 ### Clear Body
@@ -323,7 +323,7 @@ void SetBody(const std::string &value)
 * Clear request body
 
 ```cpp
-void ClearBody()
+void clear_body()
 ```
 
 ### Get Body
@@ -331,7 +331,7 @@ void ClearBody()
 * Get request body
 
 ```cpp
-std::string GetBody() const
+std::string get_body() const
 ```
 
 ### Get Request Data
@@ -339,7 +339,7 @@ std::string GetBody() const
 * Get request data
 
 ```cpp
-FRequest getRequestData() const
+FRequest get_request_data() const
 ```
 
 ### Prepare Payload
@@ -348,7 +348,7 @@ FRequest getRequestData() const
 * Must be called before call `processRequest` function
 
 ```cpp
-void preparePayload()
+void prepare_payload()
 ```
 
 ### Async Prepare Payload
@@ -357,7 +357,7 @@ void preparePayload()
 * Must be called before call `processRequest` function
 
 ```cpp
-void async_preparePayload()
+void async_prepare_payload()
 ```
 
 ### Get Payload Data
@@ -365,7 +365,7 @@ void async_preparePayload()
 * Get processed payload data 
 
 ```cpp
-std::string getPayloadData() const
+std::string get_payload_data() const
 ```
 
 ### Get Response Data
@@ -373,7 +373,7 @@ std::string getPayloadData() const
 * Get latest response data 
 
 ```cpp
-FResponse getResponseData() const
+FResponse get_response_data() const
 ```
 
 ### Process Request
@@ -382,7 +382,7 @@ FResponse getResponseData() const
 * Return true if request can be sent
 
 ```cpp
-bool processRequest()
+bool process_request()
 ```
 
 ### Cancel Request
@@ -390,7 +390,7 @@ bool processRequest()
 * Cancel request
 
 ```cpp
-void cancelRequest()
+void cancel_request()
 ```
 
 ### Clear Request
@@ -398,7 +398,7 @@ void cancelRequest()
 * Clear request data
 
 ```cpp
-void clearRequest()
+void clear_request()
 ```
 
 ### Clear Payload
@@ -406,7 +406,7 @@ void clearRequest()
 * Clear payload  data
 
 ```cpp
-void clearPayload()
+void clear_payload()
 ```
 
 ### Clear Response
@@ -414,7 +414,7 @@ void clearPayload()
 * Clear response buffer
 
 ```cpp
-void clearResponse()
+void clear_response()
 ```
 
 ### Get Error Code
@@ -422,15 +422,7 @@ void clearResponse()
 * Get latest error code
 
 ```cpp
-int getErrorCode() const
-```
-
-### Get Error Message
-
-* Get latest error message
-
-```cpp
-int getErrorMessage() const
+asio::error_code get_error_code() const
 ```
 
 ## Events
@@ -440,7 +432,7 @@ int getErrorMessage() const
 * Event triggered when payload process has been finished
 
 ```cpp
-std::function<void()> onAsyncPayloadFinished;
+std::function<void()> on_async_payload_finished;
 ```
 
 ### On Request Complete
@@ -449,7 +441,7 @@ std::function<void()> onAsyncPayloadFinished;
 * `FResponse`: Response struct
 
 ```cpp
-std::function<void(const FResponse)> onRequestComplete;
+std::function<void(const FResponse)> on_request_complete;
 ```
 
 ### On Request Canceled
@@ -457,7 +449,7 @@ std::function<void(const FResponse)> onRequestComplete;
 * Event triggered when request is canceled
 
 ```cpp
-std::function<void()> onRequestCanceled;
+std::function<void()> on_request_canceled;
 ```
 
 ### On Request Progress
@@ -467,7 +459,7 @@ std::function<void()> onRequestCanceled;
 * `size_t`: bytes received
 
 ```cpp
-std::function<void(const size_t, const size_t)> onRequestProgress;
+std::function<void(const size_t, const size_t)> on_request_progress;
 ```
 
 ### On Request Will Retry
@@ -476,7 +468,7 @@ std::function<void(const size_t, const size_t)> onRequestProgress;
 * `int`: number of attemps
 
 ```cpp
-std::function<void(const int)> onRequestWillRetry;
+std::function<void(const int)> on_request_will_retry;
 ```
 
 ### On Request Fail
@@ -486,7 +478,7 @@ std::function<void(const int)> onRequestWillRetry;
 * `std::string`: error message
 
 ```cpp
-std::function<void(const int, const std::string &)> onRequestFail;
+std::function<void(const int, const std::string &)> on_request_fail;
 ```
 
 ### On Response Error
@@ -495,5 +487,5 @@ std::function<void(const int, const std::string &)> onRequestFail;
 * `int`: error code
 
 ```cpp
-std::function<void(const int)> onResponseFail;
+std::function<void(const int)> on_response_fail;
 ```

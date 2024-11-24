@@ -30,15 +30,15 @@ using namespace InternetProtocol;
 int main()
 {
     HttpClientSsl client;
-    client.setHost("localhost", "3000");
-    client.setRequestMethod();
-    client.onRequestComplete = [&](const FResponse response) {
+    client.set_host("localhost", "3000");
+    client.set_request_method();
+    client.on_request_complete = [&](const FResponse response) {
         std::cout << response.content << std::endl;
     };
     client.load_private_key_file("client-key.pem"); //Relative path to your PEM file
     client.load_certificate_file("client-cert.pem"); //Relative path to your PEM file
-    client.preparePayload();
-    client.processRequest();
+    client.prepare_payload();
+    client.process_request();
 
     std::string input;
     std::cout << "Digite algo: ";

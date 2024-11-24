@@ -30,8 +30,8 @@ using namespace InternetProtocol;
 int main()
 {
     TCPClientSsl client;
-    client.setHost("localhost", "3000");
-    client.onMessageReceived = [&](const size_t size, const FTcpMessage message) {
+    client.set_host("localhost", "3000");
+    client.on_message_received = [&](const FTcpMessage message) {
         std::cout << message.toString() << std::endl;
     };
     client.load_private_key_file("client-key.pem"); //Relative path to your PEM file

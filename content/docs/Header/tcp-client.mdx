@@ -28,8 +28,8 @@ using namespace InternetProtocol;
 int main()
 {
     TCPClient client;
-    client.setHost("localhost", "3000");
-    client.onMessageReceived = [&](const size_t size, const FTcpMessage message) {
+    client.set_host("localhost", "3000");
+    client.on_message_received = [&](const FTcpMessage message) {
         std::cout << message.toString() << std::endl;
     };
     client.connect();
@@ -58,7 +58,7 @@ namespace InternetProtocol
 
 struct FTcpMessage {
     std::vector<std::byte> raw_data;
-    uint32_t size = 0;
+    size_t size = 0;
     std::string toString() const;
 };
 ```
@@ -70,7 +70,7 @@ struct FTcpMessage {
 * Set the `adress` and `port` of host
 
 ```cpp
-void setHost(const std::string &ip, const std::string &port)
+void set_host(const std::string &ip, const std::string &port)
 ```
 
 ### Get Local Adress
@@ -78,7 +78,7 @@ void setHost(const std::string &ip, const std::string &port)
 * Get local IP of client
 
 ```cpp
-std::string getLocalAdress() const
+std::string get_local_adress() const
 ```
 
 ### Get Local Port
@@ -86,7 +86,7 @@ std::string getLocalAdress() const
 * Get local port of client
 
 ```cpp
-std::string getLocalPort() const
+std::string get_local_port() const
 ```
 
 ### Get Remote Adress
@@ -94,7 +94,7 @@ std::string getLocalPort() const
 * Get host IP
 
 ```cpp
-std::string getRemoteAdress() const
+std::string get_remote_adress() const
 ```
 
 ### Get Remote Port
@@ -102,7 +102,7 @@ std::string getRemoteAdress() const
 * Get host port
 
 ```cpp
-std::string getRemotePort() const
+std::string get_remote_port() const
 ```
 
 ### Set Timeout
@@ -111,7 +111,7 @@ std::string getRemotePort() const
 * OBS: Value must be between 0 and 255
 
 ```cpp
-void setTimeout(uint8_t value = 3)
+void set_timeout(uint8_t value = 3)
 ```
 
 ### Get Timeout
@@ -119,7 +119,7 @@ void setTimeout(uint8_t value = 3)
 * Get timeout in seconds
 
 ```cpp
-uint8_t getTimeout() const
+uint8_t get_timeout() const
 ```
 
 ### Set Max Attemp
@@ -128,7 +128,7 @@ uint8_t getTimeout() const
 * OBS: Value must be between 0 and 255
 
 ```cpp
-void setMaxAttemp(uint8_t value = 3)
+void set_max_attemp(uint8_t value = 3)
 ```
 
 ### Get Max Attemp
@@ -136,7 +136,7 @@ void setMaxAttemp(uint8_t value = 3)
 * Get max times to try reconnect
 
 ```cpp
- uint8_t getMaxAttemp() const
+ uint8_t get_max_attemp() const
 ```
 
 ### Set Max Send Buffer Size
@@ -144,7 +144,7 @@ void setMaxAttemp(uint8_t value = 3)
 * Set max size in bytes of send buffer
 
 ```cpp
-void setMaxSendBufferSize(int value = 1024)
+void set_max_send_buffer_size(int value = 1024)
 ```
 
 ### Get Max Send Buffer Size
@@ -152,7 +152,7 @@ void setMaxSendBufferSize(int value = 1024)
 * Get max size in bytes of send buffer
 
 ```cpp
-int getMaxSendBufferSize() const
+int get_max_send_buffer_size() const
 ```
 
 ### Set Split Package
@@ -160,7 +160,7 @@ int getMaxSendBufferSize() const
 * If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
 
 ```cpp
-void setSplitPackage(bool value = true)
+void set_split_package(bool value = true)
 ```
 
 ### Get Split Package
@@ -168,7 +168,7 @@ void setSplitPackage(bool value = true)
 * Get if Split Package is enabled
 
 ```cpp
-bool getSplitPackage() const
+bool get_split_package() const
 ```
 
 ### Send
@@ -187,7 +187,7 @@ bool send(const std::string &message)
 * Return true if It's able to send
 
 ```cpp
-bool sendRaw(const std::vector<std::byte> &buffer)
+bool send_raw(const std::vector<std::byte> &buffer)
 ```
 
 ### Async Read
@@ -213,7 +213,7 @@ bool connect()
 * Check if client is connected to the host
 
 ```cpp
-bool isConnected() const
+bool is_connected() const
 ```
 
 ### Close
@@ -228,7 +228,7 @@ void close()
 * Get latest error code
 
 ```cpp
-int getErrorCode() const
+int get_error_code() const
 ```
 
 ### Get Error Message
@@ -236,7 +236,7 @@ int getErrorCode() const
 * Get latest error message
 
 ```cpp
-int getErrorMessage() const
+int get_error_message() const
 ```
 
 ## Events
@@ -246,7 +246,7 @@ int getErrorMessage() const
 * Event triggered when a connection is estabilished
 
 ```cpp
-std::function<void()> onConnected;
+std::function<void()> on_connected;
 ```
 
 ### On Close
@@ -254,7 +254,7 @@ std::function<void()> onConnected;
 * Event triggered when a connection is closed
 
 ```cpp
-std::function<void()> onClose;
+std::function<void()> on_close;
 ```
 
 ### On Connection Retry
@@ -263,7 +263,7 @@ std::function<void()> onClose;
 * `int`: number of attemps
 
 ```cpp
-std::function<void(int)> onConnectionRetry;
+std::function<void(int)> on_connection_retry;
 ```
 
 ### On Message Sent
@@ -272,7 +272,7 @@ std::function<void(int)> onConnectionRetry;
 * `size_t`: size of message sent
 
 ```cpp
-std::function<void(const size_t)> onMessageSent;
+std::function<void(const size_t)> on_message_sent;
 ```
 
 ### On Message Received
@@ -282,7 +282,7 @@ std::function<void(const size_t)> onMessageSent;
 * `FTcpMessage`: message struct
 
 ```cpp
-std::function<void(const size_t, const FTcpMessage)> onMessageReceived;
+std::function<void(const FTcpMessage)> on_nessage_received;
 ```
 
 ### On Error
@@ -292,5 +292,5 @@ std::function<void(const size_t, const FTcpMessage)> onMessageReceived;
 * `std::string`: error message
 
 ```cpp
-std::function<void(const int, const std::string &)> onError;
+std::function<void(const int, const std::string &)> on_error;
 ```

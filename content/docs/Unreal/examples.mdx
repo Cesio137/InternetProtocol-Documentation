@@ -1,29 +1,49 @@
 ---
-title: Examples
+title: Examples / Demo
 description: Setup demo project
 ---
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-# Examples
+# Plugin Demo
+
+If you wish to test the plugin power before buy or use follow the instruction bellow.
+
+<Steps>
+  <Step>
+    Download [`Golang`](https://go.dev/) and install
+  </Step>
+  <Step>
+    Download [`Demo.zip`](https://github.com/Cesio137/InternetProtocol/releases) and extract file
+  </Step>
+  <Step>
+    Open a terminal inside `GoServer` and type `go run .`
+  </Step>
+  <Step>
+    Run as many instance do you wish and connect to go server using `localhost` as adress and `3000` as port
+  </Step>
+</Steps>
+
+# Plugin Example
 
 If you wish to test the websocket and http examples follow the instruction bellow.
-
-<Cards>
-  <Card title="Download Examples" href="https://github.com/Cesio137/InternetProtocol-Documentation/releases/tag/Examples" />
-  <Card title="Download Nodejs LTS" href="https://nodejs.org/en/download" />
-</Cards>
 
 ## Setup
 
 <Steps>
   <Step>
-    Download one `*_Client` and one `*_Server`
+    Download [`Nodejs LTS`](https://nodejs.org/en/download/package-manager) and install
   </Step>
   <Step>
-    Extract both files.
+    Download [`NodejsServer.zip`](https://github.com/Cesio137/InternetProtocol/releases) and extract file
   </Step>
   <Step>
-    Go to `*_Server` folder, open terminal and type `npm install` `npm run start`.
+    Go to `InternetProtocol` folder(extracted from NodejsServer.zip), open terminal and type `npm run dev <resolver>`
+  </Step>
+  <Step>
+    Change `<resolver>` by: `udp` `tcp`, `http`, `websocket`
+  </Step>
+  <Step>
+    Now choose a unreal map and connect to server
   </Step>
 </Steps>
