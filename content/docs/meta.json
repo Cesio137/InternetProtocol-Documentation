@@ -1,6 +1,7 @@
 {
     "pages": [
         "index",
+        "licence",
         "setup",
         "changelogs",
         "Header",
