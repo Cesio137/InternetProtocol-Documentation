@@ -61,8 +61,6 @@ struct FUdpMessage {
     FUdpMessage() { rawData.resize(1024); }
     std::vector<std::byte> rawData;
     size_t size = 0;
-
-    std::string toString() const;
 };
 ```
 

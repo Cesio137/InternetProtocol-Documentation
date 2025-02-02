@@ -14,7 +14,6 @@ yarn dev
 ```
 
 Open http://localhost:3000 with your browser to see the result.
-📚 See the full documentation by accessing: https://internet-protocol-documentation.vercel.app/
 
 ## Learn More
 
