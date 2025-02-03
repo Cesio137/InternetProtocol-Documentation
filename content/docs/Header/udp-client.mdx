@@ -41,9 +41,10 @@ int main()
     while (std::getline(std::cin, input)) {
         if (input == "quit")
         {
+            client.close();
             break;
         }
-        client.send(input);
+        client.send_str(input);
     }
     
     return 0;
@@ -68,92 +69,18 @@ struct FUdpMessage {
 
 ### Set Host
 
-* Set the `adress` and `port` of host
+* Set the `adress`, `port`, `protocol` of host
 
 ```cpp
-void set_host(const std::string &ip, const std::string &port)
+void set_host(const std::string &ip, const std::string &port, const EProtocolType protocol)
 ```
 
-### Get Local Adress
+### Get Socket
 
-* Get local IP of client
-
-```cpp
-std::string get_local_adress() const
-```
-
-### Get Local Port
-
-* Get local port of client
+* Get socket connection properties
 
 ```cpp
-int get_local_port() const
-```
-
-### Get Remote Adress
-
-* Get host IP
-
-```cpp
-std::string get_remote_adress() const
-```
-
-### Get Remote Port
-
-* Get host port
-
-```cpp
-int get_remote_port() const
-```
-
-### Set Timeout
-
-* Set timeout in seconds
-* OBS: Value must be between 0 and 255
-
-```cpp
-void set_timeout(uint8_t value = 3)
-```
-
-### Get Timeout
-
-* Get timeout in seconds
-
-```cpp
-uint8_t get_timeout() const
-```
-
-### Set Max Attemp
-
-* Set max times to try reconnect
-* OBS: Value must be between 0 and 255
-
-```cpp
-void set_max_attemp(uint8_t value = 3)
-```
-
-### Get Max Attemp
-
-* Get max times to try reconnect
-
-```cpp
- uint8_t get_max_attemp() const
-```
-
-### Set Max Send Buffer Size
-
-* Set max size in bytes of send buffer
-
-```cpp
-void set_max_send_buffer_size(int value = 1024)
-```
-
-### Get Max Send Buffer Size
-
-* Get max size in bytes of send buffer
-
-```cpp
-int get_max_send_buffer_size() const
+asio::ip::udp::socket &get_socket()
 ```
 
 ### Set Max Receive Buffer Size
@@ -188,49 +115,32 @@ void set_split_package(bool value = true)
 bool get_split_package() const
 ```
 
-### Send
+### Send Str
 
 * Send a string message
-* Return true if It's able to send
+* Return false if message is empty or socket is closed
 * Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
 
 ```cpp
-bool send(const std::string &message)
+bool send_str(const std::string &message)
 ```
 
-### Send Raw
+### Send Buffer
 
 * Send a buffer message
-* Return true if It's able to send
+* Return false if buffer is empty or socket is closed
 
 ```cpp
-bool send_raw(const std::vector<std::byte> &buffer)
-```
-
-### Async Read
-
-* In case an error occurs during the asynchronous message reception, you can use the function below to reactivate the async reading
-* Return true if It's able to read
-
-```cpp
-bool async_read()
+bool send_buffer(const std::vector<uint8_t> &buffer)
 ```
 
 ### Connect
 
 * Connect to the host
-* Return true if It's able to connect
+* Return false if socket is already open
 
 ```cpp
 bool connect()
-```
-
-### Is Connected
-
-* Check if client is connected to the host
-
-```cpp
-bool is_connected() const
 ```
 
 ### Close
@@ -258,48 +168,47 @@ asio::error_code get_error_code() const
 std::function<void()> on_connected;
 ```
 
-### On Close
+### On Bytes Transferred
 
-* Event triggered when a connection is closed
-
-```cpp
-std::function<void()> on_close;
-```
-
-### On Connection Retry
-
-* Event triggered when every time It's try recconnect
-* `int`: number of attemps
+* Event triggered when socket send or receive data
 
 ```cpp
-std::function<void(const int)> on_connection_retry;
+std::function<void(const size_t, const size_t)> on_bytes_transfered;
 ```
 
 ### On Message Sent
 
 * Event triggered when a message is sent
-* `size_t`: size of message sent
+* `const asio::error_code &`: if error occur, error code will be different from 0
 
 ```cpp
-std::function<void(const size_t)> on_message_sent;
+std::function<void(const asio::error_code &)> on_message_sent;
 ```
 
 ### On Message Received
 
 * Event triggered when a message is received
-* `size_t`: size of message
 * `FUdpMessage`: message struct
+* Use `buffer_to_string()` function to converte `raw_data` to `std::string`
 
 ```cpp
 std::function<void(const FUdpMessage)> on_message_received;
 ```
 
+### On Close
+
+* Event triggered when socket is closed
+
+```cpp
+std::function<void()> on_close;
+```
+
 ### On Error
 
 * Event triggered if any error occur during async process
-* `int`: error code
-* `std::string`: error message
+* `const asio::error_code &`: if error occur, error code will be different from 0
+* Normally, when an error occurs, the socket is automatically closed, triggering the `on_close` event.
 
 ```cpp
-std::function<void(const int, const std::string &)> on_error;
+std::function<void(const asio::error_code &)> on_error;
 ```
