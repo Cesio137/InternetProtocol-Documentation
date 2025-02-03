@@ -32,11 +32,13 @@ int main()
     HttpClientSsl client;
     client.set_host("localhost", "3000");
     client.set_request_method();
-    client.on_request_complete = [&](const FResponse response) {
+    client.on_request_complete = [&](const Client::FResponse response) {
         std::cout << response.content << std::endl;
     };
+    client.get_ssl_context().set_options(asio::ssl::verify_none);
     client.load_private_key_file("client-key.pem"); //Relative path to your PEM file
     client.load_certificate_file("client-cert.pem"); //Relative path to your PEM file
+    client.update_ssl_socket();
     client.prepare_payload();
     client.process_request();
 
@@ -56,10 +58,35 @@ int main()
 
 This class has the same functions from ```HttpClient```, except for the ones shown below
 
+### Get Ssl Context
+
+* Set Ssl extra configuration.
+
+```cpp
+  asio::ssl::context &get_ssl_context()
+```
+
+### Get Ssl Socket
+
+* Get Ssl socket
+
+```cpp
+  const asio::ssl::stream<asio::ip::tcp::socket> &get_ssl_socket() const
+```
+
+### Update Ssl Socket
+
+* Update Ssl socket configuration
+* Must be called afer change options using `get_ssl_context()` function
+
+```cpp
+  void update_ssl_socket()
+```
+
 ### Load Private Key Data
 
 * Load the private key from a string.
-* If any error occurs, it will trigger the ```onError``` event.
+* If any error occurs, it will trigger the ```OnError``` event.
 
 ```cpp
  bool load_private_key_data(const std::string &key_data)
@@ -68,7 +95,7 @@ This class has the same functions from ```HttpClient```, except for the ones sho
 ### Load Private Key File
 
 * Load the private key from file.
-* If any error occurs, it will trigger the ```onError``` event.
+* If any error occurs, it will trigger the ```OnError``` event.
 * Relative path.
 
 ```cpp
@@ -78,7 +105,7 @@ This class has the same functions from ```HttpClient```, except for the ones sho
 ### Load Certificate Data
 
 * Load the certificate from a string.
-* If any error occurs, it will trigger the ```onError``` event.
+* If any error occurs, it will trigger the ```OnError``` event.
 
 ```cpp
  bool load_certificate_data(const std::string &cert_data)
@@ -87,7 +114,7 @@ This class has the same functions from ```HttpClient```, except for the ones sho
 ### Load Certificate File
 
 * Load the certificate from file.
-* If any error occurs, it will trigger the ```onError``` event.
+* If any error occurs, it will trigger the ```OnError``` event.
 * Relative path.
 
 ```cpp
@@ -97,7 +124,7 @@ This class has the same functions from ```HttpClient```, except for the ones sho
 ### Load Certificate Chain Data
 
 * Load the certificate chain from a string.
-* If any error occurs, it will trigger the ```onError``` event.
+* If any error occurs, it will trigger the ```OnError``` event.
 
 ```cpp
  bool load_certificate_chain_data(const std::string &cert_chain_data)
@@ -106,7 +133,7 @@ This class has the same functions from ```HttpClient```, except for the ones sho
 ### Load Certificate Chain File
 
 * Load the certificate chain from file.
-* If any error occurs, it will trigger the ```onError``` event.
+* If any error occurs, it will trigger the ```OnError``` event.
 * Relative path.
 
 ```cpp
@@ -116,7 +143,7 @@ This class has the same functions from ```HttpClient```, except for the ones sho
 ### Load Verify File
 
 * Load the certificate from file and verify if it is valid.
-* If any error occurs, it will trigger the ```onError``` event.
+* If any error occurs, it will trigger the ```OnError``` event.
 * Relative path.
 
 ```cpp

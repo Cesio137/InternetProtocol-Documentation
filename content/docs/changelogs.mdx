@@ -3,6 +3,18 @@ title: Changelogs
 description: Release notes
 ---
 
+## 2.0
+
+* Implemented server-side socket support for UDP, TCP, HTTP, and WebSocket protocols.
+* The HTTP connection now automatically closes when the `Connection` header is set to `close`, or remains open when set to `keep-alive`.
+* Enhanced error handling for HTTP requests and WebSocket handshake processes.
+* Removed the reconnection attempt functionality.
+* Deprecated several outdated HTTP methods.
+* Fixed an issue where the SSL socket could only connect once.
+* Unreal Engine: Resolved a bug causing events to be triggered outside the game thread.
+* Improved handshake validation for the WebSocket client.
+* And more...
+
 ## 1.0
 
 * Initial release.

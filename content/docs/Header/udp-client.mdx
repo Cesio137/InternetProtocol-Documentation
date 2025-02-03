@@ -171,6 +171,8 @@ std::function<void()> on_connected;
 ### On Bytes Transferred
 
 * Event triggered when socket send or receive data
+* `size_t`: bytes sent 
+* `size_t`: bytes received
 
 ```cpp
 std::function<void(const size_t, const size_t)> on_bytes_transfered;
