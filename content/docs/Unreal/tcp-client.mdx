@@ -3,13 +3,13 @@ title: TCP Client
 description: How to use TCP client class
 ---
 
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ## References
- 
-<Tabs items={['Include']}>
+
+<Tabs items={["Include"]}>
     <Tab value="Include">#include "TCP/TCPClient.h"</Tab>
 </Tabs>
 
@@ -26,6 +26,7 @@ import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 
     UTCPClient* TcpClient = NewObject<UTCPClient>();
     ```
+
   </Step>
 </Steps>
 
@@ -33,144 +34,176 @@ import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 
 ### Set Host
 
-* Set the `adress` and `port` of host
-<ImageZoom src="/img/client-side/tcp/sethost.png" alt='TCP client' width={169} height={164} />
+-   Set the `adress` and `port` of host
+    <ImageZoom
+        src="/img/client-side/tcp/sethost.png"
+        alt="TCP client"
+        width={169}
+        height={164}
+    />
 
-### Get Local Adress
+### Get Socket
 
-* Get local IP of client
-<ImageZoom src="/img/client-side/tcp/getlocaladress.png" alt='TCP client' width={227} height={76} />
-
-### Get Local Port
-
-* Get local port of client
-<ImageZoom src="/img/client-side/tcp/getlocalport.png" alt='TCP client' width={227} height={76} />
-
-### Get Remote Adress
-
-* Get host IP
-<ImageZoom src="/img/client-side/tcp/getremoteadress.png" alt='TCP client' width={227} height={76} />
-
-### Get Remote Port
-
-* Get host port
-<ImageZoom src="/img/client-side/tcp/getremoteport.png" alt='TCP client' width={227} height={76} />
-
-### Set Timeout
-
-* Set timeout in seconds
-* OBS: Value must be between 0 and 255
-<ImageZoom src="/img/client-side/tcp/settimeout.png" alt='TCP client' width={169} height={134} />
-
-### Get Timeout
-
-* Get timeout in seconds
-<ImageZoom src="/img/client-side/tcp/gettimeout.png" alt='TCP client' width={228} height={76} />
-
-### Set Max Attemp
-
-* Set max times to try reconnect
-* OBS: Value must be between 0 and 255
-<ImageZoom src="/img/client-side/tcp/setmaxattemp.png" alt='TCP client' width={169} height={134} />
-
-### Get Max Attemp
-
-* Get max times to try reconnect
-<ImageZoom src="/img/client-side/tcp/getmaxattemp.png" alt='TCP client' width={228} height={76} />
+-   Get socket properties
+    <ImageZoom
+        src="/img/client-side/tcp/getsocket.png"
+        alt="TCP client"
+        width={130}
+        height={75}
+    />
 
 ### Set Max Send Buffer Size
 
-* Set max size in bytes of send buffer
-<ImageZoom src="/img/client-side/tcp/setmaxsendbuffer.png" alt='TCP client' width={213} height={134} />
+-   Set max size in bytes of send buffer
+    <ImageZoom
+        src="/img/client-side/tcp/setmaxsendbuffer.png"
+        alt="TCP client"
+        width={213}
+        height={134}
+    />
 
 ### Get Max Send Buffer Size
 
-* Get max size in bytes of send buffer
-<ImageZoom src="/img/client-side/tcp/getmaxsendbuffer.png" alt='TCP client' width={228} height={76} />
+-   Get max size in bytes of send buffer
+    <ImageZoom
+        src="/img/client-side/tcp/getmaxsendbuffer.png"
+        alt="TCP client"
+        width={228}
+        height={76}
+    />
 
 ### Set Split Package
 
-* If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
-<ImageZoom src="/img/client-side/tcp/setsplitpackage.png" alt='TCP client' width={169} height={136} />
+-   If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
+    <ImageZoom
+        src="/img/client-side/tcp/setsplitpackage.png"
+        alt="TCP client"
+        width={169}
+        height={136}
+    />
 
 ### Get Split Package
 
-* Get if Split Package is enabled
-<ImageZoom src="/img/client-side/tcp/getsplitpackage.png" alt='TCP client' width={228} height={76} />
+-   Get if Split Package is enabled
+    <ImageZoom
+        src="/img/client-side/tcp/getsplitpackage.png"
+        alt="TCP client"
+        width={228}
+        height={76}
+    />
 
-### Send
+### Send Str
 
-* Send a string message
-* Return true if It's able to send
-* Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
-<ImageZoom src="/img/client-side/tcp/send.png" alt='TCP client' width={229} height={134} />
+-   Send a string message
+-   Return true if It's able to send
+-   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
+    <ImageZoom
+        src="/img/client-side/tcp/sendstr.png"
+        alt="TCP client"
+        width={229}
+        height={134}
+    />
 
-### Send Raw
+### Send Buffer
 
-* Send a buffer message
-* Return true if It's able to send
-<ImageZoom src="/img/client-side/tcp/sendraw.png" alt='TCP client' width={228} height={130} />
-
-### Async Read
-
-* In case an error occurs during the asynchronous message reception, you can use the function below to reactivate the async reading
-* Return true if It's able to read
-<ImageZoom src="/img/client-side/tcp/asyncread.png" alt='TCP client' width={228} height={104} />
+-   Send a buffer message
+-   Return true if It's able to send
+    <ImageZoom
+        src="/img/client-side/tcp/sendbuffer.png"
+        alt="TCP client"
+        width={228}
+        height={130}
+    />
 
 ### Connect
 
-* Connect to the host
-* Return true if It's able to connect
-<ImageZoom src="/img/client-side/tcp/connect.png" alt='TCP client' width={227} height={104} />
-
-### Is Connected
-
-* Check if client is connected to the host
-<ImageZoom src="/img/client-side/tcp/isconnected.png" alt='TCP client' width={227} height={76} />
+-   Connect to the host
+-   Return true if It's able to connect
+    <ImageZoom
+        src="/img/client-side/tcp/connect.png"
+        alt="TCP client"
+        width={227}
+        height={104}
+    />
 
 ### Close
 
-* Close connection
-<ImageZoom src="/img/client-side/tcp/close.png" alt='TCP client' width={166} height={103} />
+-   Close connection
+    <ImageZoom
+        src="/img/client-side/tcp/close.png"
+        alt="TCP client"
+        width={166}
+        height={103}
+    />
 
 ### Get Error Code
 
-* Get latest error code
-<ImageZoom src="/img/client-side/tcp/geterrorcode.png" alt='TCP client' width={227} height={76} />
-
-### Get Error Message
-
-* Get latest error message
-<ImageZoom src="/img/client-side/tcp/geterrormessage.png" alt='TCP client' width={227} height={76} />
+-   Get latest error code
+    <ImageZoom
+        src="/img/client-side/tcp/geterrorcode.png"
+        alt="TCP client"
+        width={227}
+        height={76}
+    />
 
 ## Events
 
 ### On Connected
 
-* Event triggered when a connection is estabilished
-<ImageZoom src="/img/client-side/tcp/onconnected.png" alt='TCP client' width={225} height={186} />
+-   Event triggered when a connection is estabilished
+    <ImageZoom
+        src="/img/client-side/tcp/onconnectedevent.png"
+        alt="TCP client"
+        width={225}
+        height={186}
+    />
 
-### On Connection Close
+### On Bytes Transferred
 
-* Event triggered when a connection is closed
-<ImageZoom src="/img/client-side/tcp/onconnectionclose.png" alt='TCP client' width={263} height={186} />
-
-### On Connection Will Retry
-
-* Event triggered when every time It's try recconnect
-<ImageZoom src="/img/client-side/tcp/onconnectionwillretry.png" alt='TCP client' width={286} height={212} />
+-   Event triggered when socket send or receive data
+    <ImageZoom
+        src="/img/client-side/tcp/onbytestransferedevent.png"
+        alt="TCP client"
+        width={258}
+        height={238}
+    />
 
 ### On Message Sent
 
-* Event triggered when a message is sent
-<ImageZoom src="/img/client-side/tcp/onmessagesent.png" alt='TCP client' width={246} height={212} />
+-   Event triggered when a message is sent
+    <ImageZoom
+        src="/img/client-side/tcp/onmessagesentevent.png"
+        alt="TCP client"
+        width={246}
+        height={212}
+    />
 
 ### On Message Received
 
-* Event triggered when a message is received
-<ImageZoom src="/img/client-side/tcp/onmessagereceived.png" alt='TCP client' width={272} height={238} />
+-   Event triggered when a message is received
+    <ImageZoom
+        src="/img/client-side/tcp/onmessagereceivedevent.png"
+        alt="TCP client"
+        width={272}
+        height={212}
+    />
+
+### On Close
+
+-   Event triggered when socket is closed
+    <ImageZoom
+        src="/img/client-side/tcp/oncloseevent.png"
+        alt="TCP client"
+        width={195}
+        height={186}
+    />
 
 ### On Error
 
-* Event triggered if any error occur during async process
-<ImageZoom src="/img/client-side/tcp/onerror.png" alt='TCP client' width={192} height={238} />
+-   Event triggered if any error occur during async process
+    <ImageZoom
+        src="/img/client-side/tcp/onerrorevent.png"
+        alt="TCP client"
+        width={192}
+        height={212}
+    />
