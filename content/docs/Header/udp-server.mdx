@@ -1,6 +1,6 @@
 ---
-title: TCP Client
-description: How to use TCP client class
+title: UDP Server
+description: How to use UDP server class
 ---
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
@@ -9,67 +9,68 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 <Tabs items={["Global", "Include"]}>
     <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
-    <Tab value="Include">#include "IP/TCP/TCPClient.hpp"</Tab>
+    <Tab value="Include">#include "IP/UDP/UDPServer.hpp"</Tab>
 </Tabs>
 
 ## Syntax
 
 ```cpp
 namespace InternetProtocol
-class TCPClient
+class UDPServer
 ```
+
+## Example code
 
 ```cpp
 #include <iostream>
-#include <IP/TCP/TCPClient.hpp>
+#include <IP/UDP/UDPServer.hpp>
 
 using namespace InternetProtocol;
 
 int main()
 {
-    TCPClient client;
-    client.set_host("localhost", "3000");
-    client.on_message_received = [&](const FTcpMessage message) {
-        std::cout << buffer_to_string(message) << std::endl;
+    UDPServer server;
+    server.set_socket(EProtocolType::V4, 3000);
+    server.on_message_received = [](const FUdpMessage message, const asio::ip::udp::endpoint &endpoint) {
+        std::cout << endpoint.port() << " -> " << buffer_to_string(message.raw_data) << std::endl;
     };
-    client.connect();
+    server.open();
 
     std::string input;
     std::cout << "Digite algo: ";
     while (std::getline(std::cin, input)) {
         if (input == "quit")
         {
-            client.close();
+            server.close();
             break;
         }
-        client.send_str(input);
     }
-
     return 0;
 }
 ```
 
 ## Variables
 
-### FTcpMessage
+### FUdpMessage
 
 ```cpp
 namespace InternetProtocol
 
-struct FTcpMessage {
-    std::vector<std::byte> raw_data;
+struct FUdpMessage {
+    FUdpMessage() { rawData.resize(1024); }
+    std::vector<std::byte> rawData;
     size_t size = 0;
 };
 ```
 
 ## Functions
 
-### Set Host
+### SetSocket
 
--   Set the `adress` and `port` of host
+-   Set socket protocol and port
 
 ```cpp
-void set_host(const std::string &ip, const std::string &port)
+void set_socket(const EProtocolType protocol, const uint16_t port)
 ```
 
 ### Get Socket
@@ -77,20 +78,20 @@ void set_host(const std::string &ip, const std::string &port)
 -   Get socket connection properties
 
 ```cpp
-asio::ip::tcp::socket &get_socket()
+asio::ip::udp::socket &get_socket()
 ```
 
-### Set Max Send Buffer Size
+### Set Max Receive Buffer Size
 
--   Set max size in bytes of send buffer
+-   Set max size in bytes of receive buffer
 
 ```cpp
-void set_max_send_buffer_size(int value = 1400)
+void set_max_sen_buffer_size(int value = 1024)
 ```
 
-### Get Max Send Buffer Size
+### Get Max Receive Buffer Size
 
--   Get max size in bytes of send buffer
+-   Get max size in bytes of receive buffer
 
 ```cpp
 int get_max_send_buffer_size() const
@@ -112,37 +113,38 @@ void set_split_package(bool value = true)
 bool get_split_package() const
 ```
 
-### Send Str
+### Send Str To
 
--   Send a string message
+-   Send a string message to specifc endpoint
 -   Return false if message is empty or socket is closed
 -   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF\*8
 
 ```cpp
-bool send_str(const std::string &message)
+bool send_str_to(const std::string &message, const asio::ip::udp::endpoint &endpoint)
 ```
 
-### Send Buffer
+### Send Buffer To
 
 -   Send a buffer message
--   Return false if message is empty or socket is closed
+-   Return false if buffer is empty or socket is closed
 
 ```cpp
-bool send_buffer(const std::vector<std::byte> &buffer)
+bool send_buffer(const std::vector<uint8_t> &buffer, const asio::ip::udp::endpoint &endpoint)
 ```
 
-### Connect
+### Open
 
--   Connect to the host
--   Return true if It's able to connect
+-   Open socket connection
+-   Return false if socket is already open or any error occurs
+-   Event `on_error` is triggered if any error occurs
 
 ```cpp
-bool connect()
+bool open()
 ```
 
 ### Close
 
--   Close connection
+-   Close socket
 
 ```cpp
 void close()
@@ -153,18 +155,10 @@ void close()
 -   Get latest error code
 
 ```cpp
-int get_error_code() const
+asio::error_code get_error_code() const
 ```
 
 ## Events
-
-### On Connected
-
--   Event triggered when a connection is estabilished
-
-```cpp
-std::function<void()> on_connected
-```
 
 ### On Bytes Transferred
 
@@ -182,17 +176,17 @@ std::function<void(const size_t, const size_t)> on_bytes_transfered
 -   `const asio::error_code &`: if error occur, error code will be different from 0
 
 ```cpp
-std::function<void(const asio::error_code &)> on_message_sent
+std::function<void(const asio::error_code &, const asio::ip::udp::endpoint &)> on_message_sent
 ```
 
 ### On Message Received
 
--   Event triggered when a message is received
--   `FTcpMessage`: message struct
+-   Event triggered when a message is received by a endpoint
+-   `FUdpMessage`: message struct
 -   Use `buffer_to_string()` function to converte `raw_data` to `std::string`
 
 ```cpp
-std::function<void(const FTcpMessage)> on_message_received
+std::function<void(const FUdpMessage, const asio::ip::udp::endpoint &)> on_message_received
 ```
 
 ### On Close

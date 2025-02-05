@@ -3,11 +3,11 @@ title: UDP Client
 description: How to use UDP client class
 ---
 
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 ## References
- 
-<Tabs items={['Global', 'Include']}>
+
+<Tabs items={["Global", "Include"]}>
     <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
     <Tab value="Include">#include "IP/UDP/UDPClient.hpp"</Tab>
 </Tabs>
@@ -35,7 +35,7 @@ int main()
         std::cout << message.toString() << std::endl;
     };
     client.connect();
-    
+
     std::string input;
     std::cout << "Digite algo: ";
     while (std::getline(std::cin, input)) {
@@ -46,7 +46,7 @@ int main()
         }
         client.send_str(input);
     }
-    
+
     return 0;
 }
 ```
@@ -69,7 +69,7 @@ struct FUdpMessage {
 
 ### Set Host
 
-* Set the `adress`, `port`, `protocol` of host
+- Set the `adress`, `port`, `protocol` of host
 
 ```cpp
 void set_host(const std::string &ip, const std::string &port, const EProtocolType protocol)
@@ -77,7 +77,7 @@ void set_host(const std::string &ip, const std::string &port, const EProtocolTyp
 
 ### Get Socket
 
-* Get socket connection properties
+-   Get socket connection properties
 
 ```cpp
 asio::ip::udp::socket &get_socket()
@@ -85,7 +85,7 @@ asio::ip::udp::socket &get_socket()
 
 ### Set Max Receive Buffer Size
 
-* Set max size in bytes of receive buffer
+-   Set max size in bytes of receive buffer
 
 ```cpp
 void set_max_sen_buffer_size(int value = 1024)
@@ -93,7 +93,7 @@ void set_max_sen_buffer_size(int value = 1024)
 
 ### Get Max Receive Buffer Size
 
-* Get max size in bytes of receive buffer
+-   Get max size in bytes of receive buffer
 
 ```cpp
 int get_max_send_buffer_size() const
@@ -101,7 +101,7 @@ int get_max_send_buffer_size() const
 
 ### Set Split Package
 
-* If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
+-   If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
 
 ```cpp
 void set_split_package(bool value = true)
@@ -109,7 +109,7 @@ void set_split_package(bool value = true)
 
 ### Get Split Package
 
-* Get if Split Package is enabled
+-   Get if Split Package is enabled
 
 ```cpp
 bool get_split_package() const
@@ -117,9 +117,9 @@ bool get_split_package() const
 
 ### Send Str
 
-* Send a string message
-* Return false if message is empty or socket is closed
-* Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
+-   Send a string message
+-   Return false if message is empty or socket is closed
+-   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
 
 ```cpp
 bool send_str(const std::string &message)
@@ -127,17 +127,17 @@ bool send_str(const std::string &message)
 
 ### Send Buffer
 
-* Send a buffer message
-* Return false if buffer is empty or socket is closed
+-   Send a buffer message
+-   Return false if buffer is empty or socket is closed
 
-```cpp
+```cpp title="Message"
 bool send_buffer(const std::vector<uint8_t> &buffer)
 ```
 
 ### Connect
 
-* Connect to the host
-* Return false if socket is already open
+-   Connect to the host
+-   Return false if socket is already open
 
 ```cpp
 bool connect()
@@ -145,14 +145,15 @@ bool connect()
 
 ### Close
 
-* Close connection
+-   Close connection
 
 ```cpp
 void close()
 ```
+
 ### Get Error Code
 
-* Get latest error code
+-   Get latest error code
 
 ```cpp
 asio::error_code get_error_code() const
@@ -162,7 +163,7 @@ asio::error_code get_error_code() const
 
 ### On Connected
 
-* Event triggered when a connection is estabilished
+-   Event triggered when a connection is estabilished
 
 ```cpp
 std::function<void()> on_connected;
@@ -170,47 +171,47 @@ std::function<void()> on_connected;
 
 ### On Bytes Transferred
 
-* Event triggered when socket send or receive data
-* `size_t`: bytes sent 
-* `size_t`: bytes received
+-   Event triggered when socket send or receive data
+-   `size_t`: bytes sent
+-   `size_t`: bytes received
 
 ```cpp
-std::function<void(const size_t, const size_t)> on_bytes_transfered;
+std::function<void(const size_t, const size_t)> on_bytes_transfered
 ```
 
 ### On Message Sent
 
-* Event triggered when a message is sent
-* `const asio::error_code &`: if error occur, error code will be different from 0
+-   Event triggered when a message is sent
+-   `const asio::error_code &`: if error occur, error code will be different from 0
 
 ```cpp
-std::function<void(const asio::error_code &)> on_message_sent;
+std::function<void(const asio::error_code &)> on_message_sent
 ```
 
 ### On Message Received
 
-* Event triggered when a message is received
-* `FUdpMessage`: message struct
-* Use `buffer_to_string()` function to converte `raw_data` to `std::string`
+-   Event triggered when a message is received
+-   `FUdpMessage`: message struct
+-   Use `buffer_to_string()` function to converte `raw_data` to `std::string`
 
 ```cpp
-std::function<void(const FUdpMessage)> on_message_received;
+std::function<void(const FUdpMessage)> on_message_received
 ```
 
 ### On Close
 
-* Event triggered when socket is closed
+-   Event triggered when socket is closed
 
 ```cpp
-std::function<void()> on_close;
+std::function<void()> on_close
 ```
 
 ### On Error
 
-* Event triggered if any error occur during async process
-* `const asio::error_code &`: if error occur, error code will be different from 0
-* Normally, when an error occurs, the socket is automatically closed, triggering the `on_close` event.
+-   Event triggered if any error occur during async process
+-   `const asio::error_code &`: if error occur, error code will be different from 0
+-   Normally, when an error occurs, the socket is automatically closed, triggering the `on_close` event.
 
 ```cpp
-std::function<void(const asio::error_code &)> on_error;
+std::function<void(const asio::error_code &)> on_error
 ```

@@ -1,0 +1,282 @@
+---
+title: HTTP Server
+description: How to use HTTP server class
+---
+
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+
+## References
+
+<Tabs items={["Global", "Include"]}>
+    <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
+    <Tab value="Include">#include "IP/HTTP/HTTPServer.hpp"</Tab>
+</Tabs>
+
+## Syntax
+
+```cpp
+namespace InternetProtocol
+class HttpServer
+```
+
+## Example code
+
+```cpp
+#include <iostream>
+#include <IP/HTTP/HTTPServer.hpp>
+
+using namespace InternetProtocol;
+
+int main()
+{
+    HttpServer server;
+    server.set_socket(EProtocolType::V4, 3000);
+    server.on_request_received = [&](const Server::FRequest request, Server::FResponse &response, const socket_ptr &socket) {
+        response.body = "Hello World!";
+        server.send_response(response, socket);
+    };
+    server.open();
+
+    std::string input;
+    std::cout << "Digite algo: ";
+    while (std::getline(std::cin, input)) {
+        if (input == "quit")
+        {
+            server.close();
+            break;
+        }
+    }
+    return 0;
+}
+```
+
+## Variables
+
+### EVerb
+
+```cpp
+namespace InternetProtocol
+
+enum class EVerb : uint8_t {
+    DEL = 0,
+    GET = 1,
+    HEAD = 2,
+    OPTIONS = 3,
+    PATCH = 4,
+    POST = 5,
+    PUT = 6,
+    TRACE = 7,
+}
+```
+
+### FRequest
+
+```cpp
+namespace InternetProtocol::Server
+
+struct FRequest {
+    EMethod method = EMethod::GET;
+    std::string path = "/";
+    std::string version = "1.1";
+    std::map<std::string, std::vector<std::string> > headers;
+    std::string body;
+};
+```
+
+### FResponse
+
+```cpp
+namespace InternetProtocol::Server
+
+struct FResponse {
+    std::string version = "1.1";
+    std::map<std::string, std::string> headers;
+    std::string body;
+};
+```
+
+## Functions
+
+### Set Socket
+
+-   Set the `adress`, `port`, `max connection` of socket acceptor
+
+```cpp
+void set_socket(const EProtocolType protocol, const uint16_t port, const int max_listen_conn = 2147483647)
+```
+
+### Get Acceptor
+
+-   Get socket acceptor
+
+```cpp
+asio::ip::tcp::acceptor &get_acceptor()
+```
+
+### Get Sockets
+
+-   Get all sockets connected to the server
+
+```cpp
+const std::set<socket_ptr> get_sockets() const
+```
+
+### Append Headers
+
+-   Append headers to response
+
+```cpp
+void Append_headers(const std::string &key, const std::string &value)
+```
+
+### Clear Headers
+
+-   Clear response headers
+
+```cpp
+void clear_headers()
+```
+
+### Remove Header
+
+-   Clear response header
+
+```cpp
+void remove_header(const std::string &key)
+```
+
+### Has Header
+
+-   Check if response has a certain header
+
+```cpp
+bool has_header(const std::string &key) const
+```
+
+### Get Headers
+
+-   Get all headers from response
+
+```cpp
+std::map<std::string, std::string> get_headers() const
+```
+
+### Send Response
+
+-   Send response to specific socket
+-   Return false if socket is closed
+-   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
+
+```cpp
+bool send_response(Server::FResponse &response, const socket_ptr &socket)
+```
+
+### Send Response Error
+
+-   Send response error to specific socket
+-   Return false if socket is closed
+-   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
+
+```cpp
+bool send_error_response(const uint32_t status_code, const Server::FResponse &response, const socket_ptr &socket)
+```
+
+### Open
+
+-   Open connection
+-   Return false if socket is already open or any error occurs
+-   Event `on_error` is triggered if any error occurs
+
+```cpp
+void open()
+```
+
+### Close
+
+-   Close connection or cancel request
+
+```cpp
+void close()
+```
+
+### Disconnect Socket
+
+-   Close connection of specific socket
+
+```cpp
+void disconnect_socket(const socket_ptr &socket)
+```
+
+### Get Error Code
+
+-   Get latest error code
+
+```cpp
+asio::error_code get_error_code() const
+```
+
+## Events
+
+### On Socket Accepted
+
+-   Event triggered when payload process has been finished
+
+```cpp
+std::function<void(const socket_ptr &)> on_socket_accepted
+```
+
+### On Bytes Transfered
+
+-   Event triggered while the request is in progress
+-   `size_t`: bytes sent
+-   `size_t`: bytes received
+
+```cpp
+std::function<void(const size_t, const size_t)> on_bytes_transfered
+```
+
+### On Request Received
+
+-   Event triggered when request has been received
+-   `FRequest`: Client request struct
+-   `FResponse`: Response struct
+
+```cpp
+std::function<void(const Server::FRequest, Server::FResponse, const ssl_socket_ptr &)> on_request_received
+```
+
+### On Request Error
+
+-   Event triggered when request fail
+-   `FResponse`: Response struct
+
+```cpp
+std::function<void(const asio::error_code &, const ssl_socket_ptr &)> on_request_error
+```
+
+### On Response Sent
+
+-   Event triggered when a response is sent to a specific socket
+-   `const asio::error_code &`: if error occur, error code will be different from 0
+
+```cpp
+std::function<void(const asio::error_code &, const socket_ptr &)> on_response_sent
+```
+
+### On Close
+
+-   Event triggered when socket is closed
+
+```cpp
+std::function<void()> on_close
+```
+
+### On Error
+
+-   Event triggered if any error occur during async process
+-   `const asio::error_code &`: if error occur, error code will be different from 0
+-   Normally, when an error occurs, the socket is automatically closed, triggering the `on_close` event.
+
+```cpp
+std::function<void(const asio::error_code &)> on_error
+```

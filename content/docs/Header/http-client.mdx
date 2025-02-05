@@ -71,7 +71,7 @@ enum class EVerb : uint8_t {
 ### FRequest
 
 ```cpp
-namespace InternetProtocol:: Client
+namespace InternetProtocol::Client
 
 struct FRequest {
     std::map<std::string, std::string> params;
@@ -380,7 +380,7 @@ asio::error_code get_error_code() const
 -   Event triggered when payload process has been finished
 
 ```cpp
-std::function<void()> on_async_payload_finished;
+std::function<void()> on_async_payload_finished
 ```
 
 ### On Request Progress
@@ -390,7 +390,7 @@ std::function<void()> on_async_payload_finished;
 -   `size_t`: bytes received
 
 ```cpp
-std::function<void(const size_t, const size_t)> on_request_progress;
+std::function<void(const size_t, const size_t)> on_request_progress
 ```
 
 ### On Request Complete
@@ -399,7 +399,7 @@ std::function<void(const size_t, const size_t)> on_request_progress;
 -   `FResponse`: Response struct
 
 ```cpp
-std::function<void(const Client::FResponse)> on_request_complete;
+std::function<void(const Client::FResponse)> on_request_complete
 ```
 
 ### On Request Fail
@@ -408,7 +408,7 @@ std::function<void(const Client::FResponse)> on_request_complete;
 -   `FResponse`: Response struct
 
 ```cpp
-std::function<void(const Client::FResponse)> on_request_fail;
+std::function<void(const Client::FResponse)> on_request_fail
 ```
 
 ### On Close
@@ -416,7 +416,7 @@ std::function<void(const Client::FResponse)> on_request_fail;
 -   Event triggered when socket is closed
 
 ```cpp
-std::function<void()> on_close;
+std::function<void()> on_close
 ```
 
 ### On Error
@@ -426,5 +426,5 @@ std::function<void()> on_close;
 -   Normally, when an error occurs, the socket is automatically closed, triggering the `on_close` event.
 
 ```cpp
-std::function<void(const asio::error_code &)> on_error;
+std::function<void(const asio::error_code &)> on_error
 ```
