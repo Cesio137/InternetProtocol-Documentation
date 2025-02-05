@@ -1,6 +1,6 @@
 ---
-title: HTTP Client Openssl
-description: How to use HTTP client class with openssl
+title: Websocket Server Openssl
+description: How to use Websocket server class with openssl
 ---
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
@@ -9,7 +9,7 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 <Tabs items={["Global", "Include", "Macro"]}>
     <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
-    <Tab value="Include">#include "IP/HTTP/HTTPClient.hpp"</Tab>
+    <Tab value="Include">#include "IP/Websocket/WebsocketServer.hpp"</Tab>
     <Tab value="Macro">#define ASIO_USE_OPENSSL</Tab>
 </Tabs>
 
@@ -17,47 +17,46 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 ```cpp
 namespace InternetProtocol
-class HttpClientSsl
+class TCPServerSsl
 ```
+
+## Example code
 
 ```cpp
 #include <iostream>
 #define ASIO_USE_OPENSSL
-#include <IP/HTTP/HTTPClient.hpp>
+#include <IP/Websocket/WebsocketServer.hpp>
 
 using namespace InternetProtocol;
 
 int main()
 {
-    HttpClientSsl client;
-    client.set_host("localhost", "3000");
-    client.set_request_method();
-    client.on_request_complete = [&](const Client::FResponse response) {
-        std::cout << response.content << std::endl;
+    WebsocketServerSsl server;
+    server.set_socket(EProtocolType::V4, 3000);
+    server.on_message_received = [&](const FWsMessage message, const ssl_socket_ptr &ssl_socket) {
+        std::cout << ssl_socket->lowest_layer().remote_endpoint().port() << " -> " << buffer_to_string(message.payload) << std::endl;
     };
-    client.get_ssl_context().set_options(asio::ssl::verify_none);
-    client.load_private_key_file("<key file>.pem"); //Relative path to your PEM file
-    client.load_certificate_file("<cert file>.pem"); //Relative path to your PEM file
-    client.update_ssl_socket();
-    client.prepare_payload();
-    client.process_request();
+    server.get_ssl_context().set_options(asio::ssl::verify_none);
+    server.load_private_key_file("<key file>.pem"); //Relative path to your PEM file
+    server.load_certificate_file("<cert file>.pem"); //Relative path to your PEM file
+    server.open();
 
     std::string input;
     std::cout << "Digite algo: ";
     while (std::getline(std::cin, input)) {
         if (input == "quit")
         {
+            server.close();
             break;
         }
     }
-
     return 0;
 }
 ```
 
 ## Functions
 
-This class has the same functions from `HttpClient`, except for the ones shown below
+This class has the same functions from `WebsocketServer`, except for the ones shown below
 
 ### Get Ssl Context
 
@@ -67,21 +66,12 @@ This class has the same functions from `HttpClient`, except for the ones shown b
   asio::ssl::context &get_ssl_context()
 ```
 
-### Get Ssl Socket
+### Get Ssl Sockets
 
--   Get Ssl socket
-
-```cpp
-  const asio::ssl::stream<asio::ip::tcp::socket> &get_ssl_socket() const
-```
-
-### Update Ssl Socket
-
--   Update Ssl socket configuration
--   Must be called afer change options using `get_ssl_context()` function
+-   Get all ssl sockets connected
 
 ```cpp
-  void update_ssl_socket()
+  const std::set<ssl_socket_ptr> &get_ssl_sockets() const
 ```
 
 ### Load Private Key Data

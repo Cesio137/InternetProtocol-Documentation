@@ -3,11 +3,11 @@ title: HTTP Client
 description: How to use HTTP client class
 ---
 
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 ## References
- 
-<Tabs items={['Global', 'Include']}>
+
+<Tabs items={["Global", "Include"]}>
     <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
     <Tab value="Include">#include "IP/HTTP/HTTPClient.hpp"</Tab>
 </Tabs>
@@ -30,7 +30,7 @@ int main()
     HttpClient client;
     client.set_host("localhost", "3000");
     client.set_request_method();
-    client.on_request_complete = [&](const FResponse response) {
+    client.on_request_complete = [&](const Client::FResponse response) {
         std::cout << response.content << std::endl;
     };
     client.prepare_payload();
@@ -44,7 +44,7 @@ int main()
             break;
         }
     }
-    
+
     return 0;
 }
 ```
@@ -57,158 +57,106 @@ int main()
 namespace InternetProtocol
 
 enum class EVerb : uint8_t {
-    GET,
-    POST,
-    PUT,
-    PATCH, 
-    DEL,
-    COPY,
-    HEAD,
-    OPTIONS,
-    LOCK,
-    UNLOCK,
-    PROPFIND
+    DEL = 0,
+    GET = 1,
+    HEAD = 2,
+    OPTIONS = 3,
+    PATCH = 4,
+    POST = 5,
+    PUT = 6,
+    TRACE = 7,
 }
 ```
 
 ### FRequest
 
 ```cpp
-namespace InternetProtocol
+namespace InternetProtocol::Client
 
 struct FRequest {
-        std::map<std::string, std::string> params;
-        EVerb verb = EVerb::GET;
-        std::string path = "/";
-        std::string version = "2.0";
-        std::map<std::string, std::string> headers;
-        std::string body;
+    std::map<std::string, std::string> params;
+    EVerb verb = EVerb::GET;
+    std::string path = "/";
+    std::string version = "1.1";
+    std::map<std::string, std::string> headers;
+    std::string body;
 
-        void clear();
-    };
+};
 ```
 
 ### FResponse
 
 ```cpp
-namespace InternetProtocol
+namespace InternetProtocol::Client
 
 struct FResponse {
-        std::map<std::string, std::vector<std::string> > headers;
-        int contentLenght = 0;
-        std::string content;
-
-        void appendHeader(const std::string &headerline);
-        void setContent(const std::string &value);
-        void appendContent(const std::string &value);
-
-        void clear();
-    };
+    std::map<std::string, std::vector<std::string> > headers;
+    int contentLenght = 0;
+    std::string content;
+};
 ```
 
 ## Functions
 
 ### Set Host
 
-* Set the `adress` and `port` of host
+-   Set the `adress` and `port` of host
 
 ```cpp
-void set_host(const std::string &url = "localhost", const std::string &port = "")
+void set_host(const std::string &url = "localhost", const std::string &port = "3000")
 ```
 
-### Get Host
+### Get Socket
 
-* Get host IP
-
-```cpp
-std::string get_host() const
-```
-
-### Get Port
-
-* Get host port
+-   Get socket connection properties
 
 ```cpp
-std::string get_port() const
-```
-
-### Set Timeout
-
-* Set timeout in seconds
-* OBS: Value must be between 0 and 255
-
-```cpp
-void set_timeout(uint8_t value = 3)
-```
-
-### Get Timeout
-
-* Get timeout in seconds
-
-```cpp
-uint8_t get_timeout() const
-```
-
-### Set Max Attemp
-
-* Set max times to try reconnect
-* OBS: Value must be between 0 and 255
-
-```cpp
-void set_max_attemp(uint8_t value = 3)
-```
-
-### Get Max Attemp
-
-* Get max times to try reconnect
-
-```cpp
- uint8_t get_max_attemp() const
+asio::ip::tcp::socket &get_socket()
 ```
 
 ### Set Request
 
-* Set the HTTP request to be sent
+-   Set the HTTP request to be sent
 
 ```cpp
-void set_request(const FRequest &value)
+void set_request(const Client::FRequest &value)
 ```
 
 ### Get Request
 
-* Get the HTTP request to be sent
+-   Get the HTTP request to be sent
 
 ```cpp
-FRequest get_request() const
+Client::FRequest get_request() const
 ```
 
 ### Set Request Method
 
-* Set request verb
+-   Set request verb
 
 ```cpp
-void set_request_method(EVerb requestMethod = EVerb::GET)
+void set_request_method(EMethod requestMethod = EMethod::GET)
 ```
 
 ### Get Request Method
 
-* Get request verb
+-   Get request verb
 
 ```cpp
-EVerb get_request_method() const
+EMethod get_request_method() const
 ```
 
 ### Set Version
 
-* Set request version
+-   Set request version
 
 ```cpp
-void set_version(const std::string &version = "2.0")
+void set_version(const std::string &version = "1.1)
 ```
 
 ### Get Version
 
-* Get request version
+-   Get request version
 
 ```cpp
 std::string get_version() const
@@ -216,7 +164,7 @@ std::string get_version() const
 
 ### Set Path
 
-* Set request version
+-   Set request version
 
 ```cpp
 void set_path(const std::string &path = "/")
@@ -224,7 +172,7 @@ void set_path(const std::string &path = "/")
 
 ### Get Path
 
-* Get request version
+-   Get request version
 
 ```cpp
 std::string get_path() const
@@ -232,7 +180,7 @@ std::string get_path() const
 
 ### Append Params
 
-* Append parameter to request
+-   Append parameter to request
 
 ```cpp
 void append_params(const std::string &key, const std::string &value)
@@ -240,7 +188,7 @@ void append_params(const std::string &key, const std::string &value)
 
 ### Clear Params
 
-* Clear request parameters
+-   Clear request parameters
 
 ```cpp
 void clear_params()
@@ -248,7 +196,7 @@ void clear_params()
 
 ### Remove Param
 
-* Remove request parameter
+-   Remove request parameter
 
 ```cpp
 void remove_param(const std::string &key)
@@ -256,7 +204,7 @@ void remove_param(const std::string &key)
 
 ### Has Param
 
-* Check if request has a certain parameter
+-   Check if request has a certain parameter
 
 ```cpp
 bool has_param(const std::string &key) const
@@ -264,7 +212,7 @@ bool has_param(const std::string &key) const
 
 ### Get Params
 
-* Get all parameters from request
+-   Get all parameters from request
 
 ```cpp
 std::map<std::string, std::string> get_params() const
@@ -272,7 +220,7 @@ std::map<std::string, std::string> get_params() const
 
 ### Append Headers
 
-* Append headers to request
+-   Append headers to request
 
 ```cpp
 void Append_headers(const std::string &key, const std::string &value)
@@ -280,7 +228,7 @@ void Append_headers(const std::string &key, const std::string &value)
 
 ### Clear Headers
 
-* Clear request headers
+-   Clear request headers
 
 ```cpp
 void clear_headers()
@@ -288,7 +236,7 @@ void clear_headers()
 
 ### Remove Header
 
-* Clear request header
+-   Clear request header
 
 ```cpp
 void remove_header(const std::string &key)
@@ -296,7 +244,7 @@ void remove_header(const std::string &key)
 
 ### Has Header
 
-* Check if request has a certain header
+-   Check if request has a certain header
 
 ```cpp
 bool has_header(const std::string &key) const
@@ -304,7 +252,7 @@ bool has_header(const std::string &key) const
 
 ### Get Headers
 
-* Get all headers from request
+-   Get all headers from request
 
 ```cpp
 std::map<std::string, std::string> get_headers() const
@@ -312,7 +260,7 @@ std::map<std::string, std::string> get_headers() const
 
 ### Set Body
 
-* Set request body
+-   Set request body
 
 ```cpp
 void set_body(const std::string &value)
@@ -320,7 +268,7 @@ void set_body(const std::string &value)
 
 ### Clear Body
 
-* Clear request body
+-   Clear request body
 
 ```cpp
 void clear_body()
@@ -328,7 +276,7 @@ void clear_body()
 
 ### Get Body
 
-* Get request body
+-   Get request body
 
 ```cpp
 std::string get_body() const
@@ -336,16 +284,16 @@ std::string get_body() const
 
 ### Get Request Data
 
-* Get request data
+-   Get request data
 
 ```cpp
-FRequest get_request_data() const
+Client::FRequest get_request_data() const
 ```
 
 ### Prepare Payload
 
-* Prepare request data
-* Must be called before call `processRequest` function
+-   Prepare request data
+-   Must be called before call `processRequest` function
 
 ```cpp
 void prepare_payload()
@@ -353,8 +301,8 @@ void prepare_payload()
 
 ### Async Prepare Payload
 
-* Prepare request data asynchronously
-* Must be called before call `processRequest` function
+-   Prepare request data asynchronously
+-   Must be called before call `processRequest` function
 
 ```cpp
 void async_prepare_payload()
@@ -362,7 +310,7 @@ void async_prepare_payload()
 
 ### Get Payload Data
 
-* Get processed payload data 
+-   Get processed payload data
 
 ```cpp
 std::string get_payload_data() const
@@ -370,7 +318,7 @@ std::string get_payload_data() const
 
 ### Get Response Data
 
-* Get latest response data 
+-   Get latest response data
 
 ```cpp
 FResponse get_response_data() const
@@ -378,24 +326,24 @@ FResponse get_response_data() const
 
 ### Process Request
 
-* Send request
-* Return true if request can be sent
+-   Send request
+-   Return false if payload is empty
 
 ```cpp
 bool process_request()
 ```
 
-### Cancel Request
+### Close
 
-* Cancel request
+-   Close connection or cancel request
 
 ```cpp
-void cancel_request()
+void close()
 ```
 
 ### Clear Request
 
-* Clear request data
+-   Clear request data
 
 ```cpp
 void clear_request()
@@ -403,7 +351,7 @@ void clear_request()
 
 ### Clear Payload
 
-* Clear payload  data
+-   Clear payload data
 
 ```cpp
 void clear_payload()
@@ -411,7 +359,7 @@ void clear_payload()
 
 ### Clear Response
 
-* Clear response buffer
+-   Clear response buffer
 
 ```cpp
 void clear_response()
@@ -419,7 +367,7 @@ void clear_response()
 
 ### Get Error Code
 
-* Get latest error code
+-   Get latest error code
 
 ```cpp
 asio::error_code get_error_code() const
@@ -429,63 +377,54 @@ asio::error_code get_error_code() const
 
 ### On Async Payload Finished
 
-* Event triggered when payload process has been finished
+-   Event triggered when payload process has been finished
 
 ```cpp
-std::function<void()> on_async_payload_finished;
-```
-
-### On Request Complete
-
-* Event triggered when request is done
-* `FResponse`: Response struct
-
-```cpp
-std::function<void(const FResponse)> on_request_complete;
-```
-
-### On Request Canceled
-
-* Event triggered when request is canceled
-
-```cpp
-std::function<void()> on_request_canceled;
+std::function<void()> on_async_payload_finished
 ```
 
 ### On Request Progress
 
-* Event triggered while the request is in progress
-* `size_t`: bytes sent 
-* `size_t`: bytes received
+-   Event triggered while the request is in progress
+-   `size_t`: bytes sent
+-   `size_t`: bytes received
 
 ```cpp
-std::function<void(const size_t, const size_t)> on_request_progress;
+std::function<void(const size_t, const size_t)> on_request_progress
 ```
 
-### On Request Will Retry
+### On Request Complete
 
-* Event triggered while retry to connect
-* `int`: number of attemps
+-   Event triggered when request is done
+-   `FResponse`: Response struct
 
 ```cpp
-std::function<void(const int)> on_request_will_retry;
+std::function<void(const Client::FResponse)> on_request_complete
 ```
 
 ### On Request Fail
 
-* Event triggered if request fail
-* `int`: error code
-* `std::string`: error message
+-   Event triggered when request fail
+-   `FResponse`: Response struct
 
 ```cpp
-std::function<void(const int, const std::string &)> on_request_fail;
+std::function<void(const Client::FResponse)> on_request_fail
 ```
 
-### On Response Error
+### On Close
 
-* Event triggered if any error occur during async process of response
-* `int`: error code
+-   Event triggered when socket is closed
 
 ```cpp
-std::function<void(const int)> on_response_fail;
+std::function<void()> on_close
+```
+
+### On Error
+
+-   Event triggered if any error occur during async process
+-   `const asio::error_code &`: if error occur, error code will be different from 0
+-   Normally, when an error occurs, the socket is automatically closed, triggering the `on_close` event.
+
+```cpp
+std::function<void(const asio::error_code &)> on_error
 ```

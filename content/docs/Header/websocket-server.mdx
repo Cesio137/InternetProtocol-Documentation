@@ -1,6 +1,6 @@
 ---
-title: Websocket Client
-description: How to use Websocket client class
+title: Websocket Server
+description: How to use Websocket server class
 ---
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
@@ -9,43 +9,42 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 <Tabs items={["Global", "Include"]}>
     <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
-    <Tab value="Include">#include "IP/Websocket/WebsocketClient.hpp"</Tab>
+    <Tab value="Include">#include "IP/Websocket/WebsocketServer.hpp"</Tab>
 </Tabs>
 
 ## Syntax
 
 ```cpp
 namespace InternetProtocol
-class WebsocketClient
+class WebsocketServer
 ```
 
 ## Example Code
 
 ```cpp
 #include <iostream>
-#include <IP/Websocket/WebsocketClient.hpp>
+#include <IP/Websocket/WebsocketServer.hpp>
 
 using namespace InternetProtocol;
 
 int main()
 {
-    WebsocketClient client;
-    client.set_host("localhost", "3000");
-    client.on_message_received = [&](const FWsMessage message) {
-        std::cout << buffer_to_string(message) << std::endl;
+    WebsocketServer server;
+    server.set_socket(EProtocolType::V4, 3000);
+    server.on_message_received = [&](const FWsMessage message, const socket_ptr &socket) {
+        std::cout << socket->remote_endpoint().port() << " -> " << buffer_to_string(message.payload) << std::endl;
     };
-    client.connect();
+    server.open();
 
     std::string input;
     std::cout << "Digite algo: ";
     while (std::getline(std::cin, input)) {
         if (input == "quit")
         {
+            server.close();
             break;
         }
-        client.send(input);
     }
-
     return 0;
 }
 ```
@@ -98,23 +97,56 @@ struct FWsMessage {
     size_t size;
 };
 ```
+### FRequest
+
+```cpp
+namespace InternetProtocol::Server
+
+struct FRequest {
+    EMethod method = EMethod::GET;
+    std::string path = "/";
+    std::string version = "1.1";
+    std::map<std::string, std::vector<std::string> > headers;
+    std::string body;
+};
+```
+
+### FResponse
+
+```cpp
+namespace InternetProtocol::Server
+
+struct FResponse {
+    std::string version = "1.1";
+    std::map<std::string, std::string> headers;
+    std::string body;
+};
+```
 
 ## Functions
 
-### Set Host
+### Set Socket
 
--   Set the `adress` and `port` of host
+-   Set the `adress`, `port`, `max connection` of socket acceptor
 
 ```cpp
-void set_host(const std::string &ip, const std::string &port)
+void set_socket(const EProtocolType protocol, const uint16_t port, const int max_listen_conn = 2147483647)
 ```
 
-### Get Socket
+### Get Acceptor
 
--   Get socket connection properties
+-   Get socket acceptor
 
 ```cpp
-asio::ip::tcp::socket &get_socket()
+asio::ip::tcp::acceptor &get_acceptor()
+```
+
+### Get Sockets
+
+-   Get all sockets connected to the server
+
+```cpp
+const std::set<socket_ptr> get_sockets() const
 ```
 
 ### Set Max Send Buffer Size
@@ -149,49 +181,78 @@ void set_split_package(bool value = true)
 bool get_split_package() const
 ```
 
-### Send Str
+### Send Handshake To
+
+-   Send a websocket handshake to stablish connection with
+-   Return false if socket is closed
+-   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
+
+```cpp
+bool send_handshake_to(const Server::FRequest &request, Server::FResponse &response, const socket_ptr &socket)
+```
+
+### Send Handshake Error To
+
+-   Send a websocket handshake error and close connection
+-   Return false if socket is closed
+-   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
+
+```cpp
+bool send_handshake_error_to(const uint32_t status_code, const std::string &body, const socket_ptr &socket)
+```
+
+### Send Str To
 
 -   Send a string message
 -   Return false if string is empty or socket is closed
 -   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
 
 ```cpp
-bool send_str(const std::string &message)
+bool send_str_to(const std::string &message, const socket_ptr &socket)
 ```
 
-### Send Buffer
+### Send Buffer To
 
 -   Send a buffer message
 -   Return false if byte array is empty or socket is closed
 
 ```cpp
-bool send_buffer(const std::vector<uint8_t> &buffer)
+bool send_buffer_to(const std::vector<uint8_t> &buffer, const socket_ptr &socket)
 ```
 
-### Send Ping
+### Send Ping To
 
 -   Send a ping to websocket server
 -   Return false if socket is closed
 
 ```cpp
-bool send_ping()
+bool send_ping_to(const socket_ptr &socket)
 ```
 
-### Connect
+### Open
 
--   Connect to the host
--   Return true if It's able to connect
+-   Open connection
+-   Return false if socket is already open or any error occurs
+-   Event `on_error` is triggered if any error occurs
 
 ```cpp
-bool connect()
+bool open()
 ```
 
 ### Close
 
--   Close connection
+-   Disconnect all clients and close connection
 
 ```cpp
 void close()
+```
+
+### Disconnect Socket
+
+-   Close connection of specific socket
+
+```cpp
+void disconnect_socket(const socket_ptr &socket)
 ```
 
 ### Get Error Code
@@ -298,12 +359,12 @@ bool use_Mask() const
 
 ## Events
 
-### On Connected
+### On Socket Accepted
 
--   Event triggered when a connection is estabilished
+-   Event triggered when a new client connection is estabilished
 
 ```cpp
-std::function<void()> on_connected
+std::function<void(const socket_ptr &)> on_socket_accepted
 ```
 
 ### On Bytes Transferred
@@ -318,20 +379,21 @@ std::function<void(const size_t, const size_t)> on_bytes_transfered
 
 ### On Message Sent
 
--   Event triggered when a message is sent
--   `size_t`: size of message
+-   Event triggered when a message is sent by specific socket
+-   `const asio::error_code &`: if error occur, error code will be different from 0
 
 ```cpp
-std::function<void(const asio::error_code &)> on_message_sent
+std::function<void(const asio::error_code &, const socket_ptr &)> on_message_sent
 ```
 
 ### On Message Received
 
--   Event triggered when a message is received
--   `const asio::error_code &`: if error occur, error code will be different from 0
+-   Event triggered when a message is received by specific socket
+-   `FWsMessage`: message struct
+-   Use `buffer_to_string()` function to converte `raw_data` to `std::string`
 
 ```cpp
-std::function<void(const FWsMessage)> on_message_received
+std::function<void(const FWsMessage, const socket_ptr &)> on_message_received
 ```
 
 ### On Pong Received
@@ -339,15 +401,15 @@ std::function<void(const FWsMessage)> on_message_received
 -   Event triggered when a pong message is received
 
 ```cpp
-std::function<void()> on_pong_received
+std::function<void(const socket_ptr &)> on_pong_received
 ```
 
 ### On Close Notify
 
--   Event triggered when a server send a close notification
+-   Event triggered when a client send a close notification
 
 ```cpp
-std::function<void()> on_close_notify
+std::function<void(const socket_ptr &)> on_close_notify
 ```
 
 ### On Close
@@ -356,15 +418,6 @@ std::function<void()> on_close_notify
 
 ```cpp
 std::function<void()> on_close
-```
-
-### On Handshake Fail
-
--   Event triggered if any error occur during handshake.
--   Normally, when a handshake error occurs, the socket is automatically closed, triggering the `on_close` event.
-
-```cpp
-std::function<void(const Client::FResponse)> on_handshake_fail
 ```
 
 ### On Error

@@ -3,11 +3,11 @@ title: Websocket Client Openssl
 description: How to use Websocket client class with openssl
 ---
 
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 ## References
- 
-<Tabs items={['Global', 'Include', 'Macro']}>
+
+<Tabs items={["Global", "Include", "Macro"]}>
     <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
     <Tab value="Include">#include "IP/Websocket/WebsocketClient.hpp"</Tab>
     <Tab value="Macro">#define ASIO_USE_OPENSSL</Tab>
@@ -34,10 +34,12 @@ int main()
     client.on_message_received = [&](const FWsMessage message) {
         std::cout << message.toString() << std::endl;
     };
-    client.load_private_key_file("client-key.pem"); //Relative path to your PEM file
-    client.load_certificate_file("client-cert.pem"); //Relative path to your PEM file
+    client.get_ssl_context().set_options(asio::ssl::verify_none);
+    client.load_private_key_file("<key file>.pem"); //Relative path to your PEM file
+    client.load_certificate_file("<cert file>.pem"); //Relative path to your PEM file
+    client.update_ssl_socket();
     client.connect();
-    
+
     std::string input;
     std::cout << "Digite algo: ";
     while (std::getline(std::cin, input)) {
@@ -46,20 +48,46 @@ int main()
             client.close();
             break;
         }
-        client.send(input);
+        client.send_str(input);
     }
-    
+
     return 0;
 }
 ```
+
 ## Functions
 
-This class has the same functions from ```WebsocketClient```, except for the ones shown below
+This class has the same functions from `WebsocketClient`, except for the ones shown below
+
+### Get Ssl Context
+
+-   Set Ssl extra configuration.
+
+```cpp
+  asio::ssl::context &get_ssl_context()
+```
+
+### Get Ssl Socket
+
+-   Get Ssl socket
+
+```cpp
+  const asio::ssl::stream<asio::ip::tcp::socket> &get_ssl_socket() const
+```
+
+### Update Ssl Socket
+
+-   Update Ssl socket configuration
+-   Must be called afer change options using `get_ssl_context()` function
+
+```cpp
+  void update_ssl_socket()
+```
 
 ### Load Private Key Data
 
-* Load the private key from a string.
-* If any error occurs, it will trigger the ```onError``` event.
+-   Load the private key from a string.
+-   If any error occurs, it will trigger the `OnError` event.
 
 ```cpp
  bool load_private_key_data(const std::string &key_data)
@@ -67,9 +95,9 @@ This class has the same functions from ```WebsocketClient```, except for the one
 
 ### Load Private Key File
 
-* Load the private key from file.
-* If any error occurs, it will trigger the ```onError``` event.
-* Relative path.
+-   Load the private key from file.
+-   If any error occurs, it will trigger the `OnError` event.
+-   Relative path.
 
 ```cpp
  bool load_private_key_file(const std::string &filename)
@@ -77,8 +105,8 @@ This class has the same functions from ```WebsocketClient```, except for the one
 
 ### Load Certificate Data
 
-* Load the certificate from a string.
-* If any error occurs, it will trigger the ```onError``` event.
+-   Load the certificate from a string.
+-   If any error occurs, it will trigger the `OnError` event.
 
 ```cpp
  bool load_certificate_data(const std::string &cert_data)
@@ -86,9 +114,9 @@ This class has the same functions from ```WebsocketClient```, except for the one
 
 ### Load Certificate File
 
-* Load the certificate from file.
-* If any error occurs, it will trigger the ```onError``` event.
-* Relative path.
+-   Load the certificate from file.
+-   If any error occurs, it will trigger the `OnError` event.
+-   Relative path.
 
 ```cpp
  bool load_certificate_file(const std::string &filename)
@@ -96,8 +124,8 @@ This class has the same functions from ```WebsocketClient```, except for the one
 
 ### Load Certificate Chain Data
 
-* Load the certificate chain from a string.
-* If any error occurs, it will trigger the ```onError``` event.
+-   Load the certificate chain from a string.
+-   If any error occurs, it will trigger the `OnError` event.
 
 ```cpp
  bool load_certificate_chain_data(const std::string &cert_chain_data)
@@ -105,9 +133,9 @@ This class has the same functions from ```WebsocketClient```, except for the one
 
 ### Load Certificate Chain File
 
-* Load the certificate chain from file.
-* If any error occurs, it will trigger the ```onError``` event.
-* Relative path.
+-   Load the certificate chain from file.
+-   If any error occurs, it will trigger the `OnError` event.
+-   Relative path.
 
 ```cpp
  bool load_certificate_chain_file(const std::string &filename)
@@ -115,9 +143,9 @@ This class has the same functions from ```WebsocketClient```, except for the one
 
 ### Load Verify File
 
-* Load the certificate from file and verify if it is valid.
-* If any error occurs, it will trigger the ```onError``` event.
-* Relative path.
+-   Load the certificate from file and verify if it is valid.
+-   If any error occurs, it will trigger the `OnError` event.
+-   Relative path.
 
 ```cpp
  bool load_verify_file(const std::string &filename)

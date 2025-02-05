@@ -1,6 +1,13 @@
 {
     "title": "Header Only Library",
     "pages": [
+        "udp-server",
+        "tcp-server",
+        "tcp-server-openssl",
+        "http-server",
+        "http-server-openssl",
+        "websocket-server",
+        "websocket-server-openssl",
         "udp-client",
         "tcp-client",
         "tcp-client-openssl",
