@@ -3,13 +3,13 @@ title: HTTP Client
 description: How to use HTTP client class
 ---
 
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ## References
- 
-<Tabs items={['Include']}>
+
+<Tabs items={["Include"]}>
     <Tab value="Include">#include "Http/HttpClient.h"</Tab>
 </Tabs>
 
@@ -26,6 +26,7 @@ import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 
     UHttpClient* HttpClient = NewObject<UHttpClient>();
     ```
+
   </Step>
 </Steps>
 
@@ -33,240 +34,376 @@ import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 
 ### Set Host
 
-* Set the `adress` and `port` of host
-<ImageZoom src="/img/client-side/http/sethost.png" alt='Http client' width={172} height={164} />
+-   Set the `adress` and `port` of host
+    <ImageZoom src="/img/client-side/http/sethost.png" alt="Http client" width={172} height={164} />
 
-### Get Host
+### Get Socket
 
-* Get host IP
-<ImageZoom src="/img/client-side/http/gethost.png" alt='Http client' width={227} height={76} />
-
-### Get Port
-
-* Get host port
-<ImageZoom src="/img/client-side/http/getport.png" alt='Http client' width={227} height={76} />
-
-### Set Timeout
-
-* Set timeout in seconds 
-<ImageZoom src="/img/client-side/http/settimeout.png" alt='Http client' width={172} height={134} />
-
-### Get Timeout
-
-* Get timeout in seconds
-<ImageZoom src="/img/client-side/http/gettimeout.png" alt='Http client' width={227} height={76} />
-
-### Set Max Attemp
-
-* Set max times to try reconnect
-<ImageZoom src="/img/client-side/http/setmaxattemp.png" alt='Http client' width={172} height={134} />
-
-### Get Max Attemp
-
-* Get max times to try reconnect
-<ImageZoom src="/img/client-side/http/getmaxattemp.png" alt='Http client' width={227} height={76} />
+-   Get socket properties
+    <ImageZoom
+        src="/img/client-side/http/getsocket.png"
+        alt="Http client"
+        width={130}
+        height={56}
+    />
 
 ### Set Request
 
-* Set the HTTP request to be sent
-<ImageZoom src="/img/client-side/http/setrequest.png" alt='Http client' width={172} height={130} />
+-   Set the HTTP request to be sent
+    <ImageZoom
+        src="/img/client-side/http/setrequest.png"
+        alt="Http client"
+        width={172}
+        height={130}
+    />
 
 ### Get Request
 
-* Get the HTTP request to be sent
-<ImageZoom src="/img/client-side/http/getrequest.png" alt='Http client' width={227} height={76} />
+-   Get the HTTP request to be sent
+    <ImageZoom
+        src="/img/client-side/http/getrequest.png"
+        alt="Http client"
+        width={227}
+        height={76}
+    />
 
 ### Set Request Method
 
-* Set request verb
-<ImageZoom src="/img/client-side/http/setrequestmethod.png" alt='Http client' width={262} height={153} />
+-   Set request verb
+    <ImageZoom
+        src="/img/client-side/http/setrequestmethod.png"
+        alt="Http client"
+        width={262}
+        height={153}
+    />
 
 ### Get Request Method
 
-* Get request verb
-<ImageZoom src="/img/client-side/http/getrequestmethod.png" alt='Http client' width={227} height={76} />
+-   Get request verb
+    <ImageZoom
+        src="/img/client-side/http/getrequestmethod.png"
+        alt="Http client"
+        width={227}
+        height={76}
+    />
 
 ### Set Version
 
-* Set request version
-<ImageZoom src="/img/client-side/http/setversion.png" alt='Http client' width={172} height={134} />
+-   Set request version
+    <ImageZoom
+        src="/img/client-side/http/setversion.png"
+        alt="Http client"
+        width={172}
+        height={134}
+    />
 
 ### Get Version
 
-* Get request version
-<ImageZoom src="/img/client-side/http/getversion.png" alt='Http client' width={227} height={76} />
+-   Get request version
+    <ImageZoom
+        src="/img/client-side/http/getversion.png"
+        alt="Http client"
+        width={227}
+        height={76}
+    />
 
 ### Set Path
 
-* Set request version
-<ImageZoom src="/img/client-side/http/setpath.png" alt='Http client' width={171} height={133} />
+-   Set request version
+    <ImageZoom src="/img/client-side/http/setpath.png" alt="Http client" width={171} height={133} />
 
 ### Get Path
 
-* Get request version
-<ImageZoom src="/img/client-side/http/getpath.png" alt='Http client' width={227} height={76} />
+-   Get request version
+    <ImageZoom src="/img/client-side/http/getpath.png" alt="Http client" width={227} height={76} />
 
 ### Append Params
 
-* Append parameter to request
-<ImageZoom src="/img/client-side/http/appendparams.png" alt='Http client' width={172} height={164} />
+-   Append parameter to request
+    <ImageZoom
+        src="/img/client-side/http/appendparams.png"
+        alt="Http client"
+        width={172}
+        height={164}
+    />
 
 ### Clear Params
 
-* Clear request parameters
-<ImageZoom src="/img/client-side/http/clearparams.png" alt='Http client' width={172} height={104} />
+-   Clear request parameters
+    <ImageZoom
+        src="/img/client-side/http/clearparams.png"
+        alt="Http client"
+        width={172}
+        height={104}
+    />
 
 ### Remove Param
 
-* Remove request parameter
-<ImageZoom src="/img/client-side/http/removeparam.png" alt='Http client' width={172} height={134} />
+-   Remove request parameter
+    <ImageZoom
+        src="/img/client-side/http/removeparam.png"
+        alt="Http client"
+        width={172}
+        height={134}
+    />
 
 ### Has Param
 
-* Check if request has a certain parameter
-<ImageZoom src="/img/client-side/http/hasparam.png" alt='Http client' width={227} height={106} />
+-   Check if request has a certain parameter
+    <ImageZoom
+        src="/img/client-side/http/hasparam.png"
+        alt="Http client"
+        width={227}
+        height={106}
+    />
 
 ### Get Params
 
-* Get all parameters from request
-<ImageZoom src="/img/client-side/http/getparams.png" alt='Http client' width={228} height={76} />
+-   Get all parameters from request
+    <ImageZoom
+        src="/img/client-side/http/getparams.png"
+        alt="Http client"
+        width={228}
+        height={76}
+    />
 
 ### Append Headers
 
-* Append headers to request
-<ImageZoom src="/img/client-side/http/appendheaders.png" alt='Http client' width={169} height={162} />
+-   Append headers to request
+    <ImageZoom
+        src="/img/client-side/http/appendheaders.png"
+        alt="Http client"
+        width={169}
+        height={162}
+    />
 
 ### Clear Headers
 
-* Clear request headers
-<ImageZoom src="/img/client-side/http/clearheaders.png" alt='Http client' width={172} height={104} />
+-   Clear request headers
+    <ImageZoom
+        src="/img/client-side/http/clearheaders.png"
+        alt="Http client"
+        width={172}
+        height={104}
+    />
 
 ### Remove Header
 
-* Clear request header
-<ImageZoom src="/img/client-side/http/removeheader.png" alt='Http client' width={172} height={134} />
+-   Clear request header
+    <ImageZoom
+        src="/img/client-side/http/removeheader.png"
+        alt="Http client"
+        width={172}
+        height={134}
+    />
 
 ### Has Header
 
-* Check if request has a certain header
-<ImageZoom src="/img/client-side/http/hasparam.png" alt='Http client' width={227} height={106} />
+-   Check if request has a certain header
+    <ImageZoom
+        src="/img/client-side/http/hasparam.png"
+        alt="Http client"
+        width={227}
+        height={106}
+    />
 
 ### Get Headers
 
-* Get all headers from request
-<ImageZoom src="/img/client-side/http/getheaders.png" alt='Http client' width={228} height={76} />
+-   Get all headers from request
+    <ImageZoom
+        src="/img/client-side/http/getheaders.png"
+        alt="Http client"
+        width={228}
+        height={76}
+    />
 
 ### Set Body
 
-* Set request body
-<ImageZoom src="/img/client-side/http/setbody.png" alt='Http client' width={172} height={134} />
+-   Set request body
+    <ImageZoom src="/img/client-side/http/setbody.png" alt="Http client" width={172} height={134} />
 
 ### Clear Body
 
-* Clear request body
-<ImageZoom src="/img/client-side/http/clearbody.png" alt='Http client' width={172} height={104} />
+-   Clear request body
+    <ImageZoom
+        src="/img/client-side/http/clearbody.png"
+        alt="Http client"
+        width={172}
+        height={104}
+    />
 
 ### Get Body
 
-* Get request body
-<ImageZoom src="/img/client-side/http/getbody.png" alt='Http client' width={227} height={76} />
+-   Get request body
+    <ImageZoom src="/img/client-side/http/getbody.png" alt="Http client" width={227} height={76} />
 
 ### Get Request Data
 
-* Get request data
-<ImageZoom src="/img/client-side/http/getrequestdata.png" alt='Http client' width={227} height={76} />
+-   Get request data
+    <ImageZoom
+        src="/img/client-side/http/getrequestdata.png"
+        alt="Http client"
+        width={227}
+        height={76}
+    />
 
 ### Prepare Payload
 
-* Prepare request data
-* Must be called before call `processRequest` function
-<ImageZoom src="/img/client-side/http/preparepayload.png" alt='Http client' width={172} height={104} />
+-   Prepare request data
+-   Must be called before call `ProcessRequest` function
+    <ImageZoom
+        src="/img/client-side/http/preparepayload.png"
+        alt="Http client"
+        width={172}
+        height={104}
+    />
 
 ### Async Prepare Payload
 
-* Prepare request data asynchronously
-* Must be called before call `processRequest` function
-<ImageZoom src="/img/client-side/http/asyncpreparepayload.png" alt='Http client' width={227} height={104} />
+-   Prepare request data asynchronously
+-   Must be called before call `ProcessRequest` function
+    <ImageZoom
+        src="/img/client-side/http/asyncpreparepayload.png"
+        alt="Http client"
+        width={199}
+        height={104}
+    />
 
 ### Get Payload Data
 
-* Get processed payload data 
-<ImageZoom src="/img/client-side/http/getpayload.png" alt='Http client' width={227} height={76} />
+-   Get processed payload data
+    <ImageZoom
+        src="/img/client-side/http/getpayload.png"
+        alt="Http client"
+        width={227}
+        height={76}
+    />
 
 ### Get Response Data
 
-* Get latest response data 
-<ImageZoom src="/img/client-side/http/getresponsedata.png" alt='Http client' width={227} height={76} />
+-   Get latest response data
+    <ImageZoom
+        src="/img/client-side/http/getresponsedata.png"
+        alt="Http client"
+        width={227}
+        height={76}
+    />
 
 ### Process Request
 
-* Send request
-* Return true if request can be sent
-<ImageZoom src="/img/client-side/http/processrequest.png" alt='Http client' width={227} height={104} />
+-   Send request
+-   Return false if socket is closed
+    <ImageZoom
+        src="/img/client-side/http/processrequest.png"
+        alt="Http client"
+        width={227}
+        height={104}
+    />
 
-### Cancel Request
+### Close
 
-* Cancel request
-<ImageZoom src="/img/client-side/http/cancelrequest.png" alt='Http client' width={172} height={104} />
+-   Close connection
+-   Also can be used to cancel a request
+    <ImageZoom src="/img/client-side/http/close.png" alt="Http client" width={172} height={104} />
 
 ### Clear Request
 
-* Clear request data
-<ImageZoom src="/img/client-side/http/clearrequest.png" alt='Http client' width={172} height={104} />
+-   Clear request data
+    <ImageZoom
+        src="/img/client-side/http/clearrequest.png"
+        alt="Http client"
+        width={172}
+        height={104}
+    />
 
 ### Clear Payload
 
-* Clear payload  data
-<ImageZoom src="/img/client-side/http/clearpayload.png" alt='Http client' width={172} height={104} />
+-   Clear payload data
+    <ImageZoom
+        src="/img/client-side/http/clearpayload.png"
+        alt="Http client"
+        width={172}
+        height={104}
+    />
 
 ### Clear Response
 
-* Clear response buffer
-<ImageZoom src="/img/client-side/http/clearresponse.png" alt='Http client' width={170} height={103} />
+-   Clear response buffer
+    <ImageZoom
+        src="/img/client-side/http/clearresponse.png"
+        alt="Http client"
+        width={170}
+        height={103}
+    />
 
 ### Get Error Code
 
-* Get latest error code
-<ImageZoom src="/img/client-side/http/geterrorcode.png" alt='Http client' width={227} height={76} />
-
-### Get Error Message
-
-* Get latest error message
-<ImageZoom src="/img/client-side/http/geterrormessage.png" alt='Http client' width={227} height={76} />
+-   Get latest error code
+    <ImageZoom
+        src="/img/client-side/http/geterrorcode.png"
+        alt="Http client"
+        width={227}
+        height={76}
+    />
 
 ## Events
 
 ### On Async Payload Finished
 
-* Event triggered when payload process has been finished
-<ImageZoom src="/img/client-side/http/onasyncpayload.png" alt='Http client' width={298} height={184} />
-
-### On Request Complete
-
-* Event triggered when request is done
-<ImageZoom src="/img/client-side/http/onrequestcompleted.png" alt='Http client' width={276} height={212} />
-
-### On Request Canceled
-
-* Event triggered when request is canceled
-<ImageZoom src="/img/client-side/http/onresquestcanceled.png" alt='Http client' width={266} height={200} />
+-   Event triggered when payload process has been finished
+    <ImageZoom
+        src="/img/client-side/http/onasyncpayloadfinishedevent.png"
+        alt="Http client"
+        width={299}
+        height={186}
+    />
 
 ### On Request Progress
 
-* Event triggered while the request is in progress
-<ImageZoom src="/img/client-side/http/onrequestprogress.png" alt='Http client' width={267} height={238} />
+-   Event triggered when socket send and receive data
+    <ImageZoom
+        src="/img/client-side/http/onrequestprogressevent.png"
+        alt="Http client"
+        width={267}
+        height={238}
+    />
 
-### On Request Will Retry
+### On Request Completed
 
-* Event triggered while retry to connect
-<ImageZoom src="/img/client-side/http/onrequestwillretry.png" alt='Http client' width={269} height={212} />
+-   Event triggered when request is done
+    <ImageZoom
+        src="/img/client-side/http/onrequestcompletedevent.png"
+        alt="Http client"
+        width={276}
+        height={211}
+    />
 
-### On Request Error
+### On Request fail
 
-* Event triggered if request fail
-<ImageZoom src="/img/client-side/http/onrequesterror.png" alt='Http client' width={243} height={238} />
+-   Event triggered if request fail
+    <ImageZoom
+        src="/img/client-side/http/onrequestfailevent.png"
+        alt="Http client"
+        width={234}
+        height={212}
+    />
 
-### On Response Error
+### On Close
 
-* Event triggered if any error occur during async process of response
-<ImageZoom src="/img/client-side/http/onresponseerror.png" alt='Http client' width={252} height={212} />
+-   Event triggered when socket is closed
+    <ImageZoom
+        src="/img/client-side/http/oncloseevent.png"
+        alt="Http client"
+        width={195}
+        height={186}
+    />
+
+### On Error
+
+-   Event triggered if any error occur during async process
+    <ImageZoom
+        src="/img/client-side/http/onerrorevent.png"
+        alt="Http client"
+        width={192}
+        height={212}
+    />
