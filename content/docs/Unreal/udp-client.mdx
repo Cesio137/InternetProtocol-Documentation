@@ -3,13 +3,13 @@ title: UDP Client
 description: How to use UDP client class
 ---
 
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ## References
- 
-<Tabs items={['Include']}>
+
+<Tabs items={["Include"]}>
     <Tab value="Include">#include "UDP/UDPClient.hpp"</Tab>
 </Tabs>
 
@@ -26,6 +26,7 @@ import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 
     UUDPClient* UdpClient = NewObject<UUDPClient>();
     ```
+
   </Step>
 </Steps>
 
@@ -33,155 +34,196 @@ import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 
 ### Set Host
 
-* Set the `adress` and `port` of host
-<ImageZoom src="/img/client-side/udp/sethost.png" alt='UDP client' width={170} height={164} />
+-   Set the `adress` and `port` of host
+    <ImageZoom
+        src="/img/client-side/udp/sethost.png"
+        alt="UDP client"
+        width={262}
+        height={213}
+    />
 
-### Get Local Adress
+### Get Socket
 
-* Get local IP of client
-<ImageZoom src="/img/client-side/udp/getlocaladress.png" alt='UDP client' width={227} height={76} />
-
-### Get Local Port
-
-* Get local port of client
-<ImageZoom src="/img/client-side/udp/getlocalport.png" alt='UDP client' width={227} height={76} />
-
-### Get Remote Adress
-
-* Get host IP
-<ImageZoom src="/img/client-side/udp/getremotehost.png" alt='UDP client' width={227} height={76} />
-
-### Get Remote Port
-
-* Get host port
-<ImageZoom src="/img/client-side/udp/getremotehost.png" alt='UDP client' width={227} height={76} />
-
-### Set Timeout
-
-* Set timeout in seconds
-* OBS: Value must be between 0 and 255
-<ImageZoom src="/img/client-side/udp/settimeout.png" alt='UDP client' width={170} height={134} />
-
-### Get Timeout
-
-* Get timeout in seconds
-<ImageZoom src="/img/client-side/udp/gettimeout.png" alt='UDP client' width={227} height={76} />
-
-### Set Max Attemp
-
-* Set max times to try reconnect
-* OBS: Value must be between 0 and 255
-<ImageZoom src="/img/client-side/udp/setmaxattemp.png" alt='UDP client' width={170} height={134} />
-
-### Get Max Attemp
-
-* Get max times to try reconnect
-<ImageZoom src="/img/client-side/udp/getmaxattemp.png" alt='UDP client' width={227} height={76} />
+-   Get socket properties
+    <ImageZoom
+        src="/img/client-side/udp/getsocket.png"
+        alt="UDP client"
+        width={130}
+        height={56}
+    />
 
 ### Set Max Send Buffer Size
 
-* Set max size in bytes of send buffer
-<ImageZoom src="/img/client-side/udp/setmaxsendbuffer.png" alt='UDP client' width={213} height={134} />
+-   Set max size in bytes of send buffer
+    <ImageZoom
+        src="/img/client-side/udp/setmaxsendbuffer.png"
+        alt="UDP client"
+        width={213}
+        height={134}
+    />
 
 ### Get Max Send Buffer Size
 
-* Get max size in bytes of send buffer
-<ImageZoom src="/img/client-side/udp/getmaxsendbuffer.png" alt='UDP client' width={227} height={76} />
+-   Get max size in bytes of send buffer
+    <ImageZoom
+        src="/img/client-side/udp/getmaxsendbuffer.png"
+        alt="UDP client"
+        width={227}
+        height={76}
+    />
 
 ### Set Max Receive Buffer Size
 
-* Set max size in bytes of receive buffer
-<ImageZoom src="/img/client-side/udp/setmaxreceivebuffer.png" alt='UDP client' width={230} height={134} />
+-   Set max size in bytes of receive buffer
+    <ImageZoom
+        src="/img/client-side/udp/setmaxreceivebuffer.png"
+        alt="UDP client"
+        width={230}
+        height={134}
+    />
 
 ### Get Max Receive Buffer Size
 
-* Get max size in bytes of receive buffer
-<ImageZoom src="/img/client-side/udp/getmaxreceivebuffer.png" alt='UDP client' width={231} height={76} />
+-   Get max size in bytes of receive buffer
+    <ImageZoom
+        src="/img/client-side/udp/getmaxreceivebuffer.png"
+        alt="UDP client"
+        width={231}
+        height={76}
+    />
 
 ### Set Split Package
 
-* If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
-<ImageZoom src="/img/client-side/udp/setsplitpackage.png" alt='UDP client' width={170} height={136} />
+-   If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
+    <ImageZoom
+        src="/img/client-side/udp/setsplitpackage.png"
+        alt="UDP client"
+        width={170}
+        height={136}
+    />
 
 ### Get Split Package
 
-* Get if Split Package is enabled
-<ImageZoom src="/img/client-side/udp/getsplitpackage.png" alt='UDP client' width={227} height={76} />
+-   Get if Split Package is enabled
+    <ImageZoom
+        src="/img/client-side/udp/getsplitpackage.png"
+        alt="UDP client"
+        width={227}
+        height={76}
+    />
 
-### Send
+### Send Str
 
-* Send a string message
-* Return true if It's able to send
-* Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
-<ImageZoom src="/img/client-side/udp/send.png" alt='UDP client' width={229} height={134} />
+-   Send a string message
+-   Return false if message is empty or socket is closed
+-   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
+    <ImageZoom
+        src="/img/client-side/udp/sendstr.png"
+        alt="UDP client"
+        width={229}
+        height={134}
+    />
 
-### Send Raw
+### Send Buffer
 
-* Send a buffer message
-* Return true if It's able to send
-<ImageZoom src="/img/client-side/udp/sendraw.png" alt='UDP client' width={227} height={130} />
-
-### Async Read
-
-* In case an error occurs during the asynchronous message reception, you can use the function below to reactivate the async reading
-* Return true if It's able to read
-<ImageZoom src="/img/client-side/udp/asyncread.png" alt='UDP client' width={226} height={104} />
+-   Send a buffer message
+-   Return false if buffer is empty or socket is closed
+    <ImageZoom
+        src="/img/client-side/udp/sendbuffer.png"
+        alt="UDP client"
+        width={228}
+        height={130}
+    />
 
 ### Connect
 
-* Connect to the host
-* Return true if It's able to connect
-<ImageZoom src="/img/client-side/udp/connect.png" alt='UDP client' width={207} height={94} />
-
-### Is Connected
-
-* Check if client is connected to the host
-<ImageZoom src="/img/client-side/udp/isconnected.png" alt='UDP client' width={227} height={76} />
+-   Connect to the host
+-   Return true if It's able to connect
+    <ImageZoom
+        src="/img/client-side/udp/connect.png"
+        alt="UDP client"
+        width={207}
+        height={94}
+    />
 
 ### Close
 
-* Close connection
-<ImageZoom src="/img/client-side/udp/close.png" alt='UDP client' width={170} height={104} />
+-   Close connection
+    <ImageZoom
+        src="/img/client-side/udp/close.png"
+        alt="UDP client"
+        width={170}
+        height={104}
+    />
 
 ### Get Error Code
 
-* Get latest error code
-<ImageZoom src="/img/client-side/udp/geterrorcode.png" alt='UDP client' width={227} height={76} />
-
-### Get Error Message
-
-* Get latest error message
-<ImageZoom src="/img/client-side/udp/geterrormessage.png" alt='UDP client' width={227} height={76} />
+-   Get latest error code
+    <ImageZoom
+        src="/img/client-side/udp/geterrorcode.png"
+        alt="UDP client"
+        width={228}
+        height={76}
+    />
 
 ## Events
 
 ### On Connected
 
-* Event triggered when a connection is estabilished
-<ImageZoom src="/img/client-side/udp/onconnected.png" alt='UDP client' width={225} height={186} />
+-   Event triggered when a connection is estabilished
+    <ImageZoom
+        src="/img/client-side/udp/onconnectedevent.png"
+        alt="UDP client"
+        width={225}
+        height={186}
+    />
 
-### On Connection Close
+### On Bytes Transferred
 
-* Event triggered when a connection is closed
-<ImageZoom src="/img/client-side/udp/onconnectionclose.png" alt='UDP client' width={263} height={186} />
-
-### On Connection Will Retry
-
-* Event triggered when every time It's try recconnect
-<ImageZoom src="/img/client-side/udp/onconnectionwillretry.png" alt='UDP client' width={286} height={212} />
+-   Event triggered when socket send or receive data
+    <ImageZoom
+        src="/img/client-side/udp/onbytestransferredevent.png"
+        alt="UDP client"
+        width={269}
+        height={238}
+    />
 
 ### On Message Sent
 
-* Event triggered when a message is sent
-<ImageZoom src="/img/client-side/udp/onmessagesent.png" alt='UDP client' width={246} height={212} />
+-   Event triggered when a message is sent
+    <ImageZoom
+        src="/img/client-side/udp/onmessagesentevent.png"
+        alt="UDP client"
+        width={246}
+        height={212}
+    />
 
 ### On Message Received
 
-* Event triggered when a message is received
-<ImageZoom src="/img/client-side/udp/onmessagereceived.png" alt='UDP client' width={272} height={238} />
+-   Event triggered when a message is received
+    <ImageZoom
+        src="/img/client-side/udp/onmessagereceivedevent.png"
+        alt="UDP client"
+        width={272}
+        height={238}
+    />
+
+### On Close
+
+-   Event triggered when socket is closed
+    <ImageZoom
+        src="/img/client-side/udp/oncloseevent.png"
+        alt="UDP client"
+        width={195}
+        height={186}
+    />
 
 ### On Error
 
-* Event triggered if any error occur during async process
-<ImageZoom src="/img/client-side/udp/onerror.png" alt='UDP client' width={192} height={238} />
-
+-   Event triggered if any error occur during async process
+    <ImageZoom
+        src="/img/client-side/udp/onerrorevent.png"
+        alt="UDP client"
+        width={192}
+        height={212}
+    />
