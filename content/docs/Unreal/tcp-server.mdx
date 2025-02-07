@@ -1,0 +1,238 @@
+---
+title: TCP Server
+description: How to use TCP server class
+---
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
+
+## References
+
+<Tabs items={["Include"]}>
+    <Tab value="Include">#include "TCP/TCPServer.h"</Tab>
+</Tabs>
+
+## How to use
+
+<Steps>
+  <Step>
+    Blueprint: search by [`GetInternetProtocolSubsystem`](/docs/Unreal/subsystem#how-to-use) and call [`CreateTCPServer`](/docs/Unreal/subsystem#create-tcp-server) function
+  </Step>
+  <Step>
+    C++: Use the code bellow
+    ``` cpp
+    #include "TCP/TCPServer.h"
+
+    UTCPServer* TcpServer = NewObject<UTCPServer>();
+    ```
+
+  </Step>
+</Steps>
+
+## Nodes
+
+### Set Socket
+
+-   Set `protocol`, `port`, `max connected clients` of socket
+    <ImageZoom
+        src="/img/server-side/tcp/setsocket.png"
+        alt="TCP server"
+        width={262}
+        height={227}
+    />
+
+### Get Acceptor
+
+-   Get acceptor properties
+    <ImageZoom
+        src="/img/server-side/tcp/getacceptor.png"
+        alt="TCP server"
+        width={142}
+        height={56}
+    />
+
+# Get Sockets
+
+-   Get all connected sockets properties
+    <ImageZoom
+        src="/img/server-side/tcp/getsockets.png"
+        alt="TCP server"
+        width={137}
+        height={56}
+    />
+
+### Set Max Send Buffer Size
+
+-   Set max size in bytes of send buffer
+    <ImageZoom
+        src="/img/server-side/tcp/setmaxsendbuffer.png"
+        alt="TCP server"
+        width={213}
+        height={134}
+    />
+
+### Get Max Send Buffer Size
+
+-   Get max size in bytes of send buffer
+    <ImageZoom
+        src="/img/server-side/tcp/getmaxsendbuffer.png"
+        alt="TCP server"
+        width={228}
+        height={76}
+    />
+
+### Set Split Package
+
+-   Set split package properties
+    <ImageZoom
+        src="/img/server-side/tcp/setsplitpackage.png"
+        alt="TCP server"
+        width={171}
+        height={136}
+    />
+
+### Get Split Package
+
+-   Get split package properties
+    <ImageZoom
+        src="/img/server-side/tcp/getsplitpackage.png"
+        alt="TCP server"
+        width={228}
+        height={76}
+    />
+
+### Send Str To
+
+-   Send a string message
+-   Return false if message is empty or socket is closed
+    <ImageZoom
+        src="/img/server-side/tcp/sendstrto.png"
+        alt="TCP server"
+        width={207}
+        height={144}
+    />
+
+### Send Buffer To
+
+-   Send a buffer message
+-   Return false if buffer is empty or socket is closed
+    <ImageZoom
+        src="/img/server-side/tcp/sendbufferto.png"
+        alt="TCP server"
+        width={206}
+        height={141}
+    />
+
+### Open
+
+-   Open connection
+-   Return false if socket is already open or any error occurs
+    <ImageZoom
+        src="/img/server-side/tcp/open.png"
+        alt="TCP server"
+        width={227}
+        height={104}
+    />
+
+### Close
+
+-   Disconnect all clients and close connection
+    <ImageZoom
+        src="/img/server-side/tcp/close.png"
+        alt="TCP server"
+        width={171}
+        height={104}
+    />
+
+### Disconnect Socket
+
+-   Close connection of specific socket
+    <ImageZoom
+        src="/img/server-side/tcp/disconnectsocket.png"
+        alt="TCP server"
+        width={175}
+        height={130}
+    />
+
+### Get Error Code
+
+-   Get latest error code
+    <ImageZoom
+        src="/img/server-side/tcp/geterrorcode.png"
+        alt="TCP server"
+        width={228}
+        height={76}
+    />
+
+## Events
+
+### On Socket Accepted
+
+-   Event triggered when a new client connection is estabilished
+    <ImageZoom
+        src="/img/server-side/tcp/onsocketacceptedevent.png"
+        alt="TCP server"
+        width={262}
+        height={212}
+    />
+
+### On Bytes Transferred
+
+-   Event triggered when bytes are sent or received
+    <ImageZoom
+        src="/img/server-side/tcp/onbytestransferredevent.png"
+        alt="TCP server"
+        width={269}
+        height={238}
+    />
+
+### On Message Sent
+
+-   Event triggered when a message is sent by specific socket
+    <ImageZoom
+        src="/img/server-side/tcp/onmessagesentevent.png"
+        alt="TCP server"
+        width={246}
+        height={238}
+    />
+
+### On Message Received
+
+-   Event triggered when a message is received by specific socket
+    <ImageZoom
+        src="/img/server-side/tcp/onmessagereceivedevent.png"
+        alt="TCP server"
+        width={272}
+        height={238}
+    />
+
+### On Close
+
+-   Event triggered when socket and acceptor are closed
+    <ImageZoom
+        src="/img/server-side/tcp/oncloseevent.png"
+        alt="TCP server"
+        width={195}
+        height={186}
+    />
+
+### On Socket Disconnected
+
+-   Event triggered when a socket is disconnected
+    <ImageZoom
+        src="/img/server-side/tcp/onsocketdisconnectedevent.png"
+        alt="TCP server"
+        width={287}
+        height={238}
+    />
+
+### On Error
+
+-   Event triggered if any error occurs during async process
+    <ImageZoom
+        src="/img/server-side/tcp/onerrorevent.png"
+        alt="TCP server"
+        width={192}
+        height={212}
+    />
