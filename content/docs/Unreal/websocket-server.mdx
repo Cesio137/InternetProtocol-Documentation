@@ -1,0 +1,394 @@
+---
+title: Websocket Server
+description: How to use Websocket server class
+---
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
+
+## References
+
+<Tabs items={["Include"]}>
+    <Tab value="Include">#include "WS/WSServer.h"</Tab>
+</Tabs>
+
+## How to use
+
+<Steps>
+  <Step>
+    Blueprint: search by [`GetInternetProtocolSubsystem`](/docs/Unreal/subsystem#how-to-use) and call [`CreateWebsocketServer`](/docs/Unreal/subsystem#create-websocket-server) function
+  </Step>
+  <Step>
+    C++: Use the code bellow
+    ``` cpp
+    #include "Websockets/WSServer.h"
+
+    UWSServer* WSServer = NewObject<UWSServer>();
+    ```
+
+  </Step>
+</Steps>
+
+## Functions
+
+### Set Socket
+
+-   Set `protocol`, `port`, `max connected clients` of socket
+    <ImageZoom
+        src="/img/server-side/websocket/setsocket.png"
+        alt="TCP server"
+        width={262}
+        height={227}
+    />
+
+### Get Acceptor
+
+-   Get acceptor properties
+    <ImageZoom
+        src="/img/server-side/websocket/getacceptor.png"
+        alt="TCP server"
+        width={142}
+        height={56}
+    />
+
+### Get Sockets
+
+-   Get all connected sockets properties
+    <ImageZoom
+        src="/img/server-side/websocket/getsockets.png"
+        alt="TCP server"
+        width={137}
+        height={56}
+    />
+
+### Set Max Send Buffer Size
+
+-   Set max size in bytes of send buffer
+    <ImageZoom
+        src="/img/server-side/websocket/setmaxsendbuffer.png"
+        alt="WS server"
+        width={213}
+        height={134}
+    />
+
+### Get Max Send Buffer Size
+
+-   Get max size in bytes of send buffer
+    <ImageZoom
+        src="/img/server-side/websocket/getmaxsendbuffer.png"
+        alt="WS server"
+        width={227}
+        height={76}
+    />
+
+### Set Split Package
+
+-   If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
+    <ImageZoom
+        src="/img/server-side/websocket/setsplitpackage.png"
+        alt="WS server"
+        width={167}
+        height={136}
+    />
+
+### Get Split Package
+
+-   Get if Split Package is enabled
+    <ImageZoom
+        src="/img/server-side/websocket/getsplitpackage.png"
+        alt="WS server"
+        width={227}
+        height={76}
+    />
+
+### Send Handshake To
+
+-   Send a handshake to a specific socket
+-   Return false if socket is closed or string is empty
+-   Warning: You must call this function if you assign event [`OnSocketAccepted`](/docs/Unreal/websocket-server#on-socket-accepted)
+    <ImageZoom
+        src="/img/server-side/websocket/sendhandshaketo.png"
+        alt="WS server"
+        width={227}
+        height={182}
+    />
+
+### Send Handshake Error To
+
+-   Send a handshake to a specific socket and close connection after message has been sent
+-   Return false if socket is closed or string is empty
+-   Warning: You must call this function to rejectosocket if you assign event [`OnSocketAccepted`](/docs/Unreal/websocket-server#on-socket-accepted)
+    <ImageZoom
+        src="/img/server-side/websocket/sendhandshakeerrorto.png"
+        alt="WS server"
+        width={247}
+        height={190}
+    />
+
+### Send Str To
+
+-   Send a string message to a specific socket
+-   Return false if socket is closed or string is empty
+-   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
+    <ImageZoom
+        src="/img/server-side/websocket/sendstrto.png"
+        alt="WS server"
+        width={229}
+        height={160}
+    />
+
+### Send Buffer To
+
+-   Send a buffer message to a specific socket
+-   Return false if socket is closed or buffer is empty
+    <ImageZoom
+        src="/img/server-side/websocket/sendbufferto.png"
+        alt="WS server"
+        width={228}
+        height={156}
+    />
+
+### Send Ping To
+
+-   Send a ping to a specific socket
+-   Return false if socket is closed
+    <ImageZoom
+        src="/img/server-side/websocket/sendpingto.png"
+        alt="WS server"
+        width={228}
+        height={130}
+    />
+
+### Open
+
+-   Open socket
+-   Return false if its already open
+    <ImageZoom
+        src="/img/server-side/websocket/open.png"
+        alt="WS server"
+        width={228}
+        height={104}
+    />
+
+### Close
+
+-   Close connection
+    <ImageZoom
+        src="/img/server-side/websocket/close.png"
+        alt="WS server"
+        width={165}
+        height={104}
+    />
+
+### Disconnect Socket
+
+-   Close connection of specific socket
+    <ImageZoom
+        src="/img/server-side/websocket/disconnectsocket.png"
+        alt="WS server"
+        width={175}
+        height={130}
+    />
+
+### Get Error Code
+
+-   Get latest error code
+    <ImageZoom
+        src="/img/server-side/websocket/geterrorcode.png"
+        alt="WS server"
+        width={228}
+        height={76}
+    />
+
+## Handshake Functions
+
+[Handshake](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#client_handshake_request) is a http request to contact the server and requesting a WebSocket connection
+
+### Set Headers
+
+-   Set handshake request headers
+    <ImageZoom
+        src="/img/server-side/websocket/setheaders.png"
+        alt="WS server"
+        width={165}
+        height={132}
+    />
+
+### Get Header
+
+-   Get reference to handshake request headers
+-   Use this function to append or modify headers
+    <ImageZoom
+        src="/img/server-side/websocket/getheaders.png"
+        alt="WS server"
+        width={138}
+        height={58}
+    />
+
+## Dataframe Functions
+
+### Set RSV1
+
+<ImageZoom
+    src="/img/server-side/websocket/setrsv1.png"
+    alt="WS server"
+    width={165}
+    height={136}
+/>
+
+### Use RSV1
+
+<ImageZoom
+    src="/img/server-side/websocket/usersv1.png"
+    alt="WS server"
+    width={227}
+    height={76}
+/>
+
+### Set RSV2
+
+<ImageZoom
+    src="/img/server-side/websocket/setrsv2.png"
+    alt="WS server"
+    width={165}
+    height={136}
+/>
+
+### Use RSV2
+
+<ImageZoom
+    src="/img/server-side/websocket/usersv2.png"
+    alt="WS server"
+    width={226}
+    height={76}
+/>
+
+### Set RSV3
+
+<ImageZoom
+    src="/img/server-side/websocket/setrsv3.png"
+    alt="WS server"
+    width={165}
+    height={136}
+/>
+
+### Use RSV3
+
+<ImageZoom
+    src="/img/server-side/websocket/usersv3.png"
+    alt="WS server"
+    width={227}
+    height={76}
+/>
+
+### Set Mask
+
+<ImageZoom
+    src="/img/server-side/websocket/setmask.png"
+    alt="WS server"
+    width={165}
+    height={136}
+/>
+
+### Use Mask
+
+<ImageZoom
+    src="/img/server-side/websocket/usemask.png"
+    alt="WS server"
+    width={227}
+    height={76}
+/>
+
+## Events
+
+### On Socket Accepted
+
+-   Event triggered when a new client connection is estabilished
+-   [`Send Handshake To`](/docs/Unreal/websocket-server#send-handshake-to) or [`Send Handshake Error To`](/docs/Unreal/websocket-server#send-handshake-error-to) must be called if this event has been assigned
+    <ImageZoom
+        src="/img/server-side/websocket/onsocketacceptedevent.png"
+        alt="WS server"
+        width={262}
+        height={264}
+    />
+
+### On Bytes Transfered
+
+-   Event triggered when socket sent and receive data
+    <ImageZoom
+        src="/img/server-side/websocket/onbytestransferredevent.png"
+        alt="WS server"
+        width={269}
+        height={238}
+    />
+
+### On Message Sent
+
+-   Event triggered when a message is sent to a specific socket
+    <ImageZoom
+        src="/img/server-side/websocket/onmessagesentevent.png"
+        alt="WS server"
+        width={246}
+        height={238}
+    />
+
+### On Message Received
+
+-   Event triggered when a message is received
+    <ImageZoom
+        src="/img/server-side/websocket/onmessagereceivedevent.png"
+        alt="WS server"
+        width={272}
+        height={238}
+    />
+
+### On Pong Received
+
+-   Event triggered when a pong message is received
+    <ImageZoom
+        src="/img/server-side/websocket/onpongreceivedevent.png"
+        alt="WS server"
+        width={248}
+        height={186}
+    />
+
+### On Close Notify
+
+-   Event triggered when a client send a close notification
+    <ImageZoom
+        src="/img/server-side/websocket/onclosenotifyevent.png"
+        alt="WS server"
+        width={234}
+        height={212}
+    />
+
+### On Close
+
+-   Event triggered when all sockets are disconnected and server is closed
+    <ImageZoom
+        src="/img/server-side/websocket/oncloseevent.png"
+        alt="WS server"
+        width={195}
+        height={186}
+    />
+
+### On Socket Disconnected
+
+-   Event triggered when a socket is disconnected
+    <ImageZoom
+        src="/img/server-side/websocket/onsocketdisconnectedevent.png"
+        alt="WS server"
+        width={287}
+        height={238}
+    />
+
+### On Error
+
+-   Event triggered if any error occur during async process
+    <ImageZoom
+        src="/img/server-side/websocket/onerrorevent.png"
+        alt="WS server"
+        width={192}
+        height={212}
+    />
