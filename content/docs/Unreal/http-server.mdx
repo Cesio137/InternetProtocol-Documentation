@@ -1,0 +1,229 @@
+---
+title: HTTP Server
+description: How to use HTTP server class
+---
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
+
+## References
+
+<Tabs items={["Include"]}>
+    <Tab value="Include">#include "Http/HttpServer.h"</Tab>
+</Tabs>
+
+## How to use
+
+<Steps>
+  <Step>
+    Blueprint: search by [`GetInternetProtocolSubsystem`](/docs/Unreal/subsystem#how-to-use) and call [`CreateHttpServer`](/docs/Unreal/subsystem#create-http-server) function
+  </Step>
+  <Step>
+    C++: Use the code bellow
+    ``` cpp
+    #include "Http/HttpServer.h"
+
+    UHttpServer* HttpServer = NewObject<UHttpServer>();
+    ```
+
+  </Step>
+</Steps>
+
+## Functions
+
+### Set Socket
+
+-   Set `protocol`, `port`, `max connected clients` of socket
+    <ImageZoom
+        src="/img/server-side/http/setsocket.png"
+        alt="HTTP server"
+        width={262}
+        height={227}
+    />
+
+### Get Acceptor
+
+-   Get acceptor properties
+    <ImageZoom
+        src="/img/server-side/http/getacceptor.png"
+        alt="HTTP server"
+        width={137}
+        height={56}
+    />
+
+### Get Sockets
+
+-   Get all connected sockets properties
+    <ImageZoom
+        src="/img/server-side/http/getsockets.png"
+        alt="HTTP server"
+        width={142}
+        height={56}
+    />
+
+### Set Headers
+
+-   Set response default headers
+    <ImageZoom
+        src="/img/server-side/http/setheaders.png"
+        alt="HTTP server"
+        width={174}
+        height={132}
+    />
+
+### Get Headers
+
+-   Return a reference to response default headers
+-   Use this function to modify or append value to headers
+    <ImageZoom
+        src="/img/server-side/http/getheaders.png"
+        alt="HTTP server"
+        width={138}
+        height={58}
+    />
+
+### Send Response
+
+-   Send response to specific client
+    <ImageZoom
+        src="/img/server-side/http/sendresponse.png"
+        alt="HTTP server"
+        width={228}
+        height={156}
+    />
+
+### Send Error Response
+
+-   Send error response to specific client
+    <ImageZoom
+        src="/img/server-side/http/senderrorresponse.png"
+        alt="HTTP server"
+        width={247}
+        height={186}
+    />
+
+### Open
+
+-   Open connection
+    <ImageZoom
+        src="/img/server-side/http/open.png"
+        alt="HTTP server"
+        width={228}
+        height={104}
+    />
+
+### Close
+
+-   Close connection
+-   Also can be used to cancel all responses
+    <ImageZoom
+        src="/img/server-side/http/close.png"
+        alt="HTTP server"
+        width={174}
+        height={104}
+    />
+
+### Disconnect Socket
+
+-   Close connection of specific client
+-   Also can be used to cancel response for specific client
+    <ImageZoom
+        src="/img/server-side/http/disconnectsocket.png"
+        alt="HTTP server"
+        width={175}
+        height={130}
+    />
+
+### Get Error Code
+
+-   Get latest error code
+    <ImageZoom
+        src="/img/server-side/http/geterrorcode.png"
+        alt="HTTP server"
+        width={228}
+        height={104}
+    />
+
+## Events
+
+### On Socket Accepted
+
+-   Event triggered when a new client is connected
+    <ImageZoom
+        src="/img/server-side/http/onsocketacceptedevent.png"
+        alt="HTTP server"
+        width={262}
+        height={212}
+    />
+
+### On Bytes Transfered
+
+-   Event triggered while socket send or receive data
+    <ImageZoom
+        src="/img/server-side/http/onbytestransferedevent.png"
+        alt="HTTP server"
+        width={269}
+        height={238}
+    />
+
+### On Request Received
+
+-   Event triggered when a request is received by specific socket
+    <ImageZoom
+        src="/img/server-side/http/onrequestreceivedevent.png"
+        alt="HTTP server"
+        width={267}
+        height={264}
+    />
+
+### On Request Error
+
+-   Event triggered when an error is detected in client request
+    <ImageZoom
+        src="/img/server-side/http/onrequesterrorevent.png"
+        alt="HTTP server"
+        width={267}
+        height={264}
+    />
+
+### On Response Sent
+
+-  Event triggered when a response is sent to specific client
+    <ImageZoom
+        src="/img/server-side/http/onresponsesentevent.png"
+        alt="HTTP server"
+        width={250}
+        height={238}
+    />
+
+### On Socket Disconnected
+
+-   Event triggered when a socket is disconnected
+    <ImageZoom
+        src="/img/server-side/http/onsocketdisconnectedevent.png"
+        alt="HTTP server"
+        width={287}
+        height={238}
+    />
+
+### On Close
+
+-   Event triggered when server is closed
+    <ImageZoom
+        src="/img/server-side/http/oncloseevent.png"
+        alt="HTTP server"
+        width={195}
+        height={186}
+    />
+
+### On Error
+
+-   Event triggered when an error is detected
+    <ImageZoom
+        src="/img/server-side/http/onerrorevent.png"
+        alt="HTTP server"
+        width={195}
+        height={186}
+    />
+
