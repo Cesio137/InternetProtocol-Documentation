@@ -1,0 +1,216 @@
+---
+title: UDP Server
+description: How to use UDP server class
+---
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
+
+## References
+
+<Tabs items={["Include"]}>
+    <Tab value="Include">#include "UDP/UDPServer.h"</Tab>
+</Tabs>
+
+## How to use
+
+<Steps>
+  <Step>
+    Blueprint: search by [`GetInternetProtocolSubsystem`](/docs/Unreal/subsystem#how-to-use) and call [`CreateUDPServer`](/docs/Unreal/subsystem#create-udp-server) function
+  </Step>
+  <Step>
+    C++: Use the code bellow
+    ``` cpp
+    #include "UDP/UDPServer.h"
+
+    UUDPServer* UdpServer = NewObject<UUDPServer>();
+    ```
+
+  </Step>
+</Steps>
+
+## Nodes
+
+### Set Socket
+
+-   Set `protocol` and `port` of socket
+    <ImageZoom
+        src="/img/server-side/udp/setsocket.png"
+        alt="UDP server"
+        width={262}
+        height={213}
+    />
+
+### Get Socket
+
+-   Get socket properties
+    <ImageZoom
+        src="/img/server-side/udp/getsocket.png"
+        alt="UDP server"
+        width={130}
+        height={56}
+    />
+
+### Set Max Send Buffer Size
+
+-   Set max size in bytes of send buffer
+    <ImageZoom
+        src="/img/server-side/udp/setmaxsendbuffer.png"
+        alt="UDP server"
+        width={213}
+        height={134}
+    />
+
+### Get Max Send Buffer Size
+
+-   Get max size in bytes of send buffer
+    <ImageZoom
+        src="/img/server-side/udp/getmaxsendbuffer.png"
+        alt="UDP server"
+        width={228}
+        height={76}
+    />
+
+### Set Max Receive Buffer Size
+
+-   Set max size in bytes of receive buffer
+    <ImageZoom
+        src="/img/server-side/udp/setmaxreceivebuffer.png"
+        alt="UDP server"
+        width={230}
+        height={134}
+    />
+
+### Get Max Receive Buffer Size
+
+-   Get max size in bytes of receive buffer
+    <ImageZoom
+        src="/img/server-side/udp/getmaxreceivebuffer.png"
+        alt="UDP server"
+        width={230}
+        height={76}
+    />
+
+### Set Split Package
+
+-   If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
+    <ImageZoom
+        src="/img/server-side/udp/setsplitpackage.png"
+        alt="UDP server"
+        width={172}
+        height={136}
+    />
+
+### Get Split Package
+
+-   Get if Split Package is enabled
+    <ImageZoom
+        src="/img/server-side/udp/getsplitpackage.png"
+        alt="UDP server"
+        width={228}
+        height={76}
+    />
+
+### Send Str to
+
+-   Send a string to a specific endpoint
+    <ImageZoom
+        src="/img/server-side/udp/sendstrto.png"
+        alt="UDP server"
+        width={229}
+        height={160}
+    />
+
+### Send Buffer To
+
+-   Send a buffer to a specific endpoint
+    <ImageZoom
+        src="/img/server-side/udp/sendbufferto.png"
+        alt="UDP server"
+        width={228}
+        height={156}
+    />
+
+### Open
+
+-   Open the socket
+-   Returns false if the socket is already open
+    <ImageZoom
+        src="/img/server-side/udp/open.png"
+        alt="UDP server"
+        width={228}
+        height={104}
+    />
+
+### Close
+
+-   Close the socket
+    <ImageZoom
+        src="/img/server-side/udp/close.png"
+        alt="UDP server"
+        width={172}
+        height={104}
+    />
+
+### Get Error Code
+
+-   Get the latest error code
+    <ImageZoom
+        src="/img/server-side/udp/geterrorcode.png"
+        alt="UDP server"
+        width={228}
+        height={76}
+    />
+
+## Events
+
+### On Bytes Transferred
+
+-   Event triggered when bytes are received and transferred
+    <ImageZoom
+        src="/img/server-side/udp/onbytestransferredevent.png"
+        alt="UDP server"
+        width={269}
+        height={238}
+    />
+
+### On Message Sent
+
+-   Event triggered when a message is sent
+    <ImageZoom
+        src="/img/server-side/udp/onmessagesentevent.png"
+        alt="UDP server"
+        width={246}
+        height={238}
+    />
+
+### On Message Received
+
+-   Event triggered when a message is received by a endpoint
+    <ImageZoom
+        src="/img/server-side/udp/onmessagereceivedevent.png"
+        alt="UDP server"
+        width={272}
+        height={238}
+    />
+
+### On Close
+
+-   Event triggered when the socket is closed
+    <ImageZoom
+        src="/img/server-side/udp/oncloseevent.png"
+        alt="UDP server"
+        width={195}
+        height={186}
+    />
+
+### On Error
+
+-   Event triggered if any error occur during async process
+    <ImageZoom
+        src="/img/server-side/udp/onerrorevent.png"
+        alt="UDP server"
+        width={192}
+        height={212}
+    />

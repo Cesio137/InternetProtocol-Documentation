@@ -178,84 +178,38 @@ void set_path(const std::string &path = "/")
 std::string get_path() const
 ```
 
-### Append Params
+### Set Params
 
--   Append parameter to request
-
-```cpp
-void append_params(const std::string &key, const std::string &value)
-```
-
-### Clear Params
-
--   Clear request parameters
+-   Set request parameters
 
 ```cpp
-void clear_params()
-```
-
-### Remove Param
-
--   Remove request parameter
-
-```cpp
-void remove_param(const std::string &key)
-```
-
-### Has Param
-
--   Check if request has a certain parameter
-
-```cpp
-bool has_param(const std::string &key) const
+void set_headers(const std::map<std::string, std::string> &headers)
 ```
 
 ### Get Params
 
--   Get all parameters from request
+-   Return a reference of request parameters
+-   Use this function to modify parameters
 
 ```cpp
-std::map<std::string, std::string> get_params() const
+std::map<std::string, std::string> &get_params()
 ```
 
-### Append Headers
+### Set Headers
 
--   Append headers to request
-
-```cpp
-void Append_headers(const std::string &key, const std::string &value)
-```
-
-### Clear Headers
-
--   Clear request headers
+-   Set request headers
 
 ```cpp
-void clear_headers()
-```
-
-### Remove Header
-
--   Clear request header
-
-```cpp
-void remove_header(const std::string &key)
-```
-
-### Has Header
-
--   Check if request has a certain header
-
-```cpp
-bool has_header(const std::string &key) const
+void set_headers(const std::map<std::string, std::string> &headers)
 ```
 
 ### Get Headers
 
--   Get all headers from request
+-   Return a reference if request headers
+-   Use this function to modify or append values to headers
 
 ```cpp
-std::map<std::string, std::string> get_headers() const
+std::map<std::string, std::string> &get_headers()
 ```
 
 ### Set Body
@@ -266,20 +220,13 @@ std::map<std::string, std::string> get_headers() const
 void set_body(const std::string &value)
 ```
 
-### Clear Body
-
--   Clear request body
-
-```cpp
-void clear_body()
-```
-
 ### Get Body
 
--   Get request body
+-   Return a reference to request body
+-   Use this function to modify or append value to body
 
 ```cpp
-std::string get_body() const
+std::string &get_body()
 ```
 
 ### Get Request Data

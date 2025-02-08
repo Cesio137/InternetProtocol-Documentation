@@ -267,44 +267,21 @@ asio::error_code get_error_code() const
 
 [Handshake](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#client_handshake_request) is a http request to contact the server and requesting a WebSocket connection
 
-### Append Header
+### Set Headers
 
--   Append a header to handshake request
+-   Set handshake headers
 
 ```cpp
-void append_header(const std::string &key, const std::string &value)
+void set_headers(const std::map<std::string, std::string> &headers)
 ```
 
-### Append Header
+### Get Headers
 
--   Clear all headers
-
-```cpp
-void clear_headers()
-```
-
-### Remove Header
-
--   Remove a header from handshake request
+-   Return a reference to handshake headers
+-   Use this function to modify or append values to headers
 
 ```cpp
-void remove_header(const std::string &key)
-```
-
-### Has Header
-
--   Check if a header exists in handshake request
-
-```cpp
-bool has_header(const std::string &key) const
-```
-
-### Get Header
-
--   Get value of a header from handshake request
-
-```cpp
- const std::string &get_header(const std::string &key)
+std::map<std::string, std::string> &get_headers()
 ```
 
 ## Dataframe Functions
