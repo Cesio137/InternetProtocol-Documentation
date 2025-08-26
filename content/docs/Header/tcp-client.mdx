@@ -8,127 +8,100 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 ## References
 
 <Tabs items={["Global", "Include"]}>
-    <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
-    <Tab value="Include">#include "IP/TCP/TCPClient.hpp"</Tab>
+    <Tab value="Global">#include "ip.hpp"</Tab>
+    <Tab value="Include">#include "ip/tcp/tcpclient.hpp"</Tab>
 </Tabs>
 
 ## Syntax
 
 ```cpp
-namespace InternetProtocol
-class TCPClient
+namespace internetprotocol
+class tcp_client_c
 ```
 
 ```cpp
-#include <iostream>
-#include <IP/TCP/TCPClient.hpp>
+#include "ip.hpp"
 
-using namespace InternetProtocol;
+using namespace internetprotocol;
 
-int main()
-{
-    TCPClient client;
-    client.set_host("localhost", "3000");
-    client.on_message_received = [&](const FTcpMessage message) {
-        std::cout << buffer_to_string(message) << std::endl;
+int main(int argc, char** argv) {
+    tcp_client_c net;
+
+    net.on_error = [&](const asio::error_code &ec) {
+        std::cout << ec.message() << std::endl;
     };
-    client.connect();
+    net.on_message_received = [&](const std::vector<uint8_t> &buffer, const size_t bytes_recv) {
+        std::cout << buffer_to_string(buffer) << std::endl;
+    };
+    net.connect();
 
     std::string input;
-    std::cout << "Digite algo: ";
     while (std::getline(std::cin, input)) {
-        if (input == "quit")
-        {
-            client.close();
+        if (input == "quit") {
+            net.close();
             break;
         }
-        client.send_str(input);
+        net.write(input, [](const asio::error_code &ec, size_t bytes_sent) {
+            // Check if message has been sent
+        });
     }
+    join_threads();
 
     return 0;
 }
 ```
 
-## Variables
-
-### FTcpMessage
-
-```cpp
-namespace InternetProtocol
-
-struct FTcpMessage {
-    std::vector<std::byte> raw_data;
-    size_t size = 0;
-};
-```
-
 ## Functions
 
-### Set Host
+### Is Open
 
--   Set the `adress` and `port` of host
-
-```cpp
-void set_host(const std::string &ip, const std::string &port)
-```
-
-### Get Socket
-
--   Get socket connection properties
+-   Return true if socket is open.
 
 ```cpp
-asio::ip::tcp::socket &get_socket()
+bool is_open() const
 ```
 
-### Set Max Send Buffer Size
+### Local Endpoint
 
--   Set max size in bytes of send buffer
+-   Get the local endpoint of the socket. Use this function only after open connection.
 
 ```cpp
-void set_max_send_buffer_size(int value = 1400)
+tcp::endpoint local_endpoint() const
 ```
 
-### Get Max Send Buffer Size
+### Remote Endpoint
 
--   Get max size in bytes of send buffer
+-   Get the remote endpoint of the socket. Use this function only after open connection.
 
 ```cpp
-int get_max_send_buffer_size() const
+tcp::endpoint remote_endpoint() const
 ```
 
-### Set Split Package
+### Get Error Code
 
--   If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
+-   Return a const ref of the latest error code returned by asio.
 
 ```cpp
-void set_split_package(bool value = true)
+const asio::error_code &get_error_code() const
 ```
 
-### Get Split Package
-
--   Get if Split Package is enabled
-
-```cpp
-bool get_split_package() const
-```
-
-### Send Str
+### Write
 
 -   Send a string message
 -   Return false if message is empty or socket is closed
 -   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF\*8
 
 ```cpp
-bool send_str(const std::string &message)
+bool write(const std::string &message, const std::function<void(const asio::error_code &, const size_t)> &callback = nullptr)
 ```
 
-### Send Buffer
+### Write Buffer
 
 -   Send a buffer message
 -   Return false if message is empty or socket is closed
 
 ```cpp
-bool send_buffer(const std::vector<std::byte> &buffer)
+bool write_buffer(const std::vector<uint8_t> &buffer, const std::function<void(const asio::error_code &, const size_t)> &callback = nullptr)
 ```
 
 ### Connect
@@ -137,7 +110,7 @@ bool send_buffer(const std::vector<std::byte> &buffer)
 -   Return true if It's able to connect
 
 ```cpp
-bool connect()
+bool connect(const client_bind_options_t &bind_opts = {})
 ```
 
 ### Close
@@ -146,14 +119,6 @@ bool connect()
 
 ```cpp
 void close()
-```
-
-### Get Error Code
-
--   Get latest error code
-
-```cpp
-int get_error_code() const
 ```
 
 ## Events
@@ -166,33 +131,13 @@ int get_error_code() const
 std::function<void()> on_connected
 ```
 
-### On Bytes Transferred
-
--   Event triggered when socket send or receive data
--   `size_t`: bytes sent
--   `size_t`: bytes received
-
-```cpp
-std::function<void(const size_t, const size_t)> on_bytes_transfered
-```
-
-### On Message Sent
-
--   Event triggered when a message is sent
--   `const asio::error_code &`: if error occur, error code will be different from 0
-
-```cpp
-std::function<void(const asio::error_code &)> on_message_sent
-```
-
 ### On Message Received
 
 -   Event triggered when a message is received
--   `FTcpMessage`: message struct
--   Use `buffer_to_string()` function to converte `raw_data` to `std::string`
+-   Use `buffer_to_string()` function to converte `std::vector<uint8_t>` to `std::string`
 
 ```cpp
-std::function<void(const FTcpMessage)> on_message_received
+std::function<void(const std::vector<uint8_t> &, const size_t)> on_message_received
 ```
 
 ### On Close
