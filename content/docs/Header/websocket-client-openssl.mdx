@@ -8,145 +8,68 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 ## References
 
 <Tabs items={["Global", "Include", "Macro"]}>
-    <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
-    <Tab value="Include">#include "IP/Websocket/WebsocketClient.hpp"</Tab>
-    <Tab value="Macro">#define ASIO_USE_OPENSSL</Tab>
+    <Tab value="Global">#include "ip.hpp"</Tab>
+    <Tab value="Include">#include "ip/websocket/wesclient.hpp"</Tab>
+    <Tab value="Macro">#define ENABLE_SSL</Tab>
 </Tabs>
 
 ## Syntax
 
 ```cpp
-namespace InternetProtocol
-class WebsocketClientSsl
+namespace internetprotocol
+class ws_client_ssl_c
 ```
 
 ```cpp
 #include <iostream>
-#define ASIO_USE_OPENSSL
-#include <IP/Websocket/WebsocketClient.hpp>
+#include <fstream>
+#define ENABLE_SSL
+#include <ip.hpp>
 
-using namespace InternetProtocol;
+using namespace internetprotocol;
+
+std::string loadfile(const std::string& file) {
+    std::ifstream arquivo(file);
+
+    if (!arquivo.is_open()) {
+        throw std::runtime_error("Erro trying to open file: " + file);
+    }
+
+    std::stringstream buffer;
+    buffer << arquivo.rdbuf();
+
+    return buffer.str();
+}
+// Relative path to the files
+const std::string cert = loadfile("cert.pem");
+const std::string key = loadfile("key.pem");
+const std::string csr = loadfile("csr.pem");
+const std::string ca_cert = loadfile("ca-cert.pem");
 
 int main()
 {
-    WebsocketClientSsl client;
-    client.set_host("localhost", "3000");
-    client.on_message_received = [&](const FWsMessage message) {
-        std::cout << message.toString() << std::endl;
+    ws_client_ssl_c net({ key, cert, "", "", file_format_e::pem, none, "" });
+    
+    net.on_error = [&](const asio::error_code &ec) {
+        std::cout << ec.message() << std::endl;
     };
-    client.get_ssl_context().set_options(asio::ssl::verify_none);
-    client.load_private_key_file("<key file>.pem"); //Relative path to your PEM file
-    client.load_certificate_file("<cert file>.pem"); //Relative path to your PEM file
-    client.update_ssl_socket();
-    client.connect();
+    net.on_message_received = [&](const std::vector<uint8_t> &buffer, bool is_binary) {
+        std::cout << buffer_to_string(buffer) << std::endl;
+    };
+    net.connect();
 
     std::string input;
-    std::cout << "Digite algo: ";
     while (std::getline(std::cin, input)) {
-        if (input == "quit")
-        {
-            client.close();
+        if (input == "quit") {
+            net.close(1000, "Shutdown client");
             break;
         }
-        client.send_str(input);
+        net.write(input, {}, [](const asio::error_code &ec, size_t bytes_sent) {
+            // Check if message has been sent
+        });
     }
+    join_threads();
 
     return 0;
 }
-```
-
-## Functions
-
-This class has the same functions from `WebsocketClient`, except for the ones shown below
-
-### Get Ssl Context
-
--   Set Ssl extra configuration.
-
-```cpp
-  asio::ssl::context &get_ssl_context()
-```
-
-### Get Ssl Socket
-
--   Get Ssl socket
-
-```cpp
-  const asio::ssl::stream<asio::ip::tcp::socket> &get_ssl_socket() const
-```
-
-### Update Ssl Socket
-
--   Update Ssl socket configuration
--   Must be called afer change options using `get_ssl_context()` function
-
-```cpp
-  void update_ssl_socket()
-```
-
-### Load Private Key Data
-
--   Load the private key from a string.
--   If any error occurs, it will trigger the `OnError` event.
-
-```cpp
- bool load_private_key_data(const std::string &key_data)
-```
-
-### Load Private Key File
-
--   Load the private key from file.
--   If any error occurs, it will trigger the `OnError` event.
--   Relative path.
-
-```cpp
- bool load_private_key_file(const std::string &filename)
-```
-
-### Load Certificate Data
-
--   Load the certificate from a string.
--   If any error occurs, it will trigger the `OnError` event.
-
-```cpp
- bool load_certificate_data(const std::string &cert_data)
-```
-
-### Load Certificate File
-
--   Load the certificate from file.
--   If any error occurs, it will trigger the `OnError` event.
--   Relative path.
-
-```cpp
- bool load_certificate_file(const std::string &filename)
-```
-
-### Load Certificate Chain Data
-
--   Load the certificate chain from a string.
--   If any error occurs, it will trigger the `OnError` event.
-
-```cpp
- bool load_certificate_chain_data(const std::string &cert_chain_data)
-```
-
-### Load Certificate Chain File
-
--   Load the certificate chain from file.
--   If any error occurs, it will trigger the `OnError` event.
--   Relative path.
-
-```cpp
- bool load_certificate_chain_file(const std::string &filename)
-```
-
-### Load Verify File
-
--   Load the certificate from file and verify if it is valid.
--   If any error occurs, it will trigger the `OnError` event.
--   Relative path.
-
-```cpp
- bool load_verify_file(const std::string &filename)
 ```
