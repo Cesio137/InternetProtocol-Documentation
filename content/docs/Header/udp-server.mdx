@@ -8,185 +8,157 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 ## References
 
 <Tabs items={["Global", "Include"]}>
-    <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
-    <Tab value="Include">#include "IP/UDP/UDPServer.hpp"</Tab>
+    <Tab value="Global">#include "ip.hpp"</Tab>
+    <Tab value="Include">#include "ip/udp/udpserver.hpp"</Tab>
 </Tabs>
 
 ## Syntax
 
 ```cpp
-namespace InternetProtocol
-class UDPServer
+namespace internetprotocol
+class udp_server_c
 ```
 
 ## Example code
 
 ```cpp
 #include <iostream>
-#include <IP/UDP/UDPServer.hpp>
+#include <ip/udp/udpserver.hpp>
 
-using namespace InternetProtocol;
+using namespace internetprotocol;
 
-int main()
-{
-    UDPServer server;
-    server.set_socket(EProtocolType::V4, 3000);
-    server.on_message_received = [](const FUdpMessage message, const asio::ip::udp::endpoint &endpoint) {
-        std::cout << endpoint.port() << " -> " << buffer_to_string(message.raw_data) << std::endl;
+int main(int argc, char** argv) {
+    udp_server_c net;
+
+    std::set<udp::endpoint> endpoints{};
+    net.on_error = [&](const asio::error_code &ec) {
+        std::cout << ec.message() << std::endl;
     };
-    server.open();
+    net.on_message_received = [&](const std::vector<uint8_t> &buffer, const size_t bytes_recvd, const udp::endpoint &endpoint) {
+        if (endpoints.find(endpoint) == endpoints.end()) {
+            endpoints.insert(endpoint);
+        }
+        std::string message = buffer_to_string(buffer);
+        for (const auto &ep: endpoints) {
+            net.send_to(message, ep); // Broadcast message to other clients
+        }
+    };
+    net.bind();
 
     std::string input;
-    std::cout << "Digite algo: ";
     while (std::getline(std::cin, input)) {
-        if (input == "quit")
-        {
-            server.close();
+        if (input == "quit") {
+            net.close();
             break;
         }
+        for (const auto &ep: endpoints) {
+            net.send_to(input, ep, [](const asio::error_code &ec, size_t bytes_sent, const udp::endpoint &endpoint) {
+                // Check if message has been sent
+            });
+        }
     }
+    join_threads();
+
     return 0;
 }
 ```
 
-## Variables
-
-### FUdpMessage
-
-```cpp
-namespace InternetProtocol
-
-struct FUdpMessage {
-    FUdpMessage() { rawData.resize(1024); }
-    std::vector<std::byte> rawData;
-    size_t size = 0;
-};
-```
-
 ## Functions
 
-### SetSocket
+### Is Open
 
--   Set socket protocol and port
-
-```cpp
-void set_socket(const EProtocolType protocol, const uint16_t port)
-```
-
-### Get Socket
-
--   Get socket connection properties
+-   Return true if socket is open.
 
 ```cpp
-asio::ip::udp::socket &get_socket()
+bool is_open() const
 ```
 
-### Set Max Receive Buffer Size
+### Local Endpoint
 
--   Set max size in bytes of receive buffer
+-   Get the local endpoint of the socket. Use this function only after open connection.
 
 ```cpp
-void set_max_sen_buffer_size(int value = 1024)
+udp::endpoint local_endpoint() const
 ```
 
-### Get Max Receive Buffer Size
+### Get Error Code
 
--   Get max size in bytes of receive buffer
+-   Return a const ref of the latest error code returned by asio.
 
 ```cpp
-int get_max_send_buffer_size() const
+const asio::error_code &get_error_code() const
 ```
 
-### Set Split Package
+### Set Recv Buffer Size
 
--   If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
+-   Set receive buffer size in bytes.
 
 ```cpp
-void set_split_package(bool value = true)
+void set_recv_buffer_size(const size_t size = 16384)
 ```
 
-### Get Split Package
+### Get Recv Buffer Size
 
--   Get if Split Package is enabled
+-   Get receive buffer size in bytes.
 
 ```cpp
-bool get_split_package() const
+size_t get_recv_buffer_size() const
 ```
 
-### Send Str To
+### Send To
 
--   Send a string message to specifc endpoint
+-   Broadcasts a string to an specific endpoint.
 -   Return false if message is empty or socket is closed
 -   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF\*8
 
 ```cpp
-bool send_str_to(const std::string &message, const asio::ip::udp::endpoint &endpoint)
+bool send_to(const std::string &message, const udp::endpoint &endpoint, const std::function<void(const asio::error_code &, const size_t, const udp::endpoint &)> &callback = nullptr)
 ```
 
 ### Send Buffer To
 
--   Send a buffer message
+-   Broadcasts a buffer to an specific endpoint.
 -   Return false if buffer is empty or socket is closed
 
 ```cpp
-bool send_buffer(const std::vector<uint8_t> &buffer, const asio::ip::udp::endpoint &endpoint)
+bool send_buffer_to(const std::vector<uint8_t> &buffer, const udp::endpoint &endpoint, const std::function<void(const asio::error_code &, const size_t)> &callback = nullptr)
 ```
 
-### Open
+### Bind
 
--   Open socket connection
+-   Listen for datagram messages on a named port and optional address.
 -   Return false if socket is already open or any error occurs
 -   Event `on_error` is triggered if any error occurs
 
 ```cpp
-bool open()
+bool bind(const server_bind_options_t &bind_opts = { "", 8080, v4, true })
 ```
 
 ### Close
 
--   Close socket
+-   Close the underlying socket and stop listening for data on it. 'on_close' event will be triggered.
 
 ```cpp
 void close()
 ```
 
-### Get Error Code
-
--   Get latest error code
-
-```cpp
-asio::error_code get_error_code() const
-```
-
 ## Events
 
-### On Bytes Transferred
+### On Listening
 
--   Event triggered when socket send or receive data
--   `size_t`: bytes sent
--   `size_t`: bytes received
+-   Event triggered when socket start to listening
 
 ```cpp
-std::function<void(const size_t, const size_t)> on_bytes_transfered
-```
-
-### On Message Sent
-
--   Event triggered when a message is sent
--   `const asio::error_code &`: if error occur, error code will be different from 0
-
-```cpp
-std::function<void(const asio::error_code &, const asio::ip::udp::endpoint &)> on_message_sent
+std::function<void()> on_listening
 ```
 
 ### On Message Received
 
 -   Event triggered when a message is received by a endpoint
--   `FUdpMessage`: message struct
--   Use `buffer_to_string()` function to converte `raw_data` to `std::string`
+-   Use `buffer_to_string()` function to converte `std::vector<uint8_t>` to `std::string`
 
 ```cpp
-std::function<void(const FUdpMessage, const asio::ip::udp::endpoint &)> on_message_received
+std::function<void(const std::vector<uint8_t> &, const size_t, const udp::endpoint &)> on_message_received
 ```
 
 ### On Close

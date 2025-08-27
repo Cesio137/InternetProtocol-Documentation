@@ -8,218 +8,128 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 ## References
 
 <Tabs items={["Global", "Include"]}>
-    <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
-    <Tab value="Include">#include "IP/TCP/TCPServer.hpp"</Tab>
+    <Tab value="Global">#include "ip.hpp"</Tab>
+    <Tab value="Include">#include "ip/tcp/tcpserver.hpp"</Tab>
 </Tabs>
 
 ## Syntax
 
 ```cpp
-namespace InternetProtocol
-class TCPServer
+namespace internetprotocol
+class tcp_server_c
 ```
 
 ## Example code
 
 ```cpp
 #include <iostream>
-#include <IP/TCP/TCPServer.hpp>
+#include "ip.hpp"
 
 using namespace InternetProtocol;
 
 int main()
 {
-    TCPServer server;
-    server.set_socket(EProtocolType::V4, 3000);
-    server.on_message_received = [&](const FTcpMessage message, const socket_ptr& socket) {
-        std::cout << socket->remote_endpoint().port() << " -> " << buffer_to_string(message.raw_data) << std::endl;
+    tcp_server_c net;
+
+    net.on_error = [&](const asio::error_code &ec) {
+        std::cout << ec.message() << std::endl;
     };
-    server.open();
+    net.on_client_accepted = [&](const std::shared_ptr<tcp_remote_c> &client) {
+        client->on_message_received = [&, client](const std::vector<uint8_t> &buffer, const size_t bytes_recvd) {
+            std::cout << client->local_endpoint().port() << " -> " << buffer_to_string(buffer) << std::endl;
+        };
+        client->on_close = [&, client]() {
+            std::cout << "client logout" << std::endl;
+        };
+    };
+    net.bind();
 
     std::string input;
-    std::cout << "Digite algo: ";
     while (std::getline(std::cin, input)) {
-        if (input == "quit")
-        {
-            server.close();
+        if (input == "quit") {
+            net.close();
             break;
         }
+        for (const auto &client: net.clients()) {
+            client->write(input, [](const asio::error_code &ec, size_t bytes_sent) {
+                // Check if message has been sent
+            });
+        }
     }
+    join_threads();
+
     return 0;
 }
 ```
 
-## Variables
-
-### FTcpMessage
-
-```cpp
-namespace InternetProtocol
-
-struct FTcpMessage {
-    std::vector<std::byte> raw_data;
-    size_t size = 0;
-};
-```
-
 ## Functions
 
-### Set Socket
+### Is Open
 
--   Set the `adress`, `port`, `max connection` of socket acceptor
+-   Return true if socket is open.
 
 ```cpp
-void set_socket(const EProtocolType protocol, const uint16_t port, const int max_listen_conn = 2147483647)
+bool is_open() const
 ```
 
-### Get Acceptor
+### Local Endpoint
 
--   Get socket acceptor
+-   Get the local endpoint of the socket. Use this function only after open connection.
 
 ```cpp
-asio::ip::tcp::acceptor &get_acceptor()
+tcp::endpoint local_endpoint() const
 ```
 
-### Get Sockets
+### Clients
 
--   Get all sockets connected to the server
+-   Gets a constant reference to the set of clients connected to the server.
 
 ```cpp
-const std::set<socket_ptr> get_sockets() const
+const std::set<std::shared_ptr<tcp_remote_c>> &clients() const
 ```
 
-### Set Max Send Buffer Size
+### Get Error Code
 
--   Set max size in bytes of send buffer
-
-```cpp
-void set_max_send_buffer_size(int value = 1400)
-```
-
-### Get Max Send Buffer Size
-
--   Get max size in bytes of send buffer
+-   Return a const ref of the latest error code returned by asio.
 
 ```cpp
-int get_max_send_buffer_size() const
-```
-
-### Set Split Package
-
--   If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
-
-```cpp
-void set_split_package(bool value = true)
-```
-
-### Get Split Package
-
--   Get if Split Package is enabled
-
-```cpp
-bool get_split_package() const
-```
-
-### Send Str To
-
--   Send a string message
--   Return false if message is empty or socket is closed
--   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
-
-```cpp
-bool send_str_to(const std::string &message, const socket_ptr &socket)
-```
-
-### Send Buffer To
-
--   Send a buffer message
--   Return false if message is empty or socket is closed
-
-```cpp
-bool send_buffer_to(const std::vector<uint8_t> &buffer, const socket_ptr &socket)
+const asio::error_code &get_error_code() const
 ```
 
 ### Open
 
--   Open connection
+-   Opens the TCP server and starts listening for incoming connections.
 -   Return false if socket is already open or any error occurs
 -   Event `on_error` is triggered if any error occurs
 
 ```cpp
-bool open()
+bool open(const server_bind_options_t &bind_opts = { "", 8080, v4, true })
 ```
 
 ### Close
 
--   Disconnect all clients and close connection
+-   Close the underlying socket and stop listening for data on it. 'on_close' event will be triggered.
 
 ```cpp
 void close()
 ```
 
-### Disconnect Socket
-
--   Close connection of specific socket
-
-```cpp
-void disconnect_socket(const socket_ptr &socket)
-```
-
-### Get Error Code
-
--   Get latest error code
-
-```cpp
-int get_error_code() const
-```
-
 ## Events
 
-### On Socket Accepted
+### On Listening
 
--   Event triggered when a new client connection is estabilished
+-   This event will be triggered when socket start to listening.
 
 ```cpp
-std::function<void(const socket_ptr &)> on_socket_accepted
+std::function<void()> on_listening
 ```
 
-### On Bytes Transferred
+### On Client Accepted
 
--   Event triggered when socket send or receive data
--   `size_t`: bytes sent
--   `size_t`: bytes received
+-   This event will be triggered when new client connect.
 
 ```cpp
-std::function<void(const size_t, const size_t)> on_bytes_transfered
-```
-
-### On Message Sent
-
--   Event triggered when a message is sent by specific socket
--   `const asio::error_code &`: if error occur, error code will be different from 0
-
-```cpp
-std::function<void(const asio::error_code &, const socket_ptr &)> on_message_sent
-```
-
-### On Message Received
-
--   Event triggered when a message is received by specific socket
--   `FTcpMessage`: message struct
--   Use `buffer_to_string()` function to converte `raw_data` to `std::string`
-
-```cpp
-std::function<void(const FTcpMessage, const socket_ptr &)> on_message_received
-```
-
-### On Socket Disconnected
-
--   Event triggered when a socket is diconnected
--   `const asio::error_code &`: if error occur, error code will be different from 0
--   Normally, when an error occurs, the socket is automatically closed, triggering the `on_close` event.
-
-```cpp
-std::function<void(const asio::error_code &, const socket_ptr &)> on_socket_disconnected
+std::function<void(const std::shared_ptr<tcp_remote_c> &)> on_client_acceptedpted
 ```
 
 ### On Close
