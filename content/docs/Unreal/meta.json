@@ -4,6 +4,7 @@
         "about",
         "examples",
         "subsystem",
+        "function-library",
         "udp-server",
         "tcp-server",
         "tcp-server-openssl",

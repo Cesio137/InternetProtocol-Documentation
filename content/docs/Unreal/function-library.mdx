@@ -14,3 +14,30 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
         #include "utils/utils.h"
     </Tab>
 </Tabs>
+
+## Nodes
+
+### Join Threads
+
+- Block execution until all asynchronous tasks on the sockets are completed.
+- Make sure the socket's Close function is called beforehand.
+
+<img src="/img/utils/join_threads.png" loading="lazy" decoding="async" />
+
+### Stop Threads
+
+- Stop all async operation at once.
+
+<img src="/img/utils/stop_threads.png" loading="lazy" decoding="async" />
+
+### Buffer To String
+
+- Convert a `TArray<uint8>` to `FString`
+
+<img src="/img/utils/buffer_to_string.png" loading="lazy" decoding="async" />
+
+### String To Byte Array
+
+- Convert a `FString` to `TArray<uint8>`
+
+<img src="/img/utils/string_to_byte_array.png" loading="lazy" decoding="async" />
