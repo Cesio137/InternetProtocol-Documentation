@@ -8,225 +8,106 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 ## References
 
 <Tabs items={["Global", "Include"]}>
-    <Tab value="Global">#include "IP/InternetProtocol.hpp"</Tab>
-    <Tab value="Include">#include "IP/Websocket/WebsocketServer.hpp"</Tab>
+    <Tab value="Global">#include "ip.hpp"</Tab>
+    <Tab value="Include">#include "ip/websocket/wsserver.hpp"</Tab>
 </Tabs>
 
 ## Syntax
 
 ```cpp
-namespace InternetProtocol
-class WebsocketServer
+namespace internetprotocol
+class ws_server_c
 ```
 
 ## Example Code
 
 ```cpp
 #include <iostream>
-#include <IP/Websocket/WebsocketServer.hpp>
+#include "ip.hpp"
 
-using namespace InternetProtocol;
+using namespace internetprotocol;
 
 int main()
 {
-    WebsocketServer server;
-    server.set_socket(EProtocolType::V4, 3000);
-    server.on_message_received = [&](const FWsMessage message, const socket_ptr &socket) {
-        std::cout << socket->remote_endpoint().port() << " -> " << buffer_to_string(message.payload) << std::endl;
+    ws_server_c net;
+
+    net.on_error = [&](const asio::error_code &ec) {
+        std::cout << ec.message() << std::endl;
     };
-    server.open();
+    net.on_client_accepted = [&](const std::shared_ptr<ws_remote_c> &client) {
+        std::cout << "Client connected" << std::endl;
+        client->on_error = [&](const asio::error_code &ec) {
+            std::cout << ec.message() << std::endl;
+        };
+        client->on_close = [&](const uint16_t code, const std::string &reason) {
+            std::cout << code << " -> " << reason << std::endl;
+        };
+        client->on_message_received = [&](const std::vector<uint8_t> &buffer, bool is_binary) {
+            std::cout << "Message received: " << buffer_to_string(buffer) << std::endl;
+        };
+    };
+    net.open();
 
     std::string input;
-    std::cout << "Digite algo: ";
     while (std::getline(std::cin, input)) {
-        if (input == "quit")
-        {
-            server.close();
+        if (input == "quit") {
+            net.close();
             break;
         }
+        for (const auto &client : net.clients()) {
+            client->write(input, {}, [](const asio::error_code &ec, const size_t bytes_sent) {
+                // Check if message has been sent
+            });
+        }
     }
+    join_threads();
+
     return 0;
 }
 ```
 
 ## Variables
 
-### EOpcode
+### Backlog
+
+- Sets the maximum number of simultaneous client connections the server will accept in queue.
 
 ```cpp
-namespace InternetProtocol
-
-enum class EOpcode : uint8_t {
-    FRAME_CON,
-    TEXT_FRAME,
-    BINARY_FRAME,
-    NON_CONTROL_FRAMES,
-    CONNECTION_CLOSE,
-    PING,
-    PONG,
-    FURTHER_FRAMES,
-};
-```
-
-### FDataFrame
-
-```cpp
-namespace InternetProtocol
-
-struct FDataFrame {
-    bool fin;
-    bool rsv1;
-    bool rsv2;
-    bool rsv3;
-    bool mask;
-    EOpcode opcode;
-    size_t length;
-    std::array<std::byte, 4> masking_key;
-};
-```
-
-### FWsMessage
-
-```cpp
-namespace InternetProtocol
-
-struct FWsMessage {
-    FDataFrame data_frame;
-    std::vector<std::byte> payload;
-    std::string toString() const;
-    size_t size;
-};
-```
-### FRequest
-
-```cpp
-namespace InternetProtocol::Server
-
-struct FRequest {
-    EMethod method = EMethod::GET;
-    std::string path = "/";
-    std::string version = "1.1";
-    std::map<std::string, std::vector<std::string> > headers;
-    std::string body;
-};
-```
-
-### FResponse
-
-```cpp
-namespace InternetProtocol::Server
-
-struct FResponse {
-    std::string version = "1.1";
-    std::map<std::string, std::string> headers;
-    std::string body;
-};
+int backlog
 ```
 
 ## Functions
 
-### Set Socket
+### Is Open
 
--   Set the `adress`, `port`, `max connection` of socket acceptor
+-   Return true if socket is open.
 
 ```cpp
-void set_socket(const EProtocolType protocol, const uint16_t port, const int max_listen_conn = 2147483647)
+bool is_open() const
 ```
 
-### Get Acceptor
+### Local Endpoint
 
--   Get socket acceptor
+-   Get the local endpoint of the socket. Use this function only after open connection.
 
 ```cpp
-asio::ip::tcp::acceptor &get_acceptor()
+tcp::endpoint local_endpoint() const
 ```
 
-### Get Sockets
+### Clients
 
--   Get all sockets connected to the server
+-   Gets a constant reference to the set of clients connected to the server.
 
 ```cpp
-const std::set<socket_ptr> get_sockets() const
+const std::set<std::shared_ptr<tcp_remote_c>> &clients() const
 ```
 
-### Set Max Send Buffer Size
+### Get Error Code
 
--   Set max size in bytes of send buffer
-
-```cpp
-void set_max_send_buffer_size(int value = 1400)
-```
-
-### Get Max Send Buffer Size
-
--   Get max size in bytes of send buffer
+-   Return a const ref of the latest error code returned by asio.
 
 ```cpp
-int get_max_send_buffer_size() const
-```
-
-### Set Split Package
-
--   If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
-
-```cpp
-void set_split_package(bool value = true)
-```
-
-### Get Split Package
-
--   Get if Split Package is enabled
-
-```cpp
-bool get_split_package() const
-```
-
-### Send Handshake To
-
--   Send a websocket handshake to stablish connection with
--   Return false if socket is closed
--   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
-
-```cpp
-bool send_handshake_to(const Server::FRequest &request, Server::FResponse &response, const socket_ptr &socket)
-```
-
-### Send Handshake Error To
-
--   Send a websocket handshake error and close connection
--   Return false if socket is closed
--   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
-
-```cpp
-bool send_handshake_error_to(const uint32_t status_code, const std::string &body, const socket_ptr &socket)
-```
-
-### Send Str To
-
--   Send a string message
--   Return false if string is empty or socket is closed
--   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
-
-```cpp
-bool send_str_to(const std::string &message, const socket_ptr &socket)
-```
-
-### Send Buffer To
-
--   Send a buffer message
--   Return false if byte array is empty or socket is closed
-
-```cpp
-bool send_buffer_to(const std::vector<uint8_t> &buffer, const socket_ptr &socket)
-```
-
-### Send Ping To
-
--   Send a ping to websocket server
--   Return false if socket is closed
-
-```cpp
-bool send_ping_to(const socket_ptr &socket)
+const asio::error_code &get_error_code() const
 ```
 
 ### Open
@@ -236,7 +117,7 @@ bool send_ping_to(const socket_ptr &socket)
 -   Event `on_error` is triggered if any error occurs
 
 ```cpp
-bool open()
+bool open(const server_bind_options_t &bind_opts = { "", 8080, v4, true }))
 ```
 
 ### Close
@@ -247,151 +128,29 @@ bool open()
 void close()
 ```
 
-### Disconnect Socket
-
--   Close connection of specific socket
-
-```cpp
-void disconnect_socket(const socket_ptr &socket)
-```
-
-### Get Error Code
-
--   Get latest error code
-
-```cpp
-asio::error_code get_error_code() const
-```
-
-## Handshake Functions
-
-[Handshake](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#client_handshake_request) is a http request to contact the server and requesting a WebSocket connection
-
-### Set Headers
-
--   Set handshake headers
-
-```cpp
-void set_headers(const std::map<std::string, std::string> &headers)
-```
-
-### Get Headers
-
--   Return a reference to handshake headers
--   Use this function to modify or append values to headers
-
-```cpp
-std::map<std::string, std::string> &get_headers()
-```
-
-## Dataframe Functions
-
-### Set RSV1
-
-```cpp
-void set_RSV1(bool value = false)
-```
-
-### Use RSV1
-
-```cpp
-bool use_RSV1() const
-```
-
-### Set RSV2
-
-```cpp
-void set_RSV2(bool value = false)
-```
-
-### Use RSV2
-
-```cpp
-bool use_RSV2() const
-```
-
-### Set RSV3
-
-```cpp
-void set_RSV3(bool value = false)
-```
-
-### Use RSV3
-
-```cpp
-bool use_RSV3() const
-```
-
-### Set Mask
-
-```cpp
-void set_Mask(bool value = true)
-```
-
-### Use Mask
-
-```cpp
-bool use_Mask() const
-```
+## Events
 
 ## Events
 
-### On Socket Accepted
+### On Listening
 
--   Event triggered when a new client connection is estabilished
+-   This event will be triggered when socket start to listening.
 
 ```cpp
-std::function<void(const socket_ptr &)> on_socket_accepted
+std::function<void()> on_listening
 ```
 
-### On Bytes Transferred
+### On Client Accepted
 
--   Event triggered when socket send or receive data
--   `size_t`: bytes sent
--   `size_t`: bytes received
+-   This event will be triggered when new client connect.
 
 ```cpp
-std::function<void(const size_t, const size_t)> on_bytes_transfered
-```
-
-### On Message Sent
-
--   Event triggered when a message is sent by specific socket
--   `const asio::error_code &`: if error occur, error code will be different from 0
-
-```cpp
-std::function<void(const asio::error_code &, const socket_ptr &)> on_message_sent
-```
-
-### On Message Received
-
--   Event triggered when a message is received by specific socket
--   `FWsMessage`: message struct
--   Use `buffer_to_string()` function to converte `raw_data` to `std::string`
-
-```cpp
-std::function<void(const FWsMessage, const socket_ptr &)> on_message_received
-```
-
-### On Pong Received
-
--   Event triggered when a pong message is received
-
-```cpp
-std::function<void(const socket_ptr &)> on_pong_received
-```
-
-### On Close Notify
-
--   Event triggered when a client send a close notification
-
-```cpp
-std::function<void(const socket_ptr &)> on_close_notify
+std::function<void(const std::shared_ptr<ws_remote_c> &)> on_client_acceptedpted
 ```
 
 ### On Close
 
--   Event triggered when a connection is closed
+-   Event triggered when socket and acceptor is closed
 
 ```cpp
 std::function<void()> on_close
@@ -399,9 +158,8 @@ std::function<void()> on_close
 
 ### On Error
 
--   Event triggered if any error occur during async process.
--   `const asio::error_code &`: if error occur, error code will be different from 0.
--   Normally, when an error occurs, the socket is automatically closed, triggering the `on_close` event.
+-   Event triggered if any error occur during async process
+-   `const asio::error_code &`: if error occur, error code will be different from 0
 
 ```cpp
 std::function<void(const asio::error_code &)> on_error

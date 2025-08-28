@@ -53,26 +53,7 @@ int main()
 }
 ```
 
-## Variables
-
-### EVerb
-
-```cpp
-namespace InternetProtocol
-
-enum class EVerb : uint8_t {
-    DEL = 0,
-    GET = 1,
-    HEAD = 2,
-    OPTIONS = 3,
-    PATCH = 4,
-    POST = 5,
-    PUT = 6,
-    TRACE = 7,
-}
-```
-
-### Iddle Timeout
+## Variables### Iddle Timeout
 
 Set/Get the idle timeout for the connection in seconds.
 
@@ -111,7 +92,7 @@ tcp::endpoint local_endpoint() const
 -   Gets a constant reference to the set of clients connected to the server.
 
 ```cpp
-const std::set<std::shared_ptr<tcp_remote_c>> &clients() const
+const std::set<std::shared_ptr<http_remote_c>> &clients() const
 ```
 
 ### Get Error Code
@@ -122,24 +103,68 @@ const std::set<std::shared_ptr<tcp_remote_c>> &clients() const
 const asio::error_code &get_error_code() const
 ```
 
-### Send Response
+### All
 
--   Send response to specific socket
--   Return false if socket is closed
--   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
+-   Create a callback to receive requests of any methods for a specific path.
 
 ```cpp
-bool send_response(Server::FResponse &response, const socket_ptr &socket)
+void all(const std::string &path, const std::function<void(const http_request_t &, const std::shared_ptr<http_remote_c> &)> &callback)
 ```
 
-### Send Response Error
+### Get
 
--   Send response error to specific socket
--   Return false if socket is closed
--   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
+-   Create a callback to receive requests of get method for a specific path.
 
 ```cpp
-bool send_error_response(const uint32_t status_code, const Server::FResponse &response, const socket_ptr &socket)
+void get(const std::string &path, const std::function<void(const http_request_t &, const std::shared_ptr<http_remote_c> &)> &callback)
+```
+
+### Post
+
+-   Create a callback to receive requests of post method for a specific path.
+
+```cpp
+void post(const std::string &path, const std::function<void(const http_request_t &, const std::shared_ptr<http_remote_c> &)> &callback)
+```
+
+### Put
+
+-   Create a callback to receive requests of put method for a specific path.
+
+```cpp
+void put(const std::string &path, const std::function<void(const http_request_t &, const std::shared_ptr<http_remote_c> &)> &callback)
+```
+
+### Del
+
+-   Create a callback to receive requests of del method for a specific path.
+
+```cpp
+void del(const std::string &path, const std::function<void(const http_request_t &, const std::shared_ptr<http_remote_c> &)> &callback)
+```
+
+### Head
+
+-   Create a callback to receive requests of head method for a specific path.
+
+```cpp
+void head(const std::string &path, const std::function<void(const http_request_t &, const std::shared_ptr<http_remote_c> &)> &callback)
+```
+
+### Options
+
+-   Create a callback to receive requests of options method for a specific path.
+
+```cpp
+void options(const std::string &path, const std::function<void(const http_request_t &, const std::shared_ptr<http_remote_c> &)> &callback)
+```
+
+### Patch
+
+-   Create a callback to receive requests of patch method for a specific path.
+
+```cpp
+void patch(const std::string &path, const std::function<void(const http_request_t &, const std::shared_ptr<http_remote_c> &)> &callback)
 ```
 
 ### Open
@@ -149,80 +174,18 @@ bool send_error_response(const uint32_t status_code, const Server::FResponse &re
 -   Event `on_error` is triggered if any error occurs
 
 ```cpp
-void open()
+bool open(const server_bind_options_t &bind_opts = { "", 8080, v4, true })
 ```
 
 ### Close
 
--   Close connection or cancel request
+-   Close connection.
 
 ```cpp
 void close()
 ```
 
-### Disconnect Socket
-
--   Close connection of specific socket
-
-```cpp
-void disconnect_socket(const socket_ptr &socket)
-```
-
-### Get Error Code
-
--   Get latest error code
-
-```cpp
-asio::error_code get_error_code() const
-```
-
 ## Events
-
-### On Socket Accepted
-
--   Event triggered when payload process has been finished
-
-```cpp
-std::function<void(const socket_ptr &)> on_socket_accepted
-```
-
-### On Bytes Transfered
-
--   Event triggered while the request is in progress
--   `size_t`: bytes sent
--   `size_t`: bytes received
-
-```cpp
-std::function<void(const size_t, const size_t)> on_bytes_transfered
-```
-
-### On Request Received
-
--   Event triggered when request has been received
--   `FRequest`: Client request struct
--   `FResponse`: Response struct
-
-```cpp
-std::function<void(const Server::FRequest, Server::FResponse, const ssl_socket_ptr &)> on_request_received
-```
-
-### On Request Error
-
--   Event triggered when request fail
--   `FResponse`: Response struct
-
-```cpp
-std::function<void(const asio::error_code &, const ssl_socket_ptr &)> on_request_error
-```
-
-### On Response Sent
-
--   Event triggered when a response is sent to a specific socket
--   `const asio::error_code &`: if error occur, error code will be different from 0
-
-```cpp
-std::function<void(const asio::error_code &, const socket_ptr &)> on_response_sent
-```
 
 ### On Close
 

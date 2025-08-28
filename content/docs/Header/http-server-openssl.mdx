@@ -9,45 +9,62 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 <Tabs items={["Global", "Include", "Macro"]}>
     <Tab value="Global">#include "ip.hpp"</Tab>
-    <Tab value="Include">#include "IP/HTTP/HTTPServer.hpp"</Tab>
-    <Tab value="Macro">#define ASIO_USE_OPENSSL</Tab>
+    <Tab value="Include">#include "ip/http/httpserver.hpp"</Tab>
+    <Tab value="Macro">#define ENABLE_SSL</Tab>
 </Tabs>
 
 ## Syntax
 
 ```cpp
-namespace InternetProtocol
-class HttpServerSsl
+namespace internetprotocol
+class http_server_ssl_c
 ```
 
 ```cpp
 #include <iostream>
-#define ASIO_USE_OPENSSL
-#include <IP/HTTP/HTTPServer.hpp>
+#define ENABLE_SSL
+#include "ip.hpp"
 
-using namespace InternetProtocol;
+using namespace internetprotocol;
+
+std::string loadfile(const std::string& file) {
+    std::ifstream arquivo(file);
+
+    if (!arquivo.is_open()) {
+        throw std::runtime_error("Erro trying to open file: " + file);
+    }
+
+    std::stringstream buffer;
+    buffer << arquivo.rdbuf();
+
+    return buffer.str();
+}
+// Relative path to the files
+const std::string cert = loadfile("cert.pem");
+const std::string key = loadfile("key.pem");
+const std::string csr = loadfile("csr.pem");
+const std::string ca_cert = loadfile("ca-cert.pem");
 
 int main()
 {
-    HttpServerSsl server;
-    server.set_socket(EProtocolType::V4, 3000);
-    server.on_request_received = [&](const Server::FRequest request, Server::FResponse &response, const socket_ptr &socket) {
-        response.body = "Hello World!";
-        server.send_response(response, socket);
-    };
-    server.get_ssl_context().set_options(asio::ssl::verify_none);
-    server.load_private_key_file("client-key.pem"); //Relative path to your PEM file
-    server.load_certificate_file("client-cert.pem"); //Relative path to your PEM file
-    server.open();
+    http_server_ssl_c net({ key, cert, "", "", file_format_e::pem, none, "" });
+    http_request_t req;
+    net.get("/", [&](const http_request_t &request, const std::shared_ptr<http_remote_c> &response) {
+        http_response_t &res = response->headers();
+        res.body = "hello, world!";
+        response->write([](const asio::error_code &ec, const size_t bytes_sent) {
+            // Check if response has been sent
+        });
+    });
 
     std::string input;
-    std::cout << "Digite algo: ";
     while (std::getline(std::cin, input)) {
-        if (input == "quit")
-        {
+        if (input == "quit") {
+            net.close();
             break;
         }
     }
+    join_threads();
 
     return 0;
 }
