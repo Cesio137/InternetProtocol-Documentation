@@ -22,22 +22,58 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 - Block execution until all asynchronous tasks on the sockets are completed.
 - Make sure the socket's Close function is called beforehand.
 
-<img src="/img/utils/join_threads.png" loading="lazy" decoding="async" />
+<UFunction
+  name="Join Threads"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
 
 ### Stop Threads
 
 - Stop all async operation at once.
 
-<img src="/img/utils/stop_threads.png" loading="lazy" decoding="async" />
+<UFunction
+  name="Stop Threads"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
 
 ### Buffer To String
 
 - Convert a `TArray<uint8>` to `FString`
 
-<img src="/img/utils/buffer_to_string.png" loading="lazy" decoding="async" />
+<UFunction
+  name="Buffer To String"
+  pure={true}
+  inPins={[
+    { name: "Value", pintype: "bytearray" }
+  ]}
+  outPins={[
+    { name: "Return Value", pintype: "fstring" }
+  ]}
+/>
 
 ### String To Byte Array
 
 - Convert a `FString` to `TArray<uint8>`
 
-<img src="/img/utils/string_to_byte_array.png" loading="lazy" decoding="async" />
+<UFunction
+  name="String To Byte Array"
+  pure={true}
+  inPins={[
+    { name: "Value", pintype: "fstring" }
+  ]}
+  outPins={[
+    { name: "Return Value", pintype: "bytearray" }
+  ]}
+/>
