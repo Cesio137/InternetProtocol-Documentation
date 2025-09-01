@@ -1,6 +1,6 @@
 export interface FunctionPin {
     name: string,
-    pintype: "exec" | "delegate" | "boolean" | "struct" | "fstring" | "bytearray",
+    pintype: "exec" | "delegate" | "boolean" | "int" | "struct" | "fstring" | "bytearray",
 }
 
 export interface FunctionProperties {

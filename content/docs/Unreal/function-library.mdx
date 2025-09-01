@@ -10,70 +10,52 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 ## References
 
 <Tabs items={["Include"]}>
-    <Tab value="Include">
-        #include "utils/utils.h"
-    </Tab>
+    <Tab value="Include">#include "utils/utils.h"</Tab>
 </Tabs>
 
 ## Nodes
 
 ### Join Threads
 
-- Block execution until all asynchronous tasks on the sockets are completed.
-- Make sure the socket's Close function is called beforehand.
+-   Block execution until all asynchronous tasks on the sockets are completed.
+-   Make sure the socket's Close function is called beforehand.
 
 <UFunction
-  name="Join Threads"
-  pure={false}
-  inPins={[
-    { name: "", pintype: "exec" }
-  ]}
-  outPins={[
-    { name: "", pintype: "exec" }
-  ]}
+    name="Join Threads"
+    pure={false}
+    inPins={[{ name: "", pintype: "exec" }]}
+    outPins={[{ name: "", pintype: "exec" }]}
 />
 
 ### Stop Threads
 
-- Stop all async operation at once.
+-   Stop all async operation at once.
 
 <UFunction
-  name="Stop Threads"
-  pure={false}
-  inPins={[
-    { name: "", pintype: "exec" }
-  ]}
-  outPins={[
-    { name: "", pintype: "exec" }
-  ]}
+    name="Stop Threads"
+    pure={false}
+    inPins={[{ name: "", pintype: "exec" }]}
+    outPins={[{ name: "", pintype: "exec" }]}
 />
 
 ### Buffer To String
 
-- Convert a `TArray<uint8>` to `FString`
+-   Convert a `TArray<uint8>` to `FString`
 
 <UFunction
-  name="Buffer To String"
-  pure={true}
-  inPins={[
-    { name: "Value", pintype: "bytearray" }
-  ]}
-  outPins={[
-    { name: "Return Value", pintype: "fstring" }
-  ]}
+    name="Buffer To String"
+    pure={true}
+    inPins={[{ name: "Value", pintype: "bytearray" }]}
+    outPins={[{ name: "Return Value", pintype: "fstring" }]}
 />
 
 ### String To Byte Array
 
-- Convert a `FString` to `TArray<uint8>`
+-   Convert a `FString` to `TArray<uint8>`
 
 <UFunction
-  name="String To Byte Array"
-  pure={true}
-  inPins={[
-    { name: "Value", pintype: "fstring" }
-  ]}
-  outPins={[
-    { name: "Return Value", pintype: "bytearray" }
-  ]}
+    name="String To Byte Array"
+    pure={true}
+    inPins={[{ name: "Value", pintype: "fstring" }]}
+    outPins={[{ name: "Return Value", pintype: "bytearray" }]}
 />

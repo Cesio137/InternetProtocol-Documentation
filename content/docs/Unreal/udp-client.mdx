@@ -10,7 +10,7 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 ## References
 
 <Tabs items={["Include"]}>
-    <Tab value="Include">#include "UDP/UDPClient.h"</Tab>
+    <Tab value="Include">#include "udp/udpclient.h"</Tab>
 </Tabs>
 
 ## How to use
@@ -32,139 +32,183 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ## Nodes
 
-### Set Host
+### Is Open
 
--   Set the `adress` and `port` of host
-    <ImageZoom
-        src="/img/client-side/udp/sethost.png"
-        alt="UDP client"
-        width={262}
-        height={213}
-    />
+-   Return true if socket is open.
 
-### Get Socket
+<UFunction
+  name="Is Open"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
 
--   Get socket properties
-    <ImageZoom
-        src="/img/client-side/udp/getsocket.png"
-        alt="UDP client"
-        width={130}
-        height={56}
-    />
+### Local Endpoint
 
-### Set Max Send Buffer Size
+-   Get the local endpoint of the socket. Use this function only after open connection.
 
--   Set max size in bytes of send buffer
-    <ImageZoom
-        src="/img/client-side/udp/setmaxsendbuffer.png"
-        alt="UDP client"
-        width={213}
-        height={134}
-    />
+<UFunction
+  name="Local Endpoint"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "struct" }
+  ]}
+/>
+
+### Remote Endpoint
+
+-   Get the remote endpoint of the socket. Use this function only after open connection.
+
+<UFunction
+  name="Remote Endpoint"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "struct" }
+  ]}
+/>
+
+### Get Error Code
+
+-   Return a struct of the latest error code returned by asio.
+
+<UFunction
+  name="Get Error Code"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "struct" }
+  ]}
+/>
+
+### Set Recv Buffer Size
+
+-   Set max size in bytes of send Buffer
+
+<UFunction
+  name="Set Recv Buffer Size"
+  className="UDPClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Value", pintype: "int" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
 
 ### Get Max Send Buffer Size
 
 -   Get max size in bytes of send buffer
-    <ImageZoom
-        src="/img/client-side/udp/getmaxsendbuffer.png"
-        alt="UDP client"
-        width={227}
-        height={76}
-    />
 
-### Set Max Receive Buffer Size
+<UFunction
+  name="Get Recv Buffer Size"
+  className="UDPClient"
+  pure={true}
+  inPins={[
+    { name: "Target", pintype: "object" },
+  ]}
+  outPins={[
+    { name: "Return Value", pintype: "int" }
+  ]}
+/>
 
--   Set max size in bytes of receive buffer
-    <ImageZoom
-        src="/img/client-side/udp/setmaxreceivebuffer.png"
-        alt="UDP client"
-        width={230}
-        height={134}
-    />
+### Get Error Code
 
-### Get Max Receive Buffer Size
+-   Get latest error code
 
--   Get max size in bytes of receive buffer
-    <ImageZoom
-        src="/img/client-side/udp/getmaxreceivebuffer.png"
-        alt="UDP client"
-        width={231}
-        height={76}
-    />
+<UFunction
+  name="Get Error Code"
+  className="UDPClient"
+  pure={true}
+  inPins={[
+    { name: "Target", pintype: "object" },
+  ]}
+  outPins={[
+    { name: "Return Value", pintype: "struct" }
+  ]}
+/>
 
-### Set Split Package
-
--   If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
-    <ImageZoom
-        src="/img/client-side/udp/setsplitpackage.png"
-        alt="UDP client"
-        width={170}
-        height={136}
-    />
-
-### Get Split Package
-
--   Get if Split Package is enabled
-    <ImageZoom
-        src="/img/client-side/udp/getsplitpackage.png"
-        alt="UDP client"
-        width={227}
-        height={76}
-    />
-
-### Send Str
+### Send
 
 -   Send a string message
 -   Return false if message is empty or socket is closed
 -   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
-    <ImageZoom
-        src="/img/client-side/udp/sendstr.png"
-        alt="UDP client"
-        width={229}
-        height={134}
-    />
+
+<UFunction
+  name="Send"
+  className="UDPClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Message", pintype: "fstring" },
+    { name: "Callback", pintype: "delegate" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
 
 ### Send Buffer
 
 -   Send a buffer message
 -   Return false if buffer is empty or socket is closed
-    <ImageZoom
-        src="/img/client-side/udp/sendbuffer.png"
-        alt="UDP client"
-        width={228}
-        height={130}
-    />
+
+<UFunction
+  name="SendBuffer"
+  className="UDPClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Buffer", pintype: "bytearray" },
+    { name: "Callback", pintype: "delegate" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
 
 ### Connect
 
 -   Connect to the host
--   Return false if socket is already connected
-    <ImageZoom
-        src="/img/client-side/udp/connect.png"
-        alt="UDP client"
-        width={207}
-        height={94}
-    />
+-   Return false if socket is already Connected
+
+<UFunction
+  name="Connect"
+  className="UDPClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Bind Opts", pintype: "struct" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
 
 ### Close
 
 -   Close connection
-    <ImageZoom
-        src="/img/client-side/udp/close.png"
-        alt="UDP client"
-        width={170}
-        height={104}
-    />
 
-### Get Error Code
-
--   Get latest error code
-    <ImageZoom
-        src="/img/client-side/udp/geterrorcode.png"
-        alt="UDP client"
-        width={228}
-        height={76}
-    />
+<UFunction
+  name="Close"
+  className="UDPClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
 
 ## Events
 
