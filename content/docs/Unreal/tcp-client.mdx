@@ -126,6 +126,21 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
         height={104}
     />
 
+<UFunction
+  name="Connect"
+  className="TCPClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Bind Opts", pintype: "struct" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
+
 ### Close
 
 -   Close connection

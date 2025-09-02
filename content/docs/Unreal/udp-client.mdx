@@ -151,6 +151,15 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
     { name: "Return Value", pintype: "bool" }
   ]}
 />
+<UEvents
+  name="On Message Sent"
+  showBindNode={false}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Error Code", pintype: "struct" },
+    { name: "Bytes Sent", pintype: "int" }
+  ]}
+/>
 
 ### Send Buffer
 
@@ -170,6 +179,16 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
   outPins={[
     { name: "", pintype: "exec" },
     { name: "Return Value", pintype: "bool" }
+  ]}
+/>
+
+<UEvents
+  name="On Message Sent"
+  showBindNode={false}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Error Code", pintype: "struct" },
+    { name: "Bytes Sent", pintype: "int" }
   ]}
 />
 
@@ -215,59 +234,50 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 ### On Connected
 
 -   Event triggered when a connection is estabilished
-    <ImageZoom
-        src="/img/client-side/udp/onconnectedevent.png"
-        alt="UDP client"
-        width={225}
-        height={186}
-    />
 
-### On Bytes Transferred
+<UEvents
+  name="On Connected"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
+
+### On Message
 
 -   Event triggered when socket send or receive data
-    <ImageZoom
-        src="/img/client-side/udp/onbytestransferredevent.png"
-        alt="UDP client"
-        width={269}
-        height={238}
-    />
 
-### On Message Sent
-
--   Event triggered when a message is sent
-    <ImageZoom
-        src="/img/client-side/udp/onmessagesentevent.png"
-        alt="UDP client"
-        width={246}
-        height={212}
-    />
-
-### On Message Received
-
--   Event triggered when a message is received
-    <ImageZoom
-        src="/img/client-side/udp/onmessagereceivedevent.png"
-        alt="UDP client"
-        width={272}
-        height={238}
-    />
+<UEvents
+  name="On Message"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Buffer", pintype: "bytearray" },
+    { name: "Bytes Recvd", pintype: "int" }
+  ]}
+/>
 
 ### On Close
 
 -   Event triggered when socket is closed
-    <ImageZoom
-        src="/img/client-side/udp/oncloseevent.png"
-        alt="UDP client"
-        width={195}
-        height={186}
-    />
+
+<UEvents
+  name="On Close"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
 
 ### On Error
 
 -   Event triggered if any error occur during async process
-    <ImageZoom
-        src="/img/client-side/udp/onerrorevent.png"
-        alt="UDP client"
-        width={192}
-        height={212}
-    />
+
+<UEvents
+  name="On Error"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Error Code", pintype: "bool" }
+  ]}
+/>
