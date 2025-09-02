@@ -10,7 +10,7 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 ## References
 
 <Tabs items={["Include"]}>
-    <Tab value="Include">#include "TCP/TCPClient.h"</Tab>
+    <Tab value="Include">#include "tcp/tcpclient.h"</Tab>
 </Tabs>
 
 ## How to use
@@ -22,9 +22,9 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
   <Step>
     C++: Use the code bellow
     ``` cpp
-    #include "TCP/TCPClient.h"
+    #include "tcp/tcpclient.h"
 
-    UTCPClient* TcpClient = NewObject<UTCPClient>();
+    UTCPClient* client = NewObject<UTCPClient>();
     ```
 
   </Step>
@@ -32,99 +32,119 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ## Functions
 
-### Set Host
+### Is Open
 
--   Set the `adress` and `port` of host
-    <ImageZoom
-        src="/img/client-side/tcp/sethost.png"
-        alt="TCP client"
-        width={169}
-        height={164}
-    />
+-   Return true if socket is open.
 
-### Get Socket
+<UFunction
+  name="Is Open"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
 
--   Get socket properties
-    <ImageZoom
-        src="/img/client-side/tcp/getsocket.png"
-        alt="TCP client"
-        width={130}
-        height={75}
-    />
+### Local Endpoint
 
-### Set Max Send Buffer Size
+-   Get the local endpoint of the socket. Use this function only after open connection.
 
--   Set max size in bytes of send buffer
-    <ImageZoom
-        src="/img/client-side/tcp/setmaxsendbuffer.png"
-        alt="TCP client"
-        width={213}
-        height={134}
-    />
+<UFunction
+  name="Local Endpoint"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "struct" }
+  ]}
+/>
 
-### Get Max Send Buffer Size
+### Remote Endpoint
 
--   Get max size in bytes of send buffer
-    <ImageZoom
-        src="/img/client-side/tcp/getmaxsendbuffer.png"
-        alt="TCP client"
-        width={228}
-        height={76}
-    />
+-   Get the remote endpoint of the socket. Use this function only after open connection.
 
-### Set Split Package
+<UFunction
+  name="Remote Endpoint"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "struct" }
+  ]}
+/>
 
--   If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
-    <ImageZoom
-        src="/img/client-side/tcp/setsplitpackage.png"
-        alt="TCP client"
-        width={169}
-        height={136}
-    />
+### Get Error Code
 
-### Get Split Package
+-   Return a struct of the latest error code returned by asio.
 
--   Get if Split Package is enabled
-    <ImageZoom
-        src="/img/client-side/tcp/getsplitpackage.png"
-        alt="TCP client"
-        width={228}
-        height={76}
-    />
+<UFunction
+  name="Get Error Code"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "struct" }
+  ]}
+/>
 
-### Send Str
+### Write
 
--   Send a string message
--   Return true if It's able to send
--   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
-    <ImageZoom
-        src="/img/client-side/tcp/sendstr.png"
-        alt="TCP client"
-        width={229}
-        height={134}
-    />
+-   Sends string data on the socket.
+-   It returns false if socket is closed or if buffer is empty.
 
-### Send Buffer
+<UFunction
+  name="Write"
+  className="TCPClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Message", pintype: "fstring" },
+    { name: "Callback", pintype: "delegate" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
+<UEvents
+  name="On Message Sent"
+  showBindNode={false}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Error Code", pintype: "struct" },
+    { name: "Bytes Sent", pintype: "int" }
+  ]}
+/>
 
--   Send a buffer message
--   Return true if It's able to send
-    <ImageZoom
-        src="/img/client-side/tcp/sendbuffer.png"
-        alt="TCP client"
-        width={228}
-        height={130}
-    />
+### Write Buffer
+
+-   Sends buffer data on the socket.
+-   It returns false if socket is closed or if buffer is empty.
+
+<UFunction
+  name="Write Buffer"
+  className="TCPClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Buffer", pintype: "bytearray" },
+    { name: "Callback", pintype: "delegate" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
+
+<UEvents
+  name="On Message Sent"
+  showBindNode={false}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Error Code", pintype: "struct" },
+    { name: "Bytes Sent", pintype: "int" }
+  ]}
+/>
 
 ### Connect
 
--   Connect to the host
--   Return true if It's able to connect
-    <ImageZoom
-        src="/img/client-side/tcp/connect.png"
-        alt="TCP client"
-        width={227}
-        height={104}
-    />
+-   Listen for datagram messages on a named port and address.
+-   It returns false if socket is already open or if asio return any error code during the bind.
 
 <UFunction
   name="Connect"
@@ -143,82 +163,70 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ### Close
 
--   Close connection
-    <ImageZoom
-        src="/img/client-side/tcp/close.png"
-        alt="TCP client"
-        width={166}
-        height={103}
-    />
+-   Close the underlying socket and stop listening for data on it. 'on_close' event will be triggered.
 
-### Get Error Code
-
--   Get latest error code
-    <ImageZoom
-        src="/img/client-side/tcp/geterrorcode.png"
-        alt="TCP client"
-        width={227}
-        height={76}
-    />
+<UFunction
+  name="Close"
+  className="TCPClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
 
 ## Events
 
 ### On Connected
 
--   Event triggered when a connection is estabilished
-    <ImageZoom
-        src="/img/client-side/tcp/onconnectedevent.png"
-        alt="TCP client"
-        width={225}
-        height={186}
-    />
+-   Event triggered when a connection is estabilished.
 
-### On Bytes Transferred
+<UEvents
+  name="On Connected"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
 
--   Event triggered when socket send or receive data
-    <ImageZoom
-        src="/img/client-side/tcp/onbytestransferedevent.png"
-        alt="TCP client"
-        width={258}
-        height={238}
-    />
+### On Message
 
-### On Message Sent
+-   Event triggered when socket send or receive data.
 
--   Event triggered when a message is sent
-    <ImageZoom
-        src="/img/client-side/tcp/onmessagesentevent.png"
-        alt="TCP client"
-        width={246}
-        height={212}
-    />
-
-### On Message Received
-
--   Event triggered when a message is received
-    <ImageZoom
-        src="/img/client-side/tcp/onmessagereceivedevent.png"
-        alt="TCP client"
-        width={272}
-        height={212}
-    />
+<UEvents
+  name="On Message"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Buffer", pintype: "bytearray" },
+    { name: "Bytes Recvd", pintype: "int" }
+  ]}
+/>
 
 ### On Close
 
--   Event triggered when socket is closed
-    <ImageZoom
-        src="/img/client-side/tcp/oncloseevent.png"
-        alt="TCP client"
-        width={195}
-        height={186}
-    />
+-   Event triggered when socket is closed.
+
+<UEvents
+  name="On Close"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
 
 ### On Error
 
--   Event triggered if any error occur during async process
-    <ImageZoom
-        src="/img/client-side/tcp/onerrorevent.png"
-        alt="TCP client"
-        width={192}
-        height={212}
-    />
+-   Event triggered if any error occur during async process.
+
+<UEvents
+  name="On Error"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Error Code", pintype: "bool" }
+  ]}
+/>

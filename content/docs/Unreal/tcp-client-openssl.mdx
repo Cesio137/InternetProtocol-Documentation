@@ -10,7 +10,7 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 ## References
 
 <Tabs items={["Include"]}>
-    <Tab value="Include">#include "TCP/TCPClient.h"</Tab>
+    <Tab value="Include">#include "tcp/client.h"</Tab>
 </Tabs>
 
 ## How to use
@@ -22,137 +22,12 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
   <Step>
     C++: Use the code bellow
     ``` cpp
-    #include "TCP/TCPClient.h"
+    #include "tcp/client.h"
 
-    UTCPClientSsl* TcpClientSsl = NewObject<UTCPClientSsl>();
+    FSecurityContextOpts SecOpts = { ... };
+    UTCPClientSsl* client = NewObject<UTCPClientSsl>();
+    client->Construct(SecOpts);
     ```
 
   </Step>
 </Steps>
-
-## Functions
-
-This class has the same functions from `TCPClient`, except for the ones shown below
-
-### Update Ssl Socket
-
--   Update ssl config.
--   Must be called after change any config from Ssl Context.
-
-<ImageZoom
-    src="/img/client-side/tcp/ssl/updatesslsocket.png"
-    alt="TCP client openssl"
-    width={188}
-    height={104}
-/>
-
-### Get Ssl Context
-
--   Get ssl context properties.
--   Must be called after change any config from Ssl Context.
-
-<ImageZoom
-    src="/img/client-side/tcp/ssl/getsslcontext.png"
-    alt="TCP client openssl"
-    width={151}
-    height={56}
-/>
-
-### Get Ssl Socket
-
--   Get ssl socket properties.
-
-<ImageZoom
-    src="/img/client-side/tcp/ssl/getsslsocket.png"
-    alt="TCP client openssl"
-    width={156}
-    height={56}
-/>
-
-### Load Private Key Data
-
--   Load the private key from a string.
--   If any error occurs, it will trigger the `OnError` event.
-
-<ImageZoom
-    src="/img/client-side/tcp/ssl/loadkeydata.png"
-    alt="TCP client openssl"
-    width={230}
-    height={134}
-/>
-
-### Load Private Key File
-
--   Load the private key from file.
--   If any error occurs, it will trigger the `OnError` event.
--   Relative path.
-
-<ImageZoom
-    src="/img/client-side/tcp/ssl/loadkeyfile.png"
-    alt="TCP client openssl"
-    width={230}
-    height={134}
-/>
-
-### Load Certificate Data
-
--   Load the certificate from a string.
--   If any error occurs, it will trigger the `OnError` event.
-
-<ImageZoom
-    src="/img/client-side/tcp/ssl/loadcertificatedata.png"
-    alt="TCP client openssl"
-    width={232}
-    height={134}
-/>
-
-### Load Certificate File
-
--   Load the certificate from file.
--   If any error occurs, it will trigger the `OnError` event.
--   Relative path.
-
-<ImageZoom
-    src="/img/client-side/tcp/ssl/loadcertificatefile.png"
-    alt="TCP client openssl"
-    width={230}
-    height={134}
-/>
-
-### Load Certificate Chain Data
-
--   Load the certificate chain from a string.
--   If any error occurs, it will trigger the `OnError` event.
-
-<ImageZoom
-    src="/img/client-side/tcp/ssl/loadcertificatechaindata.png"
-    alt="TCP client openssl"
-    width={232}
-    height={134}
-/>
-
-### Load Certificate Chain File
-
--   Load the certificate chain from file.
--   If any error occurs, it will trigger the `OnError` event.
--   Relative path.
-
-<ImageZoom
-    src="/img/client-side/tcp/ssl/loadcertificatechainfile.png"
-    alt="TCP client openssl"
-    width={230}
-    height={134}
-/>
-
-### Load Verify File
-
--   Load the certificate from file and verify if it is valid.
--   If any error occurs, it will trigger the `OnError` event.
--   Relative path.
-
-<ImageZoom
-    src="/img/client-side/tcp/ssl/loadverifyfile.png"
-    alt="TCP client openssl"
-    width={230}
-    height={134}
-/>
