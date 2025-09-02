@@ -82,7 +82,7 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ### Set Recv Buffer Size
 
--   Set max size in bytes of send Buffer
+-   Set receive buffer size in bytes
 
 <UFunction
   name="Set Recv Buffer Size"
@@ -100,7 +100,7 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ### Get Max Send Buffer Size
 
--   Get max size in bytes of send buffer
+-   Get receive buffer size in bytes
 
 <UFunction
   name="Get Recv Buffer Size"
@@ -114,27 +114,10 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
   ]}
 />
 
-### Get Error Code
-
--   Get latest error code
-
-<UFunction
-  name="Get Error Code"
-  className="UDPClient"
-  pure={true}
-  inPins={[
-    { name: "Target", pintype: "object" },
-  ]}
-  outPins={[
-    { name: "Return Value", pintype: "struct" }
-  ]}
-/>
-
 ### Send
 
--   Send a string message
--   Return false if message is empty or socket is closed
--   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
+-   Broadcasts a string to an specific endpoint.
+-   It returns false if socket is closed or if buffer is empty.
 
 <UFunction
   name="Send"
@@ -163,8 +146,8 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ### Send Buffer
 
--   Send a buffer message
--   Return false if buffer is empty or socket is closed
+-   Broadcasts a buffer to an specific endpoint.
+-   It returns false if socket is closed or if buffer is empty.
 
 <UFunction
   name="SendBuffer"
@@ -194,8 +177,8 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ### Connect
 
--   Connect to the host
--   Return false if socket is already Connected
+-   Listen for datagram messages on a named port and address.
+- It returns false if socket is already open or if asio return any error code during the bind.
 
 <UFunction
   name="Connect"
@@ -214,7 +197,7 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ### Close
 
--   Close connection
+-   Close the underlying socket and stop listening for data on it. 'on_close' event will be triggered.
 
 <UFunction
   name="Close"
@@ -233,7 +216,7 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ### On Connected
 
--   Event triggered when a connection is estabilished
+-   Event triggered when a connection is estabilished.
 
 <UEvents
   name="On Connected"
@@ -245,7 +228,7 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ### On Message
 
--   Event triggered when socket send or receive data
+-   Event triggered when socket send or receive data.
 
 <UEvents
   name="On Message"
@@ -259,7 +242,7 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ### On Close
 
--   Event triggered when socket is closed
+-   Event triggered when socket is closed.
 
 <UEvents
   name="On Close"
@@ -271,7 +254,7 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ### On Error
 
--   Event triggered if any error occur during async process
+-   Event triggered if any error occur during async process.
 
 <UEvents
   name="On Error"
