@@ -4,6 +4,7 @@ export interface NodePin {
         | "exec"
         | "delegate"
         | "boolean"
+        | "byte"
         | "int"
         | "struct"
         | "fstring"

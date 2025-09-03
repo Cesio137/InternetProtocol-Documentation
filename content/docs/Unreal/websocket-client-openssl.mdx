@@ -10,7 +10,7 @@ import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 ## References
 
 <Tabs items={['Include']}>
-    <Tab value="Include">#include "WS/WSClient.h"</Tab>
+    <Tab value="Include">#include "websocket/wsclient.h"</Tab>
 </Tabs>
 
 ## How to use
@@ -22,101 +22,11 @@ import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
   <Step>
     C++: Use the code bellow
     ``` cpp
-    #include "WS/WSClient.h"
+    #include "websocket/wsclient.h"
 
-    UWSClientSsl* WSClientSsl = NewObject<UWSClientSsl>();
+    FSecurityContextOpts SecOpts = { ... };
+    UWSClientSsl* client = NewObject<UWSClientSsl>();
+    client->Construct(SecOpts);
     ```
   </Step>
 </Steps>
-
-## Functions
-
-This class has the same functions from ```WebsocketClient```, except for the ones shown below
-
-### Update Ssl Socket
-
--   Update ssl config.
--   Must be called after change any config from Ssl Context.
-
-<ImageZoom
-    src="/img/client-side/websocket/ssl/updatesslsocket.png"
-    alt="TCP client openssl"
-    width={182}
-    height={104}
-/>
-
-### Get Ssl Context
-
--   Get ssl context properties.
--   Must be called after change any config from Ssl Context.
-
-<ImageZoom
-    src="/img/client-side/websocket/ssl/getsslcontext.png"
-    alt="TCP client openssl"
-    width={151}
-    height={56}
-/>
-
-### Get Ssl Socket
-
--   Get ssl socket properties.
-
-<ImageZoom
-    src="/img/client-side/websocket/ssl/getsslsocket.png"
-    alt="TCP client openssl"
-    width={156}
-    height={56}
-/>
-
-### Load Private Key Data
-
-* Load the private key from a string.
-* If any error occurs, it will trigger the ```OnError``` event.
-
-<ImageZoom src="/img/client-side/websocket/ssl/loadkeydata.png" alt='WS client openssl' width={230} height={134} />
-
-### Load Private Key File
-
-* Load the private key from file.
-* If any error occurs, it will trigger the ```OnError``` event.
-* Relative path.
-
-<ImageZoom src="/img/client-side/websocket/ssl/loadkeyfile.png" alt='WS client openssl' width={230} height={134} />
-
-### Load Certificate Data
-
-* Load the certificate from a string.
-* If any error occurs, it will trigger the ```OnError``` event.
-
-<ImageZoom src="/img/client-side/websocket/ssl/loadcertificatedata.png" alt='WS client openssl' width={232} height={134} />
-
-### Load Certificate File
-
-* Load the certificate from file.
-* If any error occurs, it will trigger the ```OnError``` event.
-* Relative path.
-
-<ImageZoom src="/img/client-side/websocket/ssl/loadcertificatefile.png" alt='WS client openssl' width={230} height={134} />
-
-### Load Certificate Chain Data
-
-* Load the certificate chain from a string.
-* If any error occurs, it will trigger the ```OnError``` event.
-
-<ImageZoom src="/img/client-side/websocket/ssl/loadcertificatechaindata.png" alt='WS client openssl' width={232} height={134} />
-
-### Load Certificate Chain File
-
-* Load the certificate chain from file.
-* If any error occurs, it will trigger the ```OnError``` event.
-* Relative path.
-
-<ImageZoom src="/img/client-side/websocket/ssl/loadcertificatechainfile.png" alt='WS client openssl' width={230} height={134} />
-
-### Load Verify File
-
-* Load the certificate from file and verify if it is valid.
-* If any error occurs, it will trigger the ```OnError``` event.
-* Relative path.
-
-<ImageZoom src="/img/client-side/websocket/ssl/loadverifyfile.png" alt='WS client openssl' width={230} height={134} />

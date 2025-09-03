@@ -10,7 +10,7 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 ## References
 
 <Tabs items={["Include"]}>
-    <Tab value="Include">#include "WS/WSClient.h"</Tab>
+    <Tab value="Include">#include "websocket/wsclient.h"</Tab>
 </Tabs>
 
 ## How to use
@@ -22,329 +22,344 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
   <Step>
     C++: Use the code bellow
     ``` cpp
-    #include "Websockets/WebsocketClient.h"
+    #include "websocket/wsclient.h"
 
-    UWSClient* WSClient = NewObject<UWSClient>();
+    UWSClient* client = NewObject<UWSClient>();
     ```
 
   </Step>
 </Steps>
 
+## Variables
+
+### Handshake
+
+-   Set/Get handshake headers.
+
+<UVar 
+pin={{ name: "Handshake", pintype: "struct" }}
+/>
+
 ## Functions
 
-### Set Host
+## Functions
 
--   Set the `adress` and `port` of host
-    <ImageZoom
-        src="/img/client-side/websocket/sethost.png"
-        alt="WS client"
-        width={207}
-        height={164}
-    />
+### Is Open
 
-### Get Socket
+-   Return true if socket is open.
 
--   Get socket properties
-    <ImageZoom
-        src="/img/client-side/websocket/getsocket.png"
-        alt="WS client"
-        width={130}
-        height={56}
-    />
+<UFunction
+  name="Is Open"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
 
-### Set Max Send Buffer Size
+### Local Endpoint
 
--   Set max size in bytes of send buffer
-    <ImageZoom
-        src="/img/client-side/websocket/setmaxsend.png"
-        alt="WS client"
-        width={213}
-        height={133}
-    />
+-   Get the local endpoint of the socket. Use this function only after open connection.
 
-### Get Max Send Buffer Size
+<UFunction
+  name="Local Endpoint"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "struct" }
+  ]}
+/>
 
--   Get max size in bytes of send buffer
-    <ImageZoom
-        src="/img/client-side/websocket/getmaxsend.png"
-        alt="WS client"
-        width={227}
-        height={76}
-    />
+### Remote Endpoint
 
-### Set Split Package
+-   Get the remote endpoint of the socket. Use this function only after open connection.
 
--   If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
-    <ImageZoom
-        src="/img/client-side/websocket/setsplitpackage.png"
-        alt="WS client"
-        width={207}
-        height={136}
-    />
-
-### Get Split Package
-
--   Get if Split Package is enabled
-    <ImageZoom
-        src="/img/client-side/websocket/getsplitpackage.png"
-        alt="WS client"
-        width={227}
-        height={76}
-    />
-
-### Send Str
-
--   Send a string message
--   Return false if socket is closed or string is empty
--   Warning: If you’re using Windows, ensure that you are sending characters compatible with UTF-8
-    <ImageZoom
-        src="/img/client-side/websocket/sendstr.png"
-        alt="WS client"
-        width={229}
-        height={134}
-    />
-
-### Send Buffer
-
--   Send a buffer message
--   Return false if socket is closed or buffer is empty
-    <ImageZoom
-        src="/img/client-side/websocket/sendbuffer.png"
-        alt="WS client"
-        width={227}
-        height={130}
-    />
-
-### Send Ping
-
--   Send a ping to websocket server
--   Return false if socket is closed
-    <ImageZoom
-        src="/img/client-side/websocket/sendping.png"
-        alt="WS client"
-        width={227}
-        height={104}
-    />
-
-### Connect
-
--   Connect to the host
--   Return false if its already open
-    <ImageZoom
-        src="/img/client-side/websocket/connect.png"
-        alt="WS client"
-        width={227}
-        height={103}
-    />
-
-### Close
-
--   Close connection
-    <ImageZoom
-        src="/img/client-side/websocket/close.png"
-        alt="WS client"
-        width={207}
-        height={104}
-    />
+<UFunction
+  name="Remote Endpoint"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "struct" }
+  ]}
+/>
 
 ### Get Error Code
 
--   Get latest error code
-    <ImageZoom
-        src="/img/client-side/websocket/geterrorcode.png"
-        alt="WS client"
-        width={227}
-        height={76}
-    />
+-   Return a struct of the latest error code returned by asio.
 
-## Handshake Functions
-
-[Handshake](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#client_handshake_request) is a http request to contact the server and requesting a WebSocket connection
-
-### Set Headers
-
--   Set handshake request headers
-    <ImageZoom
-        src="/img/client-side/websocket/setheaders.png"
-        alt="WS client"
-        width={163}
-        height={132}
-    />
-
-### Get Header
-
--   Get reference to handshake request headers
--   Use this function to append or modify headers
-    <ImageZoom
-        src="/img/client-side/websocket/getheaders.png"
-        alt="WS client"
-        width={138}
-        height={58}
-    />
-
-## Dataframe Functions
-
-### Set RSV1
-
-<ImageZoom
-    src="/img/client-side/websocket/setrsv1.png"
-    alt="WS client"
-    width={204}
-    height={133}
+<UFunction
+  name="Get Error Code"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "struct" }
+  ]}
 />
 
-### Use RSV1
+### Write
 
-<ImageZoom
-    src="/img/client-side/websocket/usersv1.png"
-    alt="WS client"
-    width={227}
-    height={76}
+-   Sends string data on the socket.
+-   It returns false if socket is closed or if buffer is empty.
+
+<UFunction
+  name="Write"
+  className="WSClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Message", pintype: "fstring" },
+    { name: "Callback", pintype: "delegate" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
+<UEvents
+  name="On Message Sent"
+  showBindNode={false}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Error Code", pintype: "struct" },
+    { name: "Bytes Sent", pintype: "int" }
+  ]}
 />
 
-### Set RSV2
+### Write Buffer
 
-<ImageZoom
-    src="/img/client-side/websocket/setrsv2.png"
-    alt="WS client"
-    width={207}
-    height={136}
+-   Sends buffer data on the socket.
+-   It returns false if socket is closed or if buffer is empty.
+
+<UFunction
+  name="Write Buffer"
+  className="WSClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Buffer", pintype: "bytearray" },
+    { name: "Callback", pintype: "delegate" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Return Value", pintype: "bool" }
+  ]}
 />
 
-### Use RSV2
-
-<ImageZoom
-    src="/img/client-side/websocket/usersv2.png"
-    alt="WS client"
-    width={226}
-    height={76}
+<UEvents
+  name="On Message Sent"
+  showBindNode={false}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Error Code", pintype: "struct" },
+    { name: "Bytes Sent", pintype: "int" }
+  ]}
 />
 
-### Set RSV3
+### Ping
 
-<ImageZoom
-    src="/img/client-side/websocket/setrsv3.png"
-    alt="WS client"
-    width={207}
-    height={136}
+-   Send a ping message.
+-   It returns false if socket is closed or if buffer is empty.
+
+<UFunction
+  name="Ping"
+  className="WSClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Callback", pintype: "delegate" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Return Value", pintype: "bool" }
+  ]}
 />
 
-### Use RSV3
-
-<ImageZoom
-    src="/img/client-side/websocket/usersv3.png"
-    alt="WS client"
-    width={227}
-    height={76}
+<UEvents
+  name="On Message Sent"
+  showBindNode={false}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Error Code", pintype: "struct" },
+    { name: "Bytes Sent", pintype: "int" }
+  ]}
 />
 
-### Set Mask
+### Pong
 
-<ImageZoom
-    src="/img/client-side/websocket/setmask.png"
-    alt="WS client"
-    width={207}
-    height={136}
+-   Send a pong message.
+-   It returns false if socket is closed or if buffer is empty.
+
+<UFunction
+  name="Pong"
+  className="WSClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Callback", pintype: "delegate" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Return Value", pintype: "bool" }
+  ]}
 />
 
-### Use Mask
+<UEvents
+  name="On Message Sent"
+  showBindNode={false}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Error Code", pintype: "struct" },
+    { name: "Bytes Sent", pintype: "int" }
+  ]}
+/>
 
-<ImageZoom
-    src="/img/client-side/websocket/usemask.png"
-    alt="WS client"
-    width={227}
-    height={76}
+### Connect
+
+-   Listen for datagram messages on a named port and address.
+-   It returns false if socket is already open or if asio return any error code during the bind.
+
+<UFunction
+  name="Connect"
+  className="WSClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Bind Opts", pintype: "struct" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
+
+### End
+
+-   Perform a smooth close of socket following ws protocol and stop listening for data on it. 'on_close' event will be triggered.
+
+<UFunction
+  name="End"
+  className="WSClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Code", pintype: "int" },
+    { name: "Reason", pintype: "fstring" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
+
+### Close
+
+-   Close the underlying socket and stop listening for data on it. 'on_close' event will be triggered.
+
+<UFunction
+  name="Close"
+  className="WSClient"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Code", pintype: "int" },
+    { name: "Reason", pintype: "fstring" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
 />
 
 ## Events
 
 ### On Connected
 
--   Event triggered when a connection is estabilished
-    <ImageZoom
-        src="/img/client-side/websocket/onconnectedevent.png"
-        alt="WS client"
-        width={225}
-        height={212}
-    />
+-   Event triggered when a connection is estabilished.
 
-### On Bytes Transfered
+<UEvents
+  name="On Connected"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Handshake", pintype: "struct" }
+  ]}
+/>
 
--   Event triggered when socket sent and receive data
-    <ImageZoom
-        src="/img/client-side/websocket/onbytestransferedevent.png"
-        alt="WS client"
-        width={269}
-        height={237}
-    />
+### On Unexpected Handshake
 
-### On Message Sent
+-   Event triggered when a connection is estabilished.
 
--   Event triggered when a message is sent
-    <ImageZoom
-        src="/img/client-side/websocket/onmessagesentevent.png"
-        alt="WS client"
-        width={246}
-        height={212}
-    />
+<UEvents
+  name="On Unexpected Handshake"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Handshake", pintype: "struct" }
+  ]}
+/>
 
-### On Message Received
+### On Message
 
--   Event triggered when a message is received
-    <ImageZoom
-        src="/img/client-side/websocket/onmessagereceivedevent.png"
-        alt="WS client"
-        width={272}
-        height={212}
-    />
+-   Event triggered when socket send or receive data.
 
-### On Pong Received
+<UEvents
+  name="On Message"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Buffer", pintype: "bytearray" },
+    { name: "Is Binary", pintype: "bool" }
+  ]}
+/>
 
--   Event triggered when a pong message is received
-    <ImageZoom
-        src="/img/client-side/websocket/onpongreceivedevent.png"
-        alt="WS client"
-        width={248}
-        height={186}
-    />
+### On Ping
 
-### On Close Notify
+-   This event will be triggered when a ping has been received.
 
--   Event triggered when a server send a close notification
-    <ImageZoom
-        src="/img/client-side/websocket/onclosenotifyevent.png"
-        alt="WS client"
-        width={234}
-        height={186}
-    />
+<UEvents
+  name="On Ping"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
+
+### On Pong
+
+-   This event will be triggered when a pong has been received.
+
+<UEvents
+  name="On Pong"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
 
 ### On Close
 
--   Event triggered when a connection is closed
-    <ImageZoom
-        src="/img/client-side/websocket/oncloseevent.png"
-        alt="WS client"
-        width={195}
-        height={186}
-    />
+-   Event triggered when socket is closed.
 
-### On Handshke Fail
-
--   Event triggered if any error occur during handshake.
--   Normally, when a handshake error occurs, the socket is automatically closed, triggering the `on_close` event.
-    <ImageZoom
-        src="/img/client-side/websocket/onhandshakefailevent.png"
-        alt="WS client"
-        width={251}
-        height={212}
-    />
+<UEvents
+  name="On Close"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Code", pintype: "int" },
+    { name: "Reason", pintype: "fstring" }
+  ]}
+/>
 
 ### On Error
 
--   Event triggered if any error occur during async process
-    <ImageZoom
-        src="/img/client-side/websocket/onerrorevent.png"
-        alt="WS client"
-        width={192}
-        height={212}
-    />
+-   Event triggered if any error occur during async process.
+
+<UEvents
+  name="On Error"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Error Code", pintype: "bool" }
+  ]}
+/>

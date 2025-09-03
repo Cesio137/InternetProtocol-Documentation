@@ -19,7 +19,7 @@ export function UFunction({
         <section className="my-[32px]">
             <div className="inline-block min-w-[140px] rounded-md overflow-hidden bg-neutral-900 shadow-md shadow-black">
                 <div
-                    className={`px-[12px] py-0.5 pb-2 flex flex-row gap-x-1 ${
+                    className={`px-[12px] pr-[32px] py-0.5 pb-2 flex flex-row gap-x-1 ${
                         pure ? "bg-emerald-600" : "bg-sky-600"
                     }`}
                 >
