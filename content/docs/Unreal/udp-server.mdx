@@ -32,181 +32,230 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 ## Nodes
 
-### Set Socket
+### Is Open
 
--   Set `protocol` and `port` of socket
-    <ImageZoom
-        src="/img/server-side/udp/setsocket.png"
-        alt="UDP server"
-        width={262}
-        height={213}
-    />
+-   Return true if socket is open.
 
-### Get Socket
+<UFunction
+  name="Is Open"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
 
--   Get socket properties
-    <ImageZoom
-        src="/img/server-side/udp/getsocket.png"
-        alt="UDP server"
-        width={130}
-        height={56}
-    />
+### Local Endpoint
 
-### Set Max Send Buffer Size
+-   Get the local endpoint of the socket. Use this function only after open connection.
 
--   Set max size in bytes of send buffer
-    <ImageZoom
-        src="/img/server-side/udp/setmaxsendbuffer.png"
-        alt="UDP server"
-        width={213}
-        height={134}
-    />
+<UFunction
+  name="Local Endpoint"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "struct" }
+  ]}
+/>
 
-### Get Max Send Buffer Size
+### Remote Endpoint
 
--   Get max size in bytes of send buffer
-    <ImageZoom
-        src="/img/server-side/udp/getmaxsendbuffer.png"
-        alt="UDP server"
-        width={228}
-        height={76}
-    />
+-   Get the remote endpoint of the socket. Use this function only after open connection.
 
-### Set Max Receive Buffer Size
-
--   Set max size in bytes of receive buffer
-    <ImageZoom
-        src="/img/server-side/udp/setmaxreceivebuffer.png"
-        alt="UDP server"
-        width={230}
-        height={134}
-    />
-
-### Get Max Receive Buffer Size
-
--   Get max size in bytes of receive buffer
-    <ImageZoom
-        src="/img/server-side/udp/getmaxreceivebuffer.png"
-        alt="UDP server"
-        width={230}
-        height={76}
-    />
-
-### Set Split Package
-
--   If the size of a message exceeds the maximum allowed size for the send buffer, it will be divided into smaller packets before being sent.
-    <ImageZoom
-        src="/img/server-side/udp/setsplitpackage.png"
-        alt="UDP server"
-        width={172}
-        height={136}
-    />
-
-### Get Split Package
-
--   Get if Split Package is enabled
-    <ImageZoom
-        src="/img/server-side/udp/getsplitpackage.png"
-        alt="UDP server"
-        width={228}
-        height={76}
-    />
-
-### Send Str to
-
--   Send a string to a specific endpoint
-    <ImageZoom
-        src="/img/server-side/udp/sendstrto.png"
-        alt="UDP server"
-        width={229}
-        height={160}
-    />
-
-### Send Buffer To
-
--   Send a buffer to a specific endpoint
-    <ImageZoom
-        src="/img/server-side/udp/sendbufferto.png"
-        alt="UDP server"
-        width={228}
-        height={156}
-    />
-
-### Open
-
--   Open the socket
--   Returns false if the socket is already open
-    <ImageZoom
-        src="/img/server-side/udp/open.png"
-        alt="UDP server"
-        width={228}
-        height={104}
-    />
-
-### Close
-
--   Close the socket
-    <ImageZoom
-        src="/img/server-side/udp/close.png"
-        alt="UDP server"
-        width={172}
-        height={104}
-    />
+<UFunction
+  name="Remote Endpoint"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "struct" }
+  ]}
+/>
 
 ### Get Error Code
 
--   Get the latest error code
-    <ImageZoom
-        src="/img/server-side/udp/geterrorcode.png"
-        alt="UDP server"
-        width={228}
-        height={76}
-    />
+-   Return a struct of the latest error code returned by asio.
+
+<UFunction
+  name="Get Error Code"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "struct" }
+  ]}
+/>
+
+### Set Recv Buffer Size
+
+-   Set receive buffer size in bytes
+
+<UFunction
+  name="Set Recv Buffer Size"
+  className="UDPServer"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Value", pintype: "int" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
+
+### Get Max Send Buffer Size
+
+-   Get receive buffer size in bytes
+
+<UFunction
+  name="Get Recv Buffer Size"
+  className="UDPServer"
+  pure={true}
+  inPins={[
+    { name: "Target", pintype: "object" },
+  ]}
+  outPins={[
+    { name: "Return Value", pintype: "int" }
+  ]}
+/>
+
+### Send To
+
+-   Broadcasts a string to an specific endpoint.
+-   It returns false if socket is closed or if buffer is empty.
+
+<UFunction
+  name="Send To"
+  className="UDPServer"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Message", pintype: "fstring" },
+    { name: "Callback", pintype: "delegate" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
+<UEvents
+  name="On Message Sent"
+  showBindNode={false}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Error Code", pintype: "struct" },
+    { name: "Bytes Sent", pintype: "int" }
+  ]}
+/>
+
+### Send Buffer To
+
+-   Broadcasts a buffer to an specific endpoint.
+-   It returns false if socket is closed or if buffer is empty.
+
+<UFunction
+  name="Send Buffer To"
+  className="UDPServer"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Buffer", pintype: "bytearray" },
+    { name: "Callback", pintype: "delegate" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
+
+<UEvents
+  name="On Message Sent"
+  showBindNode={false}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Error Code", pintype: "struct" },
+    { name: "Bytes Sent", pintype: "int" }
+  ]}
+/>
+
+### Bind
+
+-   Listen for datagram messages on a named port and optional address.
+-   It returns false if socket is already open or if asio return any error code during the bind.
+
+<UFunction
+    name="Bind"
+    className="UDPServer"
+    pure={false}
+    inPins={[
+        { name: "", pintype: "exec" },
+        { name: "Target", pintype: "object" },
+        { name: "Bind Opts", pintype: "struct" },
+    ]}
+    outPins={[
+        { name: "", pintype: "exec" },
+        { name: "Return Value", pintype: "bool" },
+    ]}
+/>
+
+### Close
+
+-   Close the underlying socket and stop listening for data on it. 'on_close' event will be triggered.
+
+<UFunction
+    name="Close"
+    className="UDPServer"
+    pure={false}
+    inPins={[
+        { name: "", pintype: "exec" },
+        { name: "Target", pintype: "object" },
+    ]}
+    outPins={[{ name: "", pintype: "exec" }]}
+/>
 
 ## Events
 
-### On Bytes Transferred
+### On Listening
 
--   Event triggered when bytes are received and transferred
-    <ImageZoom
-        src="/img/server-side/udp/onbytestransferredevent.png"
-        alt="UDP server"
-        width={269}
-        height={238}
-    />
+-   This event will be triggered when socket start to listening.
 
-### On Message Sent
+<UEvents
+    name="On Connected"
+    showBindNode={true}
+    outPins={[{ name: "", pintype: "exec" }]}
+/>
 
--   Event triggered when a message is sent
-    <ImageZoom
-        src="/img/server-side/udp/onmessagesentevent.png"
-        alt="UDP server"
-        width={246}
-        height={238}
-    />
+### On Message
 
-### On Message Received
+-   Event triggered when socket send or receive data.
 
--   Event triggered when a message is received by a endpoint
-    <ImageZoom
-        src="/img/server-side/udp/onmessagereceivedevent.png"
-        alt="UDP server"
-        width={272}
-        height={238}
-    />
+<UEvents
+    name="On Message"
+    showBindNode={true}
+    outPins={[
+        { name: "", pintype: "exec" },
+        { name: "Buffer", pintype: "bytearray" },
+        { name: "Bytes Recvd", pintype: "int" },
+        { name: "Endpoint", pintype: "struct" }
+    ]}
+/>
 
 ### On Close
 
--   Event triggered when the socket is closed
-    <ImageZoom
-        src="/img/server-side/udp/oncloseevent.png"
-        alt="UDP server"
-        width={195}
-        height={186}
-    />
+-   Event triggered when socket is closed.
+
+<UEvents
+    name="On Close"
+    showBindNode={true}
+    outPins={[{ name: "", pintype: "exec" }]}
+/>
 
 ### On Error
 
-- Event triggered if any error occur during async process
+-   Event triggered if any error occur during async process.
 
-<img src="/img/server-side/udp/onerrorevent.png" loading="lazy" decoding="async" />
+<UEvents
+    name="On Error"
+    showBindNode={true}
+    outPins={[
+        { name: "", pintype: "exec" },
+        { name: "Error Code", pintype: "bool" },
+    ]}
+/>

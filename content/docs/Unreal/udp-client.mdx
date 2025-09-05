@@ -37,11 +37,9 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 -   Return true if socket is open.
 
 <UFunction
-  name="Is Open"
-  pure={true}
-  outPins={[
-    { name: "Return Value", pintype: "bool" }
-  ]}
+    name="Is Open"
+    pure={true}
+    outPins={[{ name: "Return Value", pintype: "bool" }]}
 />
 
 ### Local Endpoint
@@ -49,11 +47,9 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 -   Get the local endpoint of the socket. Use this function only after open connection.
 
 <UFunction
-  name="Local Endpoint"
-  pure={true}
-  outPins={[
-    { name: "Return Value", pintype: "struct" }
-  ]}
+    name="Local Endpoint"
+    pure={true}
+    outPins={[{ name: "Return Value", pintype: "struct" }]}
 />
 
 ### Remote Endpoint
@@ -61,11 +57,9 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 -   Get the remote endpoint of the socket. Use this function only after open connection.
 
 <UFunction
-  name="Remote Endpoint"
-  pure={true}
-  outPins={[
-    { name: "Return Value", pintype: "struct" }
-  ]}
+    name="Remote Endpoint"
+    pure={true}
+    outPins={[{ name: "Return Value", pintype: "struct" }]}
 />
 
 ### Get Error Code
@@ -73,11 +67,9 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 -   Return a struct of the latest error code returned by asio.
 
 <UFunction
-  name="Get Error Code"
-  pure={true}
-  outPins={[
-    { name: "Return Value", pintype: "struct" }
-  ]}
+    name="Get Error Code"
+    pure={true}
+    outPins={[{ name: "Return Value", pintype: "struct" }]}
 />
 
 ### Set Recv Buffer Size
@@ -85,17 +77,15 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 -   Set receive buffer size in bytes
 
 <UFunction
-  name="Set Recv Buffer Size"
-  className="UDPClient"
-  pure={false}
-  inPins={[
-    { name: "", pintype: "exec" },
-    { name: "Target", pintype: "object" },
-    { name: "Value", pintype: "int" }
-  ]}
-  outPins={[
-    { name: "", pintype: "exec" }
-  ]}
+    name="Set Recv Buffer Size"
+    className="UDPClient"
+    pure={false}
+    inPins={[
+        { name: "", pintype: "exec" },
+        { name: "Target", pintype: "object" },
+        { name: "Value", pintype: "int" },
+    ]}
+    outPins={[{ name: "", pintype: "exec" }]}
 />
 
 ### Get Max Send Buffer Size
@@ -103,15 +93,11 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 -   Get receive buffer size in bytes
 
 <UFunction
-  name="Get Recv Buffer Size"
-  className="UDPClient"
-  pure={true}
-  inPins={[
-    { name: "Target", pintype: "object" },
-  ]}
-  outPins={[
-    { name: "Return Value", pintype: "int" }
-  ]}
+    name="Get Recv Buffer Size"
+    className="UDPClient"
+    pure={true}
+    inPins={[{ name: "Target", pintype: "object" }]}
+    outPins={[{ name: "Return Value", pintype: "int" }]}
 />
 
 ### Send
@@ -120,28 +106,28 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 -   It returns false if socket is closed or if buffer is empty.
 
 <UFunction
-  name="Send"
-  className="UDPClient"
-  pure={false}
-  inPins={[
-    { name: "", pintype: "exec" },
-    { name: "Target", pintype: "object" },
-    { name: "Message", pintype: "fstring" },
-    { name: "Callback", pintype: "delegate" }
-  ]}
-  outPins={[
-    { name: "", pintype: "exec" },
-    { name: "Return Value", pintype: "bool" }
-  ]}
+    name="Send"
+    className="UDPClient"
+    pure={false}
+    inPins={[
+        { name: "", pintype: "exec" },
+        { name: "Target", pintype: "object" },
+        { name: "Message", pintype: "fstring" },
+        { name: "Callback", pintype: "delegate" },
+    ]}
+    outPins={[
+        { name: "", pintype: "exec" },
+        { name: "Return Value", pintype: "bool" },
+    ]}
 />
 <UEvents
-  name="On Message Sent"
-  showBindNode={false}
-  outPins={[
-    { name: "", pintype: "exec" },
-    { name: "Error Code", pintype: "struct" },
-    { name: "Bytes Sent", pintype: "int" }
-  ]}
+    name="On Message Sent"
+    showBindNode={false}
+    outPins={[
+        { name: "", pintype: "exec" },
+        { name: "Error Code", pintype: "struct" },
+        { name: "Bytes Sent", pintype: "int" },
+    ]}
 />
 
 ### Send Buffer
@@ -150,49 +136,49 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 -   It returns false if socket is closed or if buffer is empty.
 
 <UFunction
-  name="SendBuffer"
-  className="UDPClient"
-  pure={false}
-  inPins={[
-    { name: "", pintype: "exec" },
-    { name: "Target", pintype: "object" },
-    { name: "Buffer", pintype: "bytearray" },
-    { name: "Callback", pintype: "delegate" }
-  ]}
-  outPins={[
-    { name: "", pintype: "exec" },
-    { name: "Return Value", pintype: "bool" }
-  ]}
+    name="Send Buffer"
+    className="UDPClient"
+    pure={false}
+    inPins={[
+        { name: "", pintype: "exec" },
+        { name: "Target", pintype: "object" },
+        { name: "Buffer", pintype: "bytearray" },
+        { name: "Callback", pintype: "delegate" },
+    ]}
+    outPins={[
+        { name: "", pintype: "exec" },
+        { name: "Return Value", pintype: "bool" },
+    ]}
 />
 
 <UEvents
-  name="On Message Sent"
-  showBindNode={false}
-  outPins={[
-    { name: "", pintype: "exec" },
-    { name: "Error Code", pintype: "struct" },
-    { name: "Bytes Sent", pintype: "int" }
-  ]}
+    name="On Message Sent"
+    showBindNode={false}
+    outPins={[
+        { name: "", pintype: "exec" },
+        { name: "Error Code", pintype: "struct" },
+        { name: "Bytes Sent", pintype: "int" },
+    ]}
 />
 
 ### Connect
 
 -   Listen for datagram messages on a named port and address.
-- It returns false if socket is already open or if asio return any error code during the bind.
+-   It returns false if socket is already open or if asio return any error code during the bind.
 
 <UFunction
-  name="Connect"
-  className="UDPClient"
-  pure={false}
-  inPins={[
-    { name: "", pintype: "exec" },
-    { name: "Target", pintype: "object" },
-    { name: "Bind Opts", pintype: "struct" }
-  ]}
-  outPins={[
-    { name: "", pintype: "exec" },
-    { name: "Return Value", pintype: "bool" }
-  ]}
+    name="Connect"
+    className="UDPClient"
+    pure={false}
+    inPins={[
+        { name: "", pintype: "exec" },
+        { name: "Target", pintype: "object" },
+        { name: "Bind Opts", pintype: "struct" },
+    ]}
+    outPins={[
+        { name: "", pintype: "exec" },
+        { name: "Return Value", pintype: "bool" },
+    ]}
 />
 
 ### Close
@@ -200,16 +186,14 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 -   Close the underlying socket and stop listening for data on it. 'on_close' event will be triggered.
 
 <UFunction
-  name="Close"
-  className="UDPClient"
-  pure={false}
-  inPins={[
-    { name: "", pintype: "exec" },
-    { name: "Target", pintype: "object" }
-  ]}
-  outPins={[
-    { name: "", pintype: "exec" }
-  ]}
+    name="Close"
+    className="UDPClient"
+    pure={false}
+    inPins={[
+        { name: "", pintype: "exec" },
+        { name: "Target", pintype: "object" },
+    ]}
+    outPins={[{ name: "", pintype: "exec" }]}
 />
 
 ## Events
@@ -219,11 +203,9 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 -   Event triggered when a connection is estabilished.
 
 <UEvents
-  name="On Connected"
-  showBindNode={true}
-  outPins={[
-    { name: "", pintype: "exec" }
-  ]}
+    name="On Connected"
+    showBindNode={true}
+    outPins={[{ name: "", pintype: "exec" }]}
 />
 
 ### On Message
@@ -231,13 +213,13 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 -   Event triggered when socket send or receive data.
 
 <UEvents
-  name="On Message"
-  showBindNode={true}
-  outPins={[
-    { name: "", pintype: "exec" },
-    { name: "Buffer", pintype: "bytearray" },
-    { name: "Bytes Recvd", pintype: "int" }
-  ]}
+    name="On Message"
+    showBindNode={true}
+    outPins={[
+        { name: "", pintype: "exec" },
+        { name: "Buffer", pintype: "bytearray" },
+        { name: "Bytes Recvd", pintype: "int" },
+    ]}
 />
 
 ### On Close
@@ -245,11 +227,9 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 -   Event triggered when socket is closed.
 
 <UEvents
-  name="On Close"
-  showBindNode={true}
-  outPins={[
-    { name: "", pintype: "exec" }
-  ]}
+    name="On Close"
+    showBindNode={true}
+    outPins={[{ name: "", pintype: "exec" }]}
 />
 
 ### On Error
@@ -257,10 +237,10 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 -   Event triggered if any error occur during async process.
 
 <UEvents
-  name="On Error"
-  showBindNode={true}
-  outPins={[
-    { name: "", pintype: "exec" },
-    { name: "Error Code", pintype: "bool" }
-  ]}
+    name="On Error"
+    showBindNode={true}
+    outPins={[
+        { name: "", pintype: "exec" },
+        { name: "Error Code", pintype: "bool" },
+    ]}
 />
