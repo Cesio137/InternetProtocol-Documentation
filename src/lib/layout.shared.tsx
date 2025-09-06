@@ -12,7 +12,6 @@ export function baseOptions(): BaseLayoutProps {
     nav: {
       title: (
         <>
-          <img src="/ip.svg" width={42} height={42} alt="Logo" />
           Internet Protocol
         </>
       ),
