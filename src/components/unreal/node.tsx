@@ -8,5 +8,6 @@ export interface NodePin {
         | "int"
         | "struct"
         | "fstring"
-        | "bytearray";
+        | "bytearray"
+        | "setobject";
 }

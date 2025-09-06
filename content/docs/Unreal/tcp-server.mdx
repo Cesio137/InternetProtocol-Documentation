@@ -10,7 +10,7 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 ## References
 
 <Tabs items={["Include"]}>
-    <Tab value="Include">#include "TCP/TCPServer.h"</Tab>
+    <Tab value="Include">#include "tcp/tcpserver.h"</Tab>
 </Tabs>
 
 ## How to use
@@ -22,217 +22,136 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
   <Step>
     C++: Use the code bellow
     ``` cpp
-    #include "TCP/TCPServer.h"
+    #include "tcp/tcpserver.h"
 
-    UTCPServer* TcpServer = NewObject<UTCPServer>();
+    UTCPServer* net = NewObject<UTCPServer>();
     ```
-
   </Step>
 </Steps>
 
 ## Nodes
 
-### Set Socket
+### Is Open
 
--   Set `protocol`, `port`, `max connected clients` of socket
-    <ImageZoom
-        src="/img/server-side/tcp/setsocket.png"
-        alt="TCP server"
-        width={262}
-        height={227}
-    />
+-   Return true if socket is open.
 
-### Get Acceptor
+<UFunction
+  name="Is Open"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
 
--   Get acceptor properties
-    <ImageZoom
-        src="/img/server-side/tcp/getacceptor.png"
-        alt="TCP server"
-        width={142}
-        height={56}
-    />
+### Local Endpoint
 
-# Get Sockets
+-   Get the local endpoint of the socket. Use this function only after open connection.
 
--   Get all connected sockets properties
-    <ImageZoom
-        src="/img/server-side/tcp/getsockets.png"
-        alt="TCP server"
-        width={137}
-        height={56}
-    />
+<UFunction
+  name="Local Endpoint"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "struct" }
+  ]}
+/>
 
-### Set Max Send Buffer Size
+### Clients
 
--   Set max size in bytes of send buffer
-    <ImageZoom
-        src="/img/server-side/tcp/setmaxsendbuffer.png"
-        alt="TCP server"
-        width={213}
-        height={134}
-    />
+-   Gets a constant reference to the set of clients connected to the server.
 
-### Get Max Send Buffer Size
-
--   Get max size in bytes of send buffer
-    <ImageZoom
-        src="/img/server-side/tcp/getmaxsendbuffer.png"
-        alt="TCP server"
-        width={228}
-        height={76}
-    />
-
-### Set Split Package
-
--   Set split package properties
-    <ImageZoom
-        src="/img/server-side/tcp/setsplitpackage.png"
-        alt="TCP server"
-        width={171}
-        height={136}
-    />
-
-### Get Split Package
-
--   Get split package properties
-    <ImageZoom
-        src="/img/server-side/tcp/getsplitpackage.png"
-        alt="TCP server"
-        width={228}
-        height={76}
-    />
-
-### Send Str To
-
--   Send a string message
--   Return false if message is empty or socket is closed
-    <ImageZoom
-        src="/img/server-side/tcp/sendstrto.png"
-        alt="TCP server"
-        width={207}
-        height={144}
-    />
-
-### Send Buffer To
-
--   Send a buffer message
--   Return false if buffer is empty or socket is closed
-    <ImageZoom
-        src="/img/server-side/tcp/sendbufferto.png"
-        alt="TCP server"
-        width={206}
-        height={141}
-    />
+<UFunction
+  name="Clients"
+  pure={true}
+  outPins={[
+    { name: "Return Value", pintype: "setobject" }
+  ]}
+/>
 
 ### Open
 
--   Open connection
--   Return false if socket is already open or any error occurs
-    <ImageZoom
-        src="/img/server-side/tcp/open.png"
-        alt="TCP server"
-        width={227}
-        height={104}
-    />
+-   Opens the TCP server and starts listening for incoming connections.
+-   It returns false if socket is already open or if asio return any error code during the bind.
+
+<UFunction
+  name="Open"
+  className="TCPServer"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" },
+    { name: "Bind Opts", pintype: "struct" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Return Value", pintype: "bool" }
+  ]}
+/>
 
 ### Close
 
--   Disconnect all clients and close connection
-    <ImageZoom
-        src="/img/server-side/tcp/close.png"
-        alt="TCP server"
-        width={171}
-        height={104}
-    />
+-   Close the underlying socket and stop listening for data on it. 'on_close' event will be triggered.
 
-### Disconnect Socket
-
--   Close connection of specific socket
-    <ImageZoom
-        src="/img/server-side/tcp/disconnectsocket.png"
-        alt="TCP server"
-        width={175}
-        height={130}
-    />
-
-### Get Error Code
-
--   Get latest error code
-    <ImageZoom
-        src="/img/server-side/tcp/geterrorcode.png"
-        alt="TCP server"
-        width={228}
-        height={76}
-    />
+<UFunction
+  name="Close"
+  className="TCPServer"
+  pure={false}
+  inPins={[
+    { name: "", pintype: "exec" },
+    { name: "Target", pintype: "object" }
+  ]}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
 
 ## Events
 
-### On Socket Accepted
+### On Listening
 
--   Event triggered when a new client connection is estabilished
-    <ImageZoom
-        src="/img/server-side/tcp/onsocketacceptedevent.png"
-        alt="TCP server"
-        width={262}
-        height={212}
-    />
+-   This event will be triggered when socket start to listening.
 
-### On Bytes Transferred
+<UEvents
+  name="On Listening"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
 
--   Event triggered when bytes are sent or received
-    <ImageZoom
-        src="/img/server-side/tcp/onbytestransferredevent.png"
-        alt="TCP server"
-        width={269}
-        height={238}
-    />
+### On Client Accepted
 
-### On Message Sent
+-   This event will be triggered when new client connect.
 
--   Event triggered when a message is sent by specific socket
-    <ImageZoom
-        src="/img/server-side/tcp/onmessagesentevent.png"
-        alt="TCP server"
-        width={246}
-        height={238}
-    />
-
-### On Message Received
-
--   Event triggered when a message is received by specific socket
-    <ImageZoom
-        src="/img/server-side/tcp/onmessagereceivedevent.png"
-        alt="TCP server"
-        width={272}
-        height={238}
-    />
+<UEvents
+  name="On Client Accepted"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Client", pintype: "object" }
+  ]}
+/>
 
 ### On Close
 
--   Event triggered when socket and acceptor are closed
-    <ImageZoom
-        src="/img/server-side/tcp/oncloseevent.png"
-        alt="TCP server"
-        width={195}
-        height={186}
-    />
+-   Event triggered when socket is closed.
 
-### On Socket Disconnected
-
--   Event triggered when a socket is disconnected
-    <ImageZoom
-        src="/img/server-side/tcp/onsocketdisconnectedevent.png"
-        alt="TCP server"
-        width={287}
-        height={238}
-    />
+<UEvents
+  name="On Close"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" }
+  ]}
+/>
 
 ### On Error
 
--   Event triggered if any error occurs during async process
-    <ImageZoom
-        src="/img/server-side/tcp/onerrorevent.png"
-        alt="TCP server"
-        width={192}
-        height={212}
-    />
+-   Event triggered if any error occur during async process.
+
+<UEvents
+  name="On Error"
+  showBindNode={true}
+  outPins={[
+    { name: "", pintype: "exec" },
+    { name: "Error Code", pintype: "struct" }
+  ]}
+/>
