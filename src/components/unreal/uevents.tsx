@@ -24,8 +24,8 @@ export function UEvents({ name, showBindNode, outPins }: EventProperties) {
                         </div>
                     </div>
 
-                    <div className="flex flex-row justify-between px-3 py-2 gap-x-6">
-                        <div className="flex flex-col gap-y-1.5">
+                    <div className="flex flex-row justify-between px-3 py-3 gap-x-6">
+                        <div className="flex flex-col gap-y-3">
                             <img
                                 src={`/img/blueprints/exec_pin.svg`}
                                 className="!my-0"
@@ -46,7 +46,7 @@ export function UEvents({ name, showBindNode, outPins }: EventProperties) {
                                     width={12}
                                     height={12}
                                 />
-                                <h6 className="!my-0 text-[12px] !align-text-bottom font-light text-white">
+                                <h6 className="!my-0 text-[12px] leading-[12px] !align-text-bottom font-light text-white">
                                     Target
                                 </h6>
                             </div>
@@ -61,7 +61,7 @@ export function UEvents({ name, showBindNode, outPins }: EventProperties) {
                                     width={12}
                                     height={12}
                                 />
-                                <h6 className="!my-0 text-[12px] !align-text-bottom font-light text-white">
+                                <h6 className="!my-0 text-[12px] leading-[12px] !align-text-bottom font-light text-white">
                                     Event
                                 </h6>
                             </div>
@@ -108,18 +108,18 @@ export function UEvents({ name, showBindNode, outPins }: EventProperties) {
                 </div>
 
                 <div className="flex flex-col justify-between items-end px-3 py-3">
-                    <div className="flex flex-col gap-y-1.5 items-end">
+                    <div className="flex flex-col gap-y-3 items-end">
                         {typeof outPins !== "undefined" &&
                             outPins.map((val) => {
                                 const pinSize =
                                     val.pintype === "exec" ? 14 : 12;
                                 return (
                                     <div
-                                        className="flex gap-x-1.5"
+                                        className="flex gap-x-1.5 items-center"
                                         key={`root_${val.name}`}
                                     >
                                         <h6
-                                            className="!my-0 text-[12px] font-light text-white"
+                                            className="!my-0 text-[12px] leading-[12px] font-light text-white"
                                             key={`id_${val.name}`}
                                         >
                                             {val.name}
