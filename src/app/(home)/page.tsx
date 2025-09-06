@@ -23,10 +23,10 @@ export default function HomePage() {
           </Link>
           <Link
               className="bg-indigo-600 px-3 py-1 rounded-full text-white text-center flex gap-1"
-              href="https://www.linkedin.com/in/nathan-miguel-488b462b1/"
+              href="https://nathan-miguel.vercel.app/"
               target="_blank"
           >
-              Linkedin
+              About me
           </Link>
       </div>
     </main>
