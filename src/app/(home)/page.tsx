@@ -10,7 +10,7 @@ export default function HomePage() {
       <div className="flex justify-center gap-2">
           <Link
               className="bg-fd-primary dark:bg-white px-3 py-1 rounded-full text-center text-white dark:text-black flex gap-1"
-              href="https://github.com/Cesio137/InternetProtocol"
+              href="https://github.com/nathancmiguel/InternetProtocol"
               target="_blank"
           >
               Star on github
